@@ -1,0 +1,9 @@
+.acf-field-rrule-sub-fields {
+    padding-left: 15px;
+    margin-left: 4px;
+    border-left: 2px solid #f1f1f1;
+}
+
+.acf-input-append .freq-suffix {
+    display: none;
+}
