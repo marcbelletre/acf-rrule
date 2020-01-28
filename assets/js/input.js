@@ -43,17 +43,9 @@
 			});
 		}).trigger('change');
 
-		// $('input[name="acf[' + key + ']').on('change', function () {
-		// 	var type = $(this).val();
-		//
-		// 	$field.find('.acf-field[data-end-type]').each(function () {
-		// 		if ($(this).data('end-type') != type) {
-		// 			$(this).hide();
-		// 		} else {
-		// 			$(this).show();
-		// 		}
-		// 	});
-		// }).trigger('change');
+		$('.acf-' + key + '-monthly-by').on('change', function () {
+			console.log ($(this).val());
+		}).trigger('change');
 
 	}
 

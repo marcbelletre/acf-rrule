@@ -7,3 +7,53 @@
 .acf-input-append .freq-suffix {
     display: none;
 }
+
+.acf-label.is-inline {
+    display: flex;
+    align-items: center;
+}
+
+.acf-input.is-disabled {
+    opacity: .35;
+    pointer-events: none;
+}
+
+table.acf-rrule-monthdays {
+    margin-top: 1px;
+    margin-left: 1px;
+    border-collapse: collapse;
+}
+
+table.acf-rrule-monthdays td {
+    text-align: center;
+    padding: 0;
+}
+
+table.acf-rrule-monthdays input[type=checkbox] {
+    display: none;
+}
+
+table.acf-rrule-monthdays label {
+    display: block;
+    border: 1px solid #7e8993;
+    padding: 10px;
+    margin-left: -1px;
+    margin-top: -1px;
+}
+
+table.acf-rrule-monthdays input[type=checkbox]:checked + label {
+    border-color: #007cba;
+    background-color: #008dd4;
+    color: #ffffff;
+}
+
+.acf-columns {
+    display: flex;
+    margin-left: -5px;
+    margin-right: -5px;
+}
+
+.acf-columns .acf-column {
+    flex: 1;
+    margin: 0 5px;
+}

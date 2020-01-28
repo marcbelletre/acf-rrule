@@ -55,15 +55,6 @@ class acf_field_rrule extends acf_field {
 		$this->defaults = array(
 			'date_display_format' => 'j F Y',
 			'date_return_format' => 'Y-m-d',
-			// 'sub_fields' => array(
-			// 	'rrule' => null,
-			// 	'start_date' => null,
-			// 	'frequency' => 'WEEKLY',
-			// 	'interval' => 1,
-			// 	'end_type' => 'date',
-			// 	'end_date' => null,
-			// 	'occurence_count' => null,
-			// ),
 		);
 
 
@@ -141,9 +132,9 @@ class acf_field_rrule extends acf_field {
 
 	function render_field( $field ) {
 
-		// echo "<pre>";
-		// var_dump($field);
-		// echo "</pre>";
+		echo "<pre>";
+		var_dump($field);
+		echo "</pre>";
 
 		// Datepicker options
 		$datepicker_options = array(
@@ -162,9 +153,9 @@ class acf_field_rrule extends acf_field {
 					$start_date_display = '';
 
 					// Format values
-					if( $field['value']['sub_fields'] ) {
-						$start_date_hidden = acf_format_date( $field['value']['sub_fields']['start_date'], 'Ymd' );
-						$start_date_display = acf_format_date( $field['value']['sub_fields']['start_date'], $field['date_display_format'] );
+					if( $field['value'] ) {
+						$start_date_hidden = acf_format_date( $field['value']['start_date'], 'Ymd' );
+						$start_date_display = acf_format_date( $field['value']['start_date'], $field['date_display_format'] );
 					}
 					?>
 
@@ -191,7 +182,7 @@ class acf_field_rrule extends acf_field {
 				$frequency = array(
 					'id' => $field['id'] . '-frequency',
 					'name' => $field['name'] . '[frequency]',
-					'value' => $field['value']['sub_fields']['frequency'],
+					'value' => $field['value']['frequency'],
 					'choices' => array(
 						'DAILY' => 'Quotidien',
 						'WEEKLY' => 'Hebdomadaire',
@@ -219,7 +210,7 @@ class acf_field_rrule extends acf_field {
 					'name' => $field['name'] . '[interval]',
 					'type' => 'number',
 					'class' => 'acf-is-prepended acf-is-appended',
-					'value'	=> $field['value']['sub_fields']['interval'],
+					'value'	=> $field['value']['interval'],
 					'min' => 1,
 					'step' => 1,
 				);
@@ -240,35 +231,102 @@ class acf_field_rrule extends acf_field {
 			</div>
 
 			<div class="acf-field acf-field-button-group" data-type="button_group_multiple" data-frequency="WEEKLY">
+				<?php
+				$weekdays = array(
+					'MO' => 'Lundi',
+					'TU' => 'Mardi',
+					'WE' => 'Mercredi',
+					'TH' => 'Jeudi',
+					'FR' => 'Vendredi',
+					'SA' => 'Samedi',
+					'SU' => 'Dimanche',
+				);
+				?>
+
 				<div class="acf-label">
-					<label for="<?=$frequency['id']?>">
+					<label>
 						Jour(s) de la semaine
 					</label>
 				</div>
 
 				<div class="acf-input">
 					<div class="acf-button-group">
-						<label>
-							<input type="checkbox" name="<?=$field['name']?>[days][]" value="MO"> Lundi
-						</label>
-						<label>
-							<input type="checkbox" name="<?=$field['name']?>[days][]" value="TU"> Mardi
-						</label>
-						<label>
-							<input type="checkbox" name="<?=$field['name']?>[days][]" value="WE"> Mercredi
-						</label>
-						<label>
-							<input type="checkbox" name="<?=$field['name']?>[days][]" value="TH"> Jeudi
-						</label>
-						<label>
-							<input type="checkbox" name="<?=$field['name']?>[days][]" value="FR"> Vendredi
-						</label>
-						<label>
-							<input type="checkbox" name="<?=$field['name']?>[days][]" value="SA"> Samedi
-						</label>
-						<label>
-							<input type="checkbox" name="<?=$field['name']?>[days][]" value="SU"> Dimanche
-						</label>
+						<?php foreach ($weekdays as $key => $value) : ?>
+							<label<?=in_array($key, $field['value']['weekdays']) ? ' class="selected"' : ''?>>
+								<input type="checkbox" name="<?=$field['name']?>[weekdays][]" value="<?=$key?>"<?=in_array($key, $field['value']['weekdays']) ? ' checked' : ''?>> <?=$value?>
+							</label>
+						<?php endforeach; ?>
+					</div>
+				</div>
+			</div>
+
+			<div class="acf-field" data-frequency="MONTHLY">
+				<div class="acf-columns">
+					<div class="acf-column">
+						<div class="acf-label is-inline">
+							<input id="acf-<?=$field['name']?>-bymonthdays" class="acf-<?=$field['name']?>-monthly-by" type="radio" name="<?=$field['name']?>[monthly_by]" value="monthdays">
+							<label for="acf-<?=$field['name']?>-bymonthdays">
+								Jour(s) du mois
+							</label>
+						</div>
+
+						<?php $months = range(1, 31); ?>
+
+						<div class="acf-input is-disabled">
+							<table class="acf-rrule-monthdays">
+								<?php foreach (array_chunk($months, 7) as $week) : ?>
+									<tr>
+										<?php foreach ($week as $day) : ?>
+											<td>
+												<input id="acf-<?=$field['name']?>-monthdays-<?=$day?>" type="checkbox" name="<?=$field['name']?>[monthdays][]" value="<?=$day?>"<?=in_array($day, $field['value']['monthdays']) ? ' checked' : ''?>>
+												<label for="acf-<?=$field['name']?>-monthdays-<?=$day?>"><?=$day?></label>
+											</td>
+										<?php endforeach; ?>
+									</tr>
+								<?php endforeach; ?>
+							</table>
+						</div>
+					</div>
+
+					<div class="acf-column">
+						<div class="acf-label is-inline">
+							<input id="acf-<?=$field['name']?>-bysetpos" class="acf-<?=$field['name']?>-monthly-by" type="radio" name="<?=$field['name']?>[monthly_by]" value="setpos">
+							<label for="acf-<?=$field['name']?>-bysetpos">
+								Jour spécifique
+							</label>
+						</div>
+
+						<?php
+						$setpos = array(
+							'id' => $field['id'] . '-setpos',
+							'name' => $field['name'] . '[setpos]',
+							'value' => $field['value']['setpos'],
+							'choices' => array(
+								'1' => 'Premier',
+								'2' => 'Deuxième',
+								'3' => 'Troisième',
+								'4' => 'Quatrième',
+								'-1' => 'Dernier',
+							),
+						);
+						$setpos_options = array(
+							'id' => $field['id'] . '-setpos-options',
+							'name' => $field['name'] . '[setpos_options]',
+							'value' => $field['value']['setpos_options'],
+							'choices' => $weekdays,
+						);
+						?>
+
+						<div class="acf-input is-disabled">
+							<div class="acf-columns">
+								<div class="acf-column">
+									<?php acf_select_input( $setpos ); ?>
+								</div>
+								<div class="acf-column">
+									<?php acf_select_input( $setpos_options ); ?>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -283,7 +341,7 @@ class acf_field_rrule extends acf_field {
 					<?php acf_select_input( array(
 						'id' => $field['id'] . '-end-type',
 						'name' => $field['name'] . '[end_type]',
-						'value' => $field['value']['sub_fields']['end_type'],
+						'value' => $field['value']['end_type'],
 						'choices' => array(
 							'date' => "À une date spécifique",
 							'count' => "Après un nombre d'occurences",
@@ -321,9 +379,9 @@ class acf_field_rrule extends acf_field {
 					$end_date_display = '';
 
 					// Format values
-					if( $field['value']['sub_fields'] ) {
-						$end_date_hidden = acf_format_date( $field['value']['sub_fields']['end_date'], 'Ymd' );
-						$end_date_display = acf_format_date( $field['value']['sub_fields']['end_date'], $field['date_display_format'] );
+					if( $field['value'] ) {
+						$end_date_hidden = acf_format_date( $field['value']['end_date'], 'Ymd' );
+						$end_date_display = acf_format_date( $field['value']['end_date'], $field['date_display_format'] );
 					}
 					?>
 
@@ -548,11 +606,39 @@ class acf_field_rrule extends acf_field {
 
 	function load_value( $value, $post_id, $field ) {
 
+		$new_value = array(
+			'rrule' => null,
+			'start_date' => null,
+			'frequency' => 'WEEKLY',
+			'interval' => 1,
+			'weekdays' => array(),
+			'monthdays' => array(),
+			'end_type' => null,
+			'end_date' => null,
+			'occurence_count' => null,
+		);
+
 		if ($value) {
 			$rule = new Rule($value);
 
 			$new_value['rrule'] = $value;
-			$new_value['sub_fields']['start_date'] = $rule->getStartDate()->format('Y-m-d');
+			$new_value['start_date'] = $rule->getStartDate()->format('Y-m-d');
+			$new_value['frequency'] = $rule->getFreqAsText();
+			$new_value['interval'] = $rule->getInterval();
+
+			if ($new_value['frequency'] == 'WEEKLY') {
+				$new_value['weekdays'] = $rule->getByDay() ?: array();
+			} elseif ($new_value['frequency'] == 'MONTHLY') {
+				$new_value['monthdays'] = $rule->getByMonthDay() ?: array();
+			}
+
+			if ($rule->getUntil()) {
+				$new_value['end_type'] = 'date';
+				$new_value['end_date'] =  $rule->getUntil()->format('Y-m-d');
+			} else {
+				$new_value['end_type'] = 'count';
+				$new_value['occurence_count'] =  $rule->getCount();
+			}
 		}
 
 		return $new_value;
@@ -595,19 +681,24 @@ class acf_field_rrule extends acf_field {
 
 			switch ($value['frequency']) {
 				case 'WEEKLY':
-					$rule->setByDay($value['days']);
+					$rule->setByDay($value['weekdays']);
 					break;
 				case 'MONTHLY':
+					$rule->setByMonthDay($value['monthdays']);
+					break;
 				case 'YEARLY':
 				default: break;
 			}
 
 			switch ($value['end_type']) {
 				case 'date':
-					$end_date = \DateTime::createFromFormat('Ymd', $value['end_date']);
-					$end_date->setTime(0,0,0);
+					if ($value['end_date']) {
+						$end_date = \DateTime::createFromFormat('Ymd', $value['end_date']);
+						$end_date->setTime(0,0,0);
 
-					$rule->setUntil($end_date);
+						$rule->setUntil($end_date);
+					}
+
 					break;
 				case 'count':
 					$rule->setCount($value['occurence_count']);
