@@ -43,9 +43,12 @@
 			});
 		}).trigger('change');
 
-		$('.acf-' + key + '-monthly-by').on('change', function () {
-			console.log ($(this).val());
-		}).trigger('change');
+		$('#acf-' + key + '-monthly-by').on('change', 'input[type=radio]', function () {
+			var parent = $(this).closest('.acf-field');
+
+			parent.find('.acf-input').addClass('is-disabled');
+			parent.find('.acf-input[data-monthly-by=' + $(this).val() + ']').removeClass('is-disabled');
+		});
 
 	}
 

@@ -57,3 +57,23 @@ table.acf-rrule-monthdays input[type=checkbox]:checked + label {
     flex: 1;
     margin: 0 5px;
 }
+
+.acf-column .acf-field {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+
+
+.acf-field-object-rrule .acf-radio-list li {
+    line-height: 25px;
+}
+
+.acf-field-object-rrule .acf-radio-list span {
+    display: inline-block;
+    min-width: 10em;
+}
+
+.acf-field-object-rrule .acf-radio-list input[type="text"] {
+    width: 100px;
+}
