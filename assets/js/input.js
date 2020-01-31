@@ -15,11 +15,7 @@
 
 	function initialize_field( $field ) {
 
-		//$field.doStuff();
-
-		var key = $field.data('key');
-
-		$('#acf-' + key + '-frequency').on('change', function () {
+		$field.find('.frequency-select').on('change', function () {
 			var freq = $(this).val();
 
 			$field.find('.acf-field[data-frequency], .freq-suffix[data-frequency]').each(function () {
@@ -31,7 +27,7 @@
 			});
 		}).trigger('change');
 
-		$('#acf-' + key + '-end-type').on('change', function () {
+		$field.find('.end-type-select').on('change', function () {
 			var type = $(this).val();
 
 			$field.find('.acf-field[data-end-type]').each(function () {
@@ -43,7 +39,7 @@
 			});
 		}).trigger('change');
 
-		$('#acf-' + key + '-monthly-by').on('change', 'input[type=radio]', function () {
+		$field.find('.monthly-by-options').on('change', 'input[type=radio]', function () {
 			var parent = $(this).closest('.acf-field');
 
 			parent.find('.acf-input').addClass('is-disabled');

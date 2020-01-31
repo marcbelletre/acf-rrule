@@ -34,7 +34,7 @@ msgstr "Date de début"
 
 #: fields/class-acf-field-rrule.php:239
 msgid "Start time"
-msgstr "Date de fin"
+msgstr "Heure de début"
 
 #: fields/class-acf-field-rrule.php:265
 msgid "Daily"

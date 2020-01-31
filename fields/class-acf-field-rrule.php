@@ -261,6 +261,7 @@ class acf_field_rrule extends acf_field {
 					'id' => $field['id'] . '-frequency',
 					'name' => $field['name'] . '[frequency]',
 					'value' => $field['value']['frequency'],
+                    'class' => 'frequency-select',
 					'choices' => array(
 						'DAILY' => __('Daily', 'acf-rrule'),
 						'WEEKLY' => __('Weekly', 'acf-rrule'),
@@ -288,7 +289,7 @@ class acf_field_rrule extends acf_field {
 					'name' => $field['name'] . '[interval]',
 					'type' => 'number',
 					'class' => 'acf-is-prepended acf-is-appended',
-					'value'	=> $field['value']['interval'],
+					'value'	=> $field['value']['interval'] ?: 1,
 					'min' => 1,
 					'step' => 1,
 				);
@@ -330,15 +331,17 @@ class acf_field_rrule extends acf_field {
 				<div class="acf-input">
 					<div class="acf-button-group">
 						<?php foreach ($weekdays as $key => $value) : ?>
-							<label<?=in_array($key, $field['value']['weekdays']) ? ' class="selected"' : ''?>>
-								<input type="checkbox" name="<?=$field['name']?>[weekdays][]" value="<?=$key?>"<?=in_array($key, $field['value']['weekdays']) ? ' checked' : ''?>> <?=$value?>
+                            <?php $selected = is_array($field['value']) && in_array($key, $field['value']['weekdays']); ?>
+
+							<label<?=($selected ? ' class="selected"' : '')?>>
+								<input type="checkbox" name="<?=$field['name']?>[weekdays][]" value="<?=$key?>"<?=($selected ? ' checked' : '')?>> <?=$value?>
 							</label>
 						<?php endforeach; ?>
 					</div>
 				</div>
 			</div>
 
-			<div id="<?=$field['id']?>-monthly-by" class="acf-field" data-frequency="MONTHLY">
+			<div id="<?=$field['id']?>-monthly-by" class="acf-field monthly-by-options" data-frequency="MONTHLY">
 				<div class="acf-columns">
 					<div class="acf-column">
 						<div class="acf-label is-inline">
@@ -355,8 +358,10 @@ class acf_field_rrule extends acf_field {
 								<?php foreach (array_chunk($days, 7) as $week) : ?>
 									<tr>
 										<?php foreach ($week as $day) : ?>
+                                            <?php $selected = is_array($field['value']) && in_array($day, $field['value']['monthdays']); ?>
+
 											<td>
-												<input id="acf-<?=$field['name']?>-monthdays-<?=$day?>" type="checkbox" name="<?=$field['name']?>[monthdays][]" value="<?=$day?>"<?=in_array($day, $field['value']['monthdays']) ? ' checked' : ''?>>
+												<input id="acf-<?=$field['name']?>-monthdays-<?=$day?>" type="checkbox" name="<?=$field['name']?>[monthdays][]" value="<?=$day?>"<?=($selected ? ' checked' : '')?>>
 												<label for="acf-<?=$field['name']?>-monthdays-<?=$day?>"><?=$day?></label>
 											</td>
 										<?php endforeach; ?>
@@ -433,9 +438,11 @@ class acf_field_rrule extends acf_field {
 
 					<ul class="acf-checkbox-list acf-hl">
 						<?php foreach ($months as $key => $month) : ?>
+                            <?php $selected = is_array($field['value']) && in_array($key, $field['value']['months']); ?>
+
 							<li>
-								<label<?=in_array($key, $field['value']['months']) ? ' class="selected"' : ''?>>
-									<input type="checkbox" id="acf-<?=$field['name']?>-months-<?=$key?>" name="<?=$field['name']?>[months][]" value="<?=$key?>"<?=in_array($key, $field['value']['months']) ? ' checked' : ''?>>
+								<label<?=($selected ? ' class="selected"' : '')?>>
+									<input type="checkbox" id="acf-<?=$field['name']?>-months-<?=$key?>" name="<?=$field['name']?>[months][]" value="<?=$key?>"<?=($selected ? ' checked' : '')?>>
 									<?=$month?>
 								</label>
 							</li>
@@ -455,6 +462,7 @@ class acf_field_rrule extends acf_field {
 						'id' => $field['id'] . '-end-type',
 						'name' => $field['name'] . '[end_type]',
 						'value' => $field['value']['end_type'],
+                        'class' => 'end-type-select',
 						'choices' => array(
 							'date' => __('At a specific date', 'acf-rrule'),
 							'count' =>  __('After a number of occurences', 'acf-rrule'),
@@ -798,7 +806,10 @@ class acf_field_rrule extends acf_field {
 	function update_value( $value, $post_id, $field ) {
 
 		if (is_array($value)) {
-			$start_date = \DateTime::createFromFormat('Ymd H:i', $value['start_date'] . ' ' . $value['start_time']);
+			$start_date = \DateTime::createFromFormat('Ymd', $value['start_date']);
+
+			$start_time = array_pad(explode(':', $value['start_time']), 3, 0);
+			$start_date->setTime(intval($start_time[0]), intval($start_time[1]), intval($start_time[2]));
 
 			$rule = new Rule;
 
