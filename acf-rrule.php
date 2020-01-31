@@ -49,10 +49,8 @@ class acf_plugin_rrule {
 			'path'		=> plugin_dir_path( __FILE__ )
 		);
 
-
 		// include field
-		add_action('acf/include_field_types', 	array($this, 'include_field')); // v5
-		add_action('acf/register_fields', 		array($this, 'include_field')); // v4
+		add_action('acf/include_field_types', 	array($this, 'include_field'));
 	}
 
 
@@ -70,9 +68,9 @@ class acf_plugin_rrule {
 	*/
 
 	function include_field( $version = false ) {
+
 		// load acf-rrule
 		load_plugin_textdomain( 'acf-rrule', false, plugin_basename( dirname( __FILE__ ) ) . '/lang' );
-
 
 		// include
 		include_once('fields/class-acf-field-rrule.php');
