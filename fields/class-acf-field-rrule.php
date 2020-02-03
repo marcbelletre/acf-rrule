@@ -781,7 +781,9 @@ class acf_field_rrule extends acf_field {
 			} catch (\Exception $e) {
 				//
 			}
-		}
+		} else {
+            $new_value = false;
+        }
 
 		return $new_value;
 
