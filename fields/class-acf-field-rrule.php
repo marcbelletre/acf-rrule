@@ -3,11 +3,11 @@
 use \Recurr\Rule;
 
 // exit if accessed directly
-if( ! defined( 'ABSPATH' ) ) exit;
+if (! defined( 'ABSPATH' )) exit;
 
 
 // check if class already exists
-if( !class_exists('acf_field_rrule') ) :
+if (!class_exists('acf_field_rrule')) :
 
 
 class acf_field_rrule extends acf_field {
@@ -186,6 +186,13 @@ class acf_field_rrule extends acf_field {
 
 		// HTML
 		?>
+
+        <?php if ($field['value'] && $field['value']['text']) : ?>
+            <p class="acf-field-rrule-current">
+                <?=__('Current value:', 'acf-rrule')?> <?=$field['value']['text']?>
+            </p>
+        <?php endif; ?>
+
 		<div class="acf-field-rrule-sub-fields">
 			<div class="acf-field">
 				<div class="acf-columns">
@@ -197,7 +204,7 @@ class acf_field_rrule extends acf_field {
 								$start_date_display = '';
 
 								// Format values
-								if( $field['value'] ) {
+								if ($field['value']) {
 									$start_date_hidden = acf_format_date( $field['value']['start_date'], 'Ymd' );
 									$start_date_display = acf_format_date( $field['value']['start_date'], $field['date_display_format'] );
 								}
@@ -229,7 +236,7 @@ class acf_field_rrule extends acf_field {
 								$start_time = '';
 
 								// Format values
-								if( $field['value'] ) {
+								if ($field['value']) {
 									$start_time = acf_format_date( $field['value']['start_time'], $field['time_display_format'] );
 								}
 								?>
@@ -248,6 +255,37 @@ class acf_field_rrule extends acf_field {
 									'id' => $unique_id . '-start-time',
 									'class' => 'input',
 									'value'	=> $start_time,
+								) ); ?>
+							</div>
+						</div>
+					</div>
+
+					<div class="acf-column">
+						<div class="acf-field acf-field-time-picker" data-type="time_picker">
+							<div <?php acf_esc_attr_e( $timepicker_options ); ?>>
+								<?php
+								$end_time = '';
+
+								// Format values
+								if ($field['value']) {
+									$end_time = acf_format_date( $field['value']['end_time'], $field['time_display_format'] );
+								}
+								?>
+
+								<div class="acf-label">
+									<label for="<?=$unique_id?>-end-time">
+										<?=__('End time', 'acf-rrule')?>
+									</label>
+								</div>
+
+								<?php acf_hidden_input( array (
+									'name' => $field['name'] . '[end_time]',
+									'value'	=> $end_time,
+								) ); ?>
+								<?php acf_text_input( array(
+									'id' => $unique_id . '-end-time',
+									'class' => 'input',
+									'value'	=> $end_time,
 								) ); ?>
 							</div>
 						</div>
@@ -500,7 +538,7 @@ class acf_field_rrule extends acf_field {
 					$end_date_display = '';
 
 					// Format values
-					if( $field['value'] ) {
+					if ($field['value']) {
 						$end_date_hidden = acf_format_date( $field['value']['end_date'], 'Ymd' );
 						$end_date_display = acf_format_date( $field['value']['end_date'], $field['date_display_format'] );
 					}
@@ -545,7 +583,7 @@ class acf_field_rrule extends acf_field {
 	function input_admin_enqueue_scripts() {
 
 		// bail early if no enqueue
-	   	if( !acf_get_setting('enqueue_datepicker') ) {
+	   	if (!acf_get_setting('enqueue_datepicker')) {
 		   	return;
 	   	}
 
@@ -732,6 +770,7 @@ class acf_field_rrule extends acf_field {
 			'rrule' => null,
 			'start_date' => null,
 			'start_time' => null,
+			'end_time' => null,
 			'frequency' => 'WEEKLY',
 			'interval' => 1,
 			'weekdays' => array(),
@@ -743,6 +782,8 @@ class acf_field_rrule extends acf_field {
 			'end_type' => null,
 			'end_date' => null,
 			'occurence_count' => null,
+            'dates_collection' => null,
+            'text' => null,
 		);
 
 		if ($value) {
@@ -754,6 +795,7 @@ class acf_field_rrule extends acf_field {
 				$new_value['rrule'] = $value;
 				$new_value['start_date'] = $start_date->format('Y-m-d');
 				$new_value['start_time'] = $start_date->format('H:i:s');
+				$new_value['end_time'] = $end_time ? $end_time->format('H:i:s') : null;
 				$new_value['frequency'] = $rule->getFreqAsText();
 				$new_value['interval'] = $rule->getInterval();
 				$new_value['weekdays'] = $rule->getByDay() ?: array();
@@ -778,6 +820,21 @@ class acf_field_rrule extends acf_field {
 					$new_value['end_type'] = 'count';
 					$new_value['occurence_count'] =  $rule->getCount();
 				}
+
+                $locale = explode('_', get_locale());
+
+                $transformer = new \Recurr\Transformer\ArrayTransformer();
+                $textTransformer = new \Recurr\Transformer\TextTransformer(
+                    new \Recurr\Transformer\Translator($locale[0])
+                );
+
+                $new_value['dates_collection'] = array();
+
+                foreach ($transformer->transform($rule) as $recurrence) {
+                    $new_value['dates_collection'][] = $recurrence->getStart();
+                }
+
+                $new_value['text'] = $textTransformer->transform($rule);
 			} catch (\Exception $e) {
 				//
 			}
@@ -890,7 +947,7 @@ class acf_field_rrule extends acf_field {
 	function format_value( $value, $post_id, $field ) {
 
 		// bail early if no value
-		if( empty($value) ) {
+		if (empty($value)) {
 
 			return $value;
 
@@ -898,7 +955,7 @@ class acf_field_rrule extends acf_field {
 
 
 		// apply setting
-		if( $field['font_size'] > 12 ) {
+		if ($field['font_size'] > 12) {
 
 			// format the value
 			// $value = 'something';
@@ -936,14 +993,14 @@ class acf_field_rrule extends acf_field {
 	function validate_value( $valid, $value, $field, $input ){
 
 		// Basic usage
-		if( $value < $field['custom_minimum_setting'] )
+		if ($value < $field['custom_minimum_setting'])
 		{
 			$valid = false;
 		}
 
 
 		// Advanced usage
-		if( $value < $field['custom_minimum_setting'] )
+		if ($value < $field['custom_minimum_setting'])
 		{
 			$valid = __('The value is too little!','acf-rrule'),
 		}
