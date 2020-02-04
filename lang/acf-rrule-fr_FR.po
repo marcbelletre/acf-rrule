@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Advanced Custom Fields\n"
 "POT-Creation-Date: 2020-01-29 19:19+1000\n"
-"PO-Revision-Date: 2020-02-04 15:13+0100\n"
+"PO-Revision-Date: 2020-02-04 15:44+0100\n"
 "Last-Translator: \n"
 "Language-Team: Marc Bellêtre <marc@pixelparfait.fr>\n"
 "Language: fr_FR\n"
@@ -27,6 +27,14 @@ msgstr "Format de retour des dates"
 #: fields/class-acf-field-rrule.php:137
 msgid "The date format returned via template functions"
 msgstr "Valeur retournée dans le code"
+
+#: fields/class-acf-field-rrule.php:153
+msgid "Time Selector"
+msgstr "Sélecteur d'heure"
+
+#: fields/class-acf-field-rrule.php:154
+msgid "Allow time selection when creating the recurring rule"
+msgstr "Autoriser la sélection de l'heure lors de la création de la récurrence"
 
 #: fields/class-acf-field-rrule.php:192
 msgid "Current value:"

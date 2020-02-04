@@ -55,6 +55,7 @@ class acf_field_rrule extends acf_field {
 		$this->defaults = array(
 			'date_display_format' => 'j F Y',
 			'date_return_format' => 'Y-m-d',
+			'allow_time' => false,
 			'time_display_format' => 'H:i',
 			'timezone' => get_option('timezone_string'),
 		);
@@ -147,6 +148,15 @@ class acf_field_rrule extends acf_field {
 			)
 		));
 
+		// allow_time
+		acf_render_field_setting( $field, array(
+			'label'			=> __('Time Selector', 'acf-rrule'),
+			'instructions'	=> __('Allow time selection when creating the recurring rule', 'acf-rrule'),
+			'name'			=> 'allow_time',
+			'type'			=> 'true_false',
+			'ui'			=> 1,
+		));
+
 	}
 
 
@@ -229,67 +239,38 @@ class acf_field_rrule extends acf_field {
 						</div>
 					</div>
 
-					<div class="acf-column">
-						<div class="acf-field acf-field-time-picker is-required" data-type="time_picker">
-							<div <?php acf_esc_attr_e( $timepicker_options ); ?>>
-								<?php
-								$start_time = '';
+					<?php if ($field['allow_time']) : ?>
+						<div class="acf-column">
+							<div class="acf-field acf-field-time-picker is-required" data-type="time_picker">
+								<div <?php acf_esc_attr_e( $timepicker_options ); ?>>
+									<?php
+									$start_time = '';
 
-								// Format values
-								if ($field['value']) {
-									$start_time = acf_format_date( $field['value']['start_time'], $field['time_display_format'] );
-								}
-								?>
+									// Format values
+									if ($field['value']) {
+										$start_time = acf_format_date( $field['value']['start_time'], $field['time_display_format'] );
+									}
+									?>
 
-								<div class="acf-label">
-									<label for="<?=$unique_id?>-start-time">
-										<?=__('Start time', 'acf-rrule')?> <span class="acf-required">*</span>
-									</label>
+									<div class="acf-label">
+										<label for="<?=$unique_id?>-start-time">
+											<?=__('Start time', 'acf-rrule')?> <span class="acf-required">*</span>
+										</label>
+									</div>
+
+									<?php acf_hidden_input( array (
+										'name' => $field['name'] . '[start_time]',
+										'value'	=> $start_time,
+									) ); ?>
+									<?php acf_text_input( array(
+										'id' => $unique_id . '-start-time',
+										'class' => 'input',
+										'value'	=> $start_time,
+									) ); ?>
 								</div>
-
-								<?php acf_hidden_input( array (
-									'name' => $field['name'] . '[start_time]',
-									'value'	=> $start_time,
-								) ); ?>
-								<?php acf_text_input( array(
-									'id' => $unique_id . '-start-time',
-									'class' => 'input',
-									'value'	=> $start_time,
-								) ); ?>
 							</div>
 						</div>
-					</div>
-
-					<div class="acf-column">
-						<div class="acf-field acf-field-time-picker" data-type="time_picker">
-							<div <?php acf_esc_attr_e( $timepicker_options ); ?>>
-								<?php
-								$end_time = '';
-
-								// Format values
-								if ($field['value']) {
-									$end_time = acf_format_date( $field['value']['end_time'], $field['time_display_format'] );
-								}
-								?>
-
-								<div class="acf-label">
-									<label for="<?=$unique_id?>-end-time">
-										<?=__('End time', 'acf-rrule')?>
-									</label>
-								</div>
-
-								<?php acf_hidden_input( array (
-									'name' => $field['name'] . '[end_time]',
-									'value'	=> $end_time,
-								) ); ?>
-								<?php acf_text_input( array(
-									'id' => $unique_id . '-end-time',
-									'class' => 'input',
-									'value'	=> $end_time,
-								) ); ?>
-							</div>
-						</div>
-					</div>
+					<?php endif; ?>
 				</div>
 			</div>
 
@@ -583,12 +564,13 @@ class acf_field_rrule extends acf_field {
 	function input_admin_enqueue_scripts() {
 
 		// bail early if no enqueue
-	   	if (!acf_get_setting('enqueue_datepicker')) {
+	   	if (! acf_get_setting('enqueue_datepicker')) {
 		   	return;
 	   	}
 
 	   	// localize
 	   	global $wp_locale;
+
 	   	acf_localize_data(array(
 		   	'datePickerL10n'	=> array(
 				'closeText'			=> _x('Done',	'Date Picker JS closeText',		'acf'),
@@ -770,7 +752,6 @@ class acf_field_rrule extends acf_field {
 			'rrule' => null,
 			'start_date' => null,
 			'start_time' => null,
-			'end_time' => null,
 			'frequency' => 'WEEKLY',
 			'interval' => 1,
 			'weekdays' => array(),
@@ -795,7 +776,6 @@ class acf_field_rrule extends acf_field {
 				$new_value['rrule'] = $value;
 				$new_value['start_date'] = $start_date->format('Y-m-d');
 				$new_value['start_time'] = $start_date->format('H:i:s');
-				$new_value['end_time'] = $end_time ? $end_time->format('H:i:s') : null;
 				$new_value['frequency'] = $rule->getFreqAsText();
 				$new_value['interval'] = $rule->getInterval();
 				$new_value['weekdays'] = $rule->getByDay() ?: array();
@@ -867,8 +847,12 @@ class acf_field_rrule extends acf_field {
 		if (is_array($value)) {
 			$start_date = \DateTime::createFromFormat('Ymd', $value['start_date']);
 
-			$start_time = array_pad(explode(':', $value['start_time']), 3, 0);
-			$start_date->setTime(intval($start_time[0]), intval($start_time[1]), intval($start_time[2]));
+			if ($value['start_time']) {
+				$start_time = array_pad(explode(':', $value['start_time']), 3, 0);
+				$start_date->setTime(intval($start_time[0]), intval($start_time[1]), intval($start_time[2]));
+			} else {
+				$start_date->setTime(0,0,0);
+			}
 
 			$rule = new Rule;
 

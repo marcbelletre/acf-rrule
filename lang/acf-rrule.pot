@@ -27,6 +27,14 @@ msgstr ""
 msgid "The date format returned via template functions"
 msgstr ""
 
+#: fields/class-acf-field-rrule.php:153
+msgid "Time Selector"
+msgstr ""
+
+#: fields/class-acf-field-rrule.php:154
+msgid "Allow time selection when creating the recurring rule"
+msgstr ""
+
 #: fields/class-acf-field-rrule.php:192
 msgid "Current value:"
 msgstr ""
