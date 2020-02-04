@@ -847,7 +847,7 @@ class acf_field_rrule extends acf_field {
 		if (is_array($value)) {
 			$start_date = \DateTime::createFromFormat('Ymd', $value['start_date']);
 
-			if ($value['start_time']) {
+			if (array_key_exists('start_time', $value)) {
 				$start_time = array_pad(explode(':', $value['start_time']), 3, 0);
 				$start_date->setTime(intval($start_time[0]), intval($start_time[1]), intval($start_time[2]));
 			} else {
