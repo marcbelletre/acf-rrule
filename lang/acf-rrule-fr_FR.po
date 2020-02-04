@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Advanced Custom Fields\n"
 "POT-Creation-Date: 2020-01-29 19:19+1000\n"
-"PO-Revision-Date: 2020-01-29 19:54+0100\n"
+"PO-Revision-Date: 2020-02-04 15:13+0100\n"
 "Last-Translator: \n"
 "Language-Team: Marc Bellêtre <marc@pixelparfait.fr>\n"
 "Language: fr_FR\n"
@@ -28,179 +28,187 @@ msgstr "Format de retour des dates"
 msgid "The date format returned via template functions"
 msgstr "Valeur retournée dans le code"
 
-#: fields/class-acf-field-rrule.php:208
+#: fields/class-acf-field-rrule.php:192
+msgid "Current value:"
+msgstr "Valeur actuelle :"
+
+#: fields/class-acf-field-rrule.php:215
 msgid "Start date"
 msgstr "Date de début"
 
-#: fields/class-acf-field-rrule.php:239
+#: fields/class-acf-field-rrule.php:246
 msgid "Start time"
 msgstr "Heure de début"
 
-#: fields/class-acf-field-rrule.php:265
+#: fields/class-acf-field-rrule.php:277
+msgid "End time"
+msgstr "Heure de fin"
+
+#: fields/class-acf-field-rrule.php:304
 msgid "Daily"
 msgstr "Quotidien"
 
-#: fields/class-acf-field-rrule.php:266
+#: fields/class-acf-field-rrule.php:305
 msgid "Weekly"
 msgstr "Hebdomadaire"
 
-#: fields/class-acf-field-rrule.php:267
+#: fields/class-acf-field-rrule.php:306
 msgid "Monthly"
 msgstr "Mensuel"
 
-#: fields/class-acf-field-rrule.php:268
+#: fields/class-acf-field-rrule.php:307
 msgid "Yearly"
 msgstr "Annuel"
 
-#: fields/class-acf-field-rrule.php:275
+#: fields/class-acf-field-rrule.php:314
 msgid "Frequency"
 msgstr "Fréquence"
 
-#: fields/class-acf-field-rrule.php:298
+#: fields/class-acf-field-rrule.php:337
 msgctxt "RRule Interval"
 msgid "Every"
 msgstr "Tous les"
 
-#: fields/class-acf-field-rrule.php:300
+#: fields/class-acf-field-rrule.php:339
 msgctxt "RRule Interval"
 msgid "day"
 msgstr "jour(s)"
 
-#: fields/class-acf-field-rrule.php:301
+#: fields/class-acf-field-rrule.php:340
 msgctxt "RRule Interval"
 msgid "week"
 msgstr "semaine(s)"
 
-#: fields/class-acf-field-rrule.php:302
+#: fields/class-acf-field-rrule.php:341
 msgctxt "RRule Interval"
 msgid "month"
 msgstr "mois"
 
-#: fields/class-acf-field-rrule.php:303
+#: fields/class-acf-field-rrule.php:342
 msgctxt "RRule Interval"
 msgid "year"
 msgstr "an(s)"
 
-#: fields/class-acf-field-rrule.php:314
+#: fields/class-acf-field-rrule.php:353
 msgid "Monday"
 msgstr "Lundi"
 
-#: fields/class-acf-field-rrule.php:315
+#: fields/class-acf-field-rrule.php:354
 msgid "Tuesday"
 msgstr "Mardi"
 
-#: fields/class-acf-field-rrule.php:316
+#: fields/class-acf-field-rrule.php:355
 msgid "Wednesday"
 msgstr "Mercredi"
 
-#: fields/class-acf-field-rrule.php:317
+#: fields/class-acf-field-rrule.php:356
 msgid "Thursday"
 msgstr "Jeudi"
 
-#: fields/class-acf-field-rrule.php:318
+#: fields/class-acf-field-rrule.php:357
 msgid "Friday"
 msgstr "Vendredi"
 
-#: fields/class-acf-field-rrule.php:319
+#: fields/class-acf-field-rrule.php:358
 msgid "Saturday"
 msgstr "Samedi"
 
-#: fields/class-acf-field-rrule.php:320
+#: fields/class-acf-field-rrule.php:359
 msgid "Sunday"
 msgstr "Dimanche"
 
-#: fields/class-acf-field-rrule.php:326
+#: fields/class-acf-field-rrule.php:365
 msgid "Week days"
 msgstr "Jour(s) de la semaine"
 
-#: fields/class-acf-field-rrule.php:347
+#: fields/class-acf-field-rrule.php:388
 msgid "Month days"
 msgstr "Jour(s) du mois"
 
-#: fields/class-acf-field-rrule.php:373
+#: fields/class-acf-field-rrule.php:416
 msgid "Day of the week"
 msgstr "Jour de la semaine"
 
-#: fields/class-acf-field-rrule.php:383
+#: fields/class-acf-field-rrule.php:426
 msgid "First"
 msgstr "Premier"
 
-#: fields/class-acf-field-rrule.php:384
+#: fields/class-acf-field-rrule.php:427
 msgid "Second"
 msgstr "Deuxième"
 
-#: fields/class-acf-field-rrule.php:385
+#: fields/class-acf-field-rrule.php:428
 msgid "Third"
 msgstr "Troisième"
 
-#: fields/class-acf-field-rrule.php:386
+#: fields/class-acf-field-rrule.php:429
 msgid "Fourth"
 msgstr "Quatrième"
 
-#: fields/class-acf-field-rrule.php:387
+#: fields/class-acf-field-rrule.php:430
 msgid "Last"
 msgstr "Dernier"
 
-#: fields/class-acf-field-rrule.php:414
+#: fields/class-acf-field-rrule.php:457
 msgid "Month"
 msgstr "Mois"
 
-#: fields/class-acf-field-rrule.php:418
+#: fields/class-acf-field-rrule.php:461
 msgid "January"
 msgstr "Janvier"
 
-#: fields/class-acf-field-rrule.php:419
+#: fields/class-acf-field-rrule.php:462
 msgid "February"
 msgstr "Février"
 
-#: fields/class-acf-field-rrule.php:420
+#: fields/class-acf-field-rrule.php:463
 msgid "March"
 msgstr "Mars"
 
-#: fields/class-acf-field-rrule.php:421
+#: fields/class-acf-field-rrule.php:464
 msgid "April"
 msgstr "Avril"
 
-#: fields/class-acf-field-rrule.php:422
+#: fields/class-acf-field-rrule.php:465
 msgid "May"
 msgstr "Mai"
 
-#: fields/class-acf-field-rrule.php:423
+#: fields/class-acf-field-rrule.php:466
 msgid "June"
 msgstr "Juin"
 
-#: fields/class-acf-field-rrule.php:424
+#: fields/class-acf-field-rrule.php:467
 msgid "July"
 msgstr "Juillet"
 
-#: fields/class-acf-field-rrule.php:425
+#: fields/class-acf-field-rrule.php:468
 msgid "August"
 msgstr "Août"
 
-#: fields/class-acf-field-rrule.php:426
+#: fields/class-acf-field-rrule.php:469
 msgid "September"
 msgstr "Septembre"
 
-#: fields/class-acf-field-rrule.php:427
+#: fields/class-acf-field-rrule.php:470
 msgid "October"
 msgstr "Octobre"
 
-#: fields/class-acf-field-rrule.php:428
+#: fields/class-acf-field-rrule.php:471
 msgid "November"
 msgstr "Novembre"
 
-#: fields/class-acf-field-rrule.php:429
+#: fields/class-acf-field-rrule.php:472
 msgid "December"
 msgstr "Décembre"
 
-#: fields/class-acf-field-rrule.php:450
+#: fields/class-acf-field-rrule.php:495
 msgid "End date"
 msgstr "Fin de la récurrence"
 
-#: fields/class-acf-field-rrule.php:459
+#: fields/class-acf-field-rrule.php:505
 msgid "At a specific date"
 msgstr "À une date spécifique"
 
-#: fields/class-acf-field-rrule.php:460
+#: fields/class-acf-field-rrule.php:506
 msgid "After a number of occurences"
 msgstr "Après un nombre d'occurences"

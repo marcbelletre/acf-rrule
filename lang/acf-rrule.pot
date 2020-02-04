@@ -27,179 +27,187 @@ msgstr ""
 msgid "The date format returned via template functions"
 msgstr ""
 
-#: fields/class-acf-field-rrule.php:208
+#: fields/class-acf-field-rrule.php:192
+msgid "Current value:"
+msgstr ""
+
+#: fields/class-acf-field-rrule.php:215
 msgid "Start date"
 msgstr ""
 
-#: fields/class-acf-field-rrule.php:239
+#: fields/class-acf-field-rrule.php:246
 msgid "Start time"
 msgstr ""
 
-#: fields/class-acf-field-rrule.php:265
+#: fields/class-acf-field-rrule.php:277
+msgid "End time"
+msgstr ""
+
+#: fields/class-acf-field-rrule.php:304
 msgid "Daily"
 msgstr ""
 
-#: fields/class-acf-field-rrule.php:266
+#: fields/class-acf-field-rrule.php:305
 msgid "Weekly"
 msgstr ""
 
-#: fields/class-acf-field-rrule.php:267
+#: fields/class-acf-field-rrule.php:306
 msgid "Monthly"
 msgstr ""
 
-#: fields/class-acf-field-rrule.php:268
+#: fields/class-acf-field-rrule.php:307
 msgid "Yearly"
 msgstr ""
 
-#: fields/class-acf-field-rrule.php:275
+#: fields/class-acf-field-rrule.php:314
 msgid "Frequency"
 msgstr ""
 
-#: fields/class-acf-field-rrule.php:298
+#: fields/class-acf-field-rrule.php:337
 msgctxt "RRule Interval"
 msgid "Every"
 msgstr ""
 
-#: fields/class-acf-field-rrule.php:300
+#: fields/class-acf-field-rrule.php:339
 msgctxt "RRule Interval"
 msgid "day"
 msgstr ""
 
-#: fields/class-acf-field-rrule.php:301
+#: fields/class-acf-field-rrule.php:340
 msgctxt "RRule Interval"
 msgid "week"
 msgstr ""
 
-#: fields/class-acf-field-rrule.php:302
+#: fields/class-acf-field-rrule.php:341
 msgctxt "RRule Interval"
 msgid "month"
 msgstr ""
 
-#: fields/class-acf-field-rrule.php:303
+#: fields/class-acf-field-rrule.php:342
 msgctxt "RRule Interval"
 msgid "year"
 msgstr ""
 
-#: fields/class-acf-field-rrule.php:314
+#: fields/class-acf-field-rrule.php:353
 msgid "Monday"
 msgstr ""
 
-#: fields/class-acf-field-rrule.php:315
+#: fields/class-acf-field-rrule.php:354
 msgid "Tuesday"
 msgstr ""
 
-#: fields/class-acf-field-rrule.php:316
+#: fields/class-acf-field-rrule.php:355
 msgid "Wednesday"
 msgstr ""
 
-#: fields/class-acf-field-rrule.php:317
+#: fields/class-acf-field-rrule.php:356
 msgid "Thursday"
 msgstr ""
 
-#: fields/class-acf-field-rrule.php:318
+#: fields/class-acf-field-rrule.php:357
 msgid "Friday"
 msgstr ""
 
-#: fields/class-acf-field-rrule.php:319
+#: fields/class-acf-field-rrule.php:358
 msgid "Saturday"
 msgstr ""
 
-#: fields/class-acf-field-rrule.php:320
+#: fields/class-acf-field-rrule.php:359
 msgid "Sunday"
 msgstr ""
 
-#: fields/class-acf-field-rrule.php:326
+#: fields/class-acf-field-rrule.php:365
 msgid "Week days"
 msgstr ""
 
-#: fields/class-acf-field-rrule.php:347
+#: fields/class-acf-field-rrule.php:388
 msgid "Month days"
 msgstr ""
 
-#: fields/class-acf-field-rrule.php:373
+#: fields/class-acf-field-rrule.php:416
 msgid "Day of the week"
 msgstr ""
 
-#: fields/class-acf-field-rrule.php:383
+#: fields/class-acf-field-rrule.php:426
 msgid "First"
 msgstr ""
 
-#: fields/class-acf-field-rrule.php:384
+#: fields/class-acf-field-rrule.php:427
 msgid "Second"
 msgstr ""
 
-#: fields/class-acf-field-rrule.php:385
+#: fields/class-acf-field-rrule.php:428
 msgid "Third"
 msgstr ""
 
-#: fields/class-acf-field-rrule.php:386
+#: fields/class-acf-field-rrule.php:429
 msgid "Fourth"
 msgstr ""
 
-#: fields/class-acf-field-rrule.php:387
+#: fields/class-acf-field-rrule.php:430
 msgid "Last"
 msgstr ""
 
-#: fields/class-acf-field-rrule.php:414
+#: fields/class-acf-field-rrule.php:457
 msgid "Month"
 msgstr ""
 
-#: fields/class-acf-field-rrule.php:418
+#: fields/class-acf-field-rrule.php:461
 msgid "January"
 msgstr ""
 
-#: fields/class-acf-field-rrule.php:419
+#: fields/class-acf-field-rrule.php:462
 msgid "February"
 msgstr ""
 
-#: fields/class-acf-field-rrule.php:420
+#: fields/class-acf-field-rrule.php:463
 msgid "March"
 msgstr ""
 
-#: fields/class-acf-field-rrule.php:421
+#: fields/class-acf-field-rrule.php:464
 msgid "April"
 msgstr ""
 
-#: fields/class-acf-field-rrule.php:422
+#: fields/class-acf-field-rrule.php:465
 msgid "May"
 msgstr ""
 
-#: fields/class-acf-field-rrule.php:423
+#: fields/class-acf-field-rrule.php:466
 msgid "June"
 msgstr ""
 
-#: fields/class-acf-field-rrule.php:424
+#: fields/class-acf-field-rrule.php:467
 msgid "July"
 msgstr ""
 
-#: fields/class-acf-field-rrule.php:425
+#: fields/class-acf-field-rrule.php:468
 msgid "August"
 msgstr ""
 
-#: fields/class-acf-field-rrule.php:426
+#: fields/class-acf-field-rrule.php:469
 msgid "September"
 msgstr ""
 
-#: fields/class-acf-field-rrule.php:427
+#: fields/class-acf-field-rrule.php:470
 msgid "October"
 msgstr ""
 
-#: fields/class-acf-field-rrule.php:428
+#: fields/class-acf-field-rrule.php:471
 msgid "November"
 msgstr ""
 
-#: fields/class-acf-field-rrule.php:429
+#: fields/class-acf-field-rrule.php:472
 msgid "December"
 msgstr ""
 
-#: fields/class-acf-field-rrule.php:450
+#: fields/class-acf-field-rrule.php:495
 msgid "End date"
 msgstr ""
 
-#: fields/class-acf-field-rrule.php:459
+#: fields/class-acf-field-rrule.php:505
 msgid "At a specific date"
 msgstr ""
 
-#: fields/class-acf-field-rrule.php:460
+#: fields/class-acf-field-rrule.php:506
 msgid "After a number of occurences"
 msgstr ""
