@@ -774,7 +774,7 @@ class acf_field_rrule extends acf_field {
 				$start_date = $rule->getStartDate();
 
 				$new_value['rrule'] = $value;
-				$new_value['start_date'] = $start_date->format('Y-m-d');
+				$new_value['start_date'] = $start_date->format('Ymd');
 				$new_value['start_time'] = $start_date->format('H:i:s');
 				$new_value['frequency'] = $rule->getFreqAsText();
 				$new_value['interval'] = $rule->getInterval();
@@ -795,7 +795,7 @@ class acf_field_rrule extends acf_field {
 
 				if ($rule->getUntil()) {
 					$new_value['end_type'] = 'date';
-					$new_value['end_date'] =  $rule->getUntil()->format('Y-m-d');
+					$new_value['end_date'] =  $rule->getUntil()->format('Ymd');
 				} else {
 					$new_value['end_type'] = 'count';
 					$new_value['occurence_count'] =  $rule->getCount();
@@ -907,6 +907,8 @@ class acf_field_rrule extends acf_field {
 
 			return $new_value;
 		}
+
+        return $value;
 	}
 
 
