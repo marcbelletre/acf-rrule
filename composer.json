@@ -1,6 +1,6 @@
 {
     "name": "marcbelletre/acf-rrule",
-    "description": "RRule field for Advanced Custom Fields"
+    "description": "RRule field for Advanced Custom Fields",
     "require": {
         "simshaun/recurr": "^4.0"
     }
