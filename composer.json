@@ -3,5 +3,6 @@
     "description": "RRule field for Advanced Custom Fields",
     "require": {
         "simshaun/recurr": "^4.0"
-    }
+    },
+    "type": "wordpress-plugin"
 }
