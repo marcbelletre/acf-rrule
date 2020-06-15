@@ -2,13 +2,12 @@
 
 /*
 Plugin Name: Advanced Custom Fields: RRule
-Plugin URI: PLUGIN_URL
+Plugin URI: https://github.com/marcbelletre/acf-rrule
 Description: Create recurring rules with a single ACF field
-Version: 1.0.0
+Version: 1.0-beta
 Author: Marc Bellêtre
 Author URI: https://pixelparfait.fr
-License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+License: MIT
 */
 
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -70,7 +69,8 @@ class acf_plugin_rrule {
 	function include_field( $version = false ) {
 
 		// load acf-rrule
-		load_plugin_textdomain( 'acf-rrule', false, plugin_basename( dirname( __FILE__ ) ) . '/lang' );
+		load_plugin_textdomain( 'acf-rrule', false, basename( dirname(__FILE__) ) . '/lang' );
+        load_muplugin_textdomain( 'acf-rrule', basename( dirname(__FILE__) ) . '/lang' );
 
 		// include
 		include_once('fields/class-acf-field-rrule.php');
