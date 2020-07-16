@@ -279,7 +279,7 @@ class acf_field_rrule extends acf_field {
 				$frequency = array(
 					'id' => $field['id'] . '-frequency',
 					'name' => $field['name'] . '[frequency]',
-					'value' => $field['value']['frequency'],
+					'value' => is_array($field['value']) ? $field['value']['frequency'] : null,
                     'class' => 'frequency-select',
 					'choices' => array(
 						'DAILY' => __('Daily', 'acf-rrule'),
@@ -308,7 +308,7 @@ class acf_field_rrule extends acf_field {
 					'name' => $field['name'] . '[interval]',
 					'type' => 'number',
 					'class' => 'acf-is-prepended acf-is-appended',
-					'value'	=> $field['value']['interval'] ?: 1,
+					'value'	=> is_array($field['value']) && $field['value']['interval'] ? $field['value']['interval'] : 1,
 					'min' => 1,
 					'step' => 1,
 				);
@@ -364,7 +364,7 @@ class acf_field_rrule extends acf_field {
 				<div class="acf-columns">
 					<div class="acf-column">
 						<div class="acf-label is-inline">
-							<input id="acf-<?=$field['name']?>-bymonthdays" type="radio" name="<?=$field['name']?>[monthly_by]" value="monthdays"<?=$field['value']['monthly_by'] == 'monthdays' ? ' checked' : ''?>>
+							<input id="acf-<?=$field['name']?>-bymonthdays" type="radio" name="<?=$field['name']?>[monthly_by]" value="monthdays"<?=(is_array($field['value']) && $field['value']['monthly_by'] == 'monthdays' ? ' checked' : '')?>>
 							<label for="acf-<?=$field['name']?>-bymonthdays">
 								<?=__('Month days', 'acf-rrule')?>
 							</label>
@@ -392,7 +392,7 @@ class acf_field_rrule extends acf_field {
 
 					<div class="acf-column">
 						<div class="acf-label is-inline">
-							<input id="acf-<?=$field['name']?>-bysetpos" type="radio" name="<?=$field['name']?>[monthly_by]" value="setpos"<?=$field['value']['monthly_by'] == 'setpos' ? ' checked' : ''?>>
+							<input id="acf-<?=$field['name']?>-bysetpos" type="radio" name="<?=$field['name']?>[monthly_by]" value="setpos"<?=(is_array($field['value']) && $field['value']['monthly_by'] == 'setpos' ? ' checked' : '')?>>
 							<label for="acf-<?=$field['name']?>-bysetpos">
 								<?=__('Day of the week', 'acf-rrule')?>
 							</label>
@@ -402,7 +402,7 @@ class acf_field_rrule extends acf_field {
 						$setpos = array(
 							'id' => $field['id'] . '-setpos',
 							'name' => $field['name'] . '[setpos]',
-							'value' => $field['value']['setpos'],
+							'value' => is_array($field['value']) ? $field['value']['setpos'] : null,
 							'choices' => array(
 								'1' => __('First', 'acf-rrule'),
 								'2' => __('Second', 'acf-rrule'),
@@ -414,12 +414,12 @@ class acf_field_rrule extends acf_field {
 						$setpos_options = array(
 							'id' => $field['id'] . '-setpos-option',
 							'name' => $field['name'] . '[setpos_option]',
-							'value' => $field['value']['setpos_option'],
+							'value' => is_array($field['value']) ? $field['value']['setpos_option'] : null,
 							'choices' => $weekdays,
 						);
 						?>
 
-						<div class="acf-input<?=$field['value']['monthly_by'] != 'setpos' ? ' is-disabled' : ''?>" data-monthly-by="setpos">
+						<div class="acf-input<?=(is_array($field['value']) && $field['value']['monthly_by'] != 'setpos' ? ' is-disabled' : '')?>" data-monthly-by="setpos">
 							<div class="acf-columns">
 								<div class="acf-column">
 									<?php acf_select_input( $setpos ); ?>
@@ -480,7 +480,7 @@ class acf_field_rrule extends acf_field {
 					<?php acf_select_input( array(
 						'id' => $field['id'] . '-end-type',
 						'name' => $field['name'] . '[end_type]',
-						'value' => $field['value']['end_type'],
+						'value' => $field['value'] ? $field['value']['end_type'] : null,
                         'class' => 'end-type-select',
 						'choices' => array(
 							'date' => __('At a specific date', 'acf-rrule'),
