@@ -181,10 +181,6 @@ class acf_field_rrule extends acf_field {
 		// Generate a unique ID for fields we don't want to be autocompleted
 		$unique_id = $field['id'] . '-' . time();
 
-		// echo "<pre>";
-		// var_dump($field);
-		// echo "</pre>";
-
 		// Datepicker options
 		$datepicker_options = array(
 			'class' => 'acf-date-picker acf-input-wrap',
