@@ -1,7 +1,6 @@
 {
     "name": "marcbelletre/acf-rrule",
     "description": "RRule field for Advanced Custom Fields",
-    "version": "1.0-beta",
     "type": "wordpress-plugin",
     "keywords": ["acf", "rrule", "recurring", "date"],
     "license": "MIT",
