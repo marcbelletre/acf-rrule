@@ -493,7 +493,7 @@ class acf_field_rrule extends acf_field {
 					'name' => $field['name'] . '[occurence_count]',
 					'type' => 'number',
 					'class' => 'acf-is-prepended acf-is-appended',
-					'value'	=> $field['value']['occurence_count'],
+					'value'	=> is_array($field['value']) ? $field['value']['occurence_count'] : null,
 					'min' => 1,
 					'step' => 1,
 				);
