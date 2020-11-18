@@ -3,12 +3,12 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "Project-Id-Version: Advanced Custom Fields: RRule\n"
 "POT-Creation-Date: 2020-06-15 10:21+0200\n"
-"PO-Revision-Date: 2020-06-15 10:25+0200\n"
+"PO-Revision-Date: 2020-11-18 11:03+0100\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.3.1\n"
+"X-Generator: Poedit 2.4.2\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-Flags-xgettext: --add-comments=translators:\n"
 "X-Poedit-WPHeader: acf-rrule.php\n"
@@ -62,7 +62,7 @@ msgstr "Date de début"
 
 #: fields/class-acf-field-rrule.php:257
 msgid "Start time"
-msgstr "Date de fin"
+msgstr "Heure de début"
 
 #: fields/class-acf-field-rrule.php:285
 msgid "Daily"
