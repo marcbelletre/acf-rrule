@@ -1,7 +1,7 @@
 <?php
 
 /*
-Plugin Name: Advanced Custom Fields: RRule
+Plugin Name: ACF RRule Field
 Plugin URI: https://github.com/marcbelletre/acf-rrule
 Description: Create recurring rules with a single ACF field
 Version: 1.0.2

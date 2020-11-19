@@ -1,0 +1,44 @@
+=== ACF RRule Field ===
+Contributors: marcbelletre
+Tags: acf, rrule, recurrence, date, calendar
+Requires at least: 4.7
+Tested up to: 5.5
+Requires PHP: 5.6
+Stable tag: 1.0.3
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+
+Create recurring rules within a single ACF field and retrieve all the dates.
+
+== Description ==
+
+This plugin allows you to create recurring rules within a single ACF field.
+
+Just add a RRule field in an ACF field group and use the interface to create a period like you would do in any agenda. The field will automatically generate the corresponding RRule string and save every single date in database. You can then query all the dates with a single call to the `get_field()` function.
+
+== Installation ==
+
+This plugin requires ACF or ACF Pro to work.
+
+1. Upload `acf-rrule` to the `/wp-content/plugins/` directory
+2. Activate the plugin through the 'Plugins' menu in WordPress
+3. Create a RRule field in an ACF field group
+4. Use `get_field('field_name')` to get an array representation of your recurring rule
+
+== Screenshots ==
+
+1. RRule field example
+
+== Changelog ==
+
+= 1.0.3 =
+* Updates french translation
+
+= 1.0.2 =
+* Fixes a PHP error when the start date field is not set
+
+= 1.0.1 =
+* Fixes a PHP warning when using a number of occurrences.
+
+= 1.0 =
+* First stable release
