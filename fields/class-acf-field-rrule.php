@@ -470,6 +470,7 @@ if (! class_exists('acf_field_rrule')) :
 							'value' => $field['value'] ? $field['value']['end_type'] : null,
 	                        'class' => 'end-type-select',
 							'choices' => array(
+								'none'	=> __('No end date', 'acf-rrule'),
 								'date' => __('At a specific date', 'acf-rrule'),
 								'count' =>  __('After a number of occurences', 'acf-rrule'),
 							),
@@ -655,9 +656,11 @@ if (! class_exists('acf_field_rrule')) :
 					if ($rule->getUntil()) {
 						$new_value['end_type'] = 'date';
 						$new_value['end_date'] =  $rule->getUntil()->format('Ymd');
-					} else {
+					} else if ($rule->getCount()) {
 						$new_value['end_type'] = 'count';
 						$new_value['occurence_count'] =  $rule->getCount();
+					} else {
+						$new_value['end_type'] = 'none';
 					}
 
 	                $locale = explode('_', get_locale());
@@ -718,6 +721,7 @@ if (! class_exists('acf_field_rrule')) :
 				}
 
 				$rule = new Rule;
+
 
 				$rule->setTimezone($field['timezone'])
 					 ->setStartDate($start_date, true)
