@@ -470,9 +470,9 @@ if (! class_exists('acf_field_rrule')) :
 							'value' => $field['value'] ? $field['value']['end_type'] : null,
 	                        'class' => 'end-type-select',
 							'choices' => array(
-								'none'	=> __('No end date', 'acf-rrule'),
 								'date' => __('At a specific date', 'acf-rrule'),
 								'count' =>  __('After a number of occurences', 'acf-rrule'),
+								'none'	=> __('No end date', 'acf-rrule'),
 							),
 						) ); ?>
 					</div>
