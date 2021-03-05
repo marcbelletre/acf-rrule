@@ -722,8 +722,16 @@ if (! class_exists('acf_field_rrule')) :
 
 				$rule = new Rule;
 
+				// Ensure timezone arg is never blank
+				$timezone = $field['timezone'];
+				if( empty( $timezone ) ) {
+					$timezone = get_option( 'timezone_string' );
+				}
+				if( empty( $timezone ) ) {
+					$timezone = get_option( 'gmt_offset' );
+				}
 
-				$rule->setTimezone($field['timezone'])
+				$rule->setTimezone( $timezone )
 					 ->setStartDate($start_date, true)
 					 ->setFreq($value['frequency'])
 					 ->setInterval($value['interval']);
