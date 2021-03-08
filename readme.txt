@@ -2,9 +2,9 @@
 Contributors: marcbelletre
 Tags: acf, rrule, recurrence, date, calendar
 Requires at least: 4.7
-Tested up to: 5.5
+Tested up to: 5.7
 Requires PHP: 5.6
-Stable tag: 1.0.3
+Stable tag: 1.0.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -31,14 +31,18 @@ This plugin requires ACF or ACF Pro to work.
 
 == Changelog ==
 
+= 1.0.4 =
+* Add a "No end date" option
+* Fix a bug when the timezone is not set
+
 = 1.0.3 =
-* Updates french translation
+* Update french translation
 
 = 1.0.2 =
-* Fixes a PHP error when the start date field is not set
+* Fix a PHP error when the start date field is not set
 
 = 1.0.1 =
-* Fixes a PHP warning when using a number of occurrences.
+* Fix a PHP warning when using a number of occurrences.
 
 = 1.0 =
 * First stable release
