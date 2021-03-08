@@ -472,6 +472,7 @@ if (! class_exists('acf_field_rrule')) :
 							'choices' => array(
 								'date' => __('At a specific date', 'acf-rrule'),
 								'count' =>  __('After a number of occurences', 'acf-rrule'),
+								'none'	=> __('Never', 'acf-rrule'),
 							),
 						) ); ?>
 					</div>
@@ -655,9 +656,11 @@ if (! class_exists('acf_field_rrule')) :
 					if ($rule->getUntil()) {
 						$new_value['end_type'] = 'date';
 						$new_value['end_date'] =  $rule->getUntil()->format('Ymd');
-					} else {
+					} else if ($rule->getCount()) {
 						$new_value['end_type'] = 'count';
 						$new_value['occurence_count'] =  $rule->getCount();
+					} else {
+						$new_value['end_type'] = 'none';
 					}
 
 	                $locale = explode('_', get_locale());
@@ -719,7 +722,16 @@ if (! class_exists('acf_field_rrule')) :
 
 				$rule = new Rule;
 
-				$rule->setTimezone($field['timezone'])
+				// Ensure timezone arg is never blank
+				$timezone = $field['timezone'];
+				if( empty( $timezone ) ) {
+					$timezone = get_option( 'timezone_string' );
+				}
+				if( empty( $timezone ) ) {
+					$timezone = get_option( 'gmt_offset' );
+				}
+
+				$rule->setTimezone( $timezone )
 					 ->setStartDate($start_date, true)
 					 ->setFreq($value['frequency'])
 					 ->setInterval($value['interval']);
