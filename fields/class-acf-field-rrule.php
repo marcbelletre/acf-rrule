@@ -472,7 +472,7 @@ if (! class_exists('acf_field_rrule')) :
 							'choices' => array(
 								'date' => __('At a specific date', 'acf-rrule'),
 								'count' =>  __('After a number of occurences', 'acf-rrule'),
-								'none'	=> __('No end date', 'acf-rrule'),
+								'none'	=> __('Never', 'acf-rrule'),
 							),
 						) ); ?>
 					</div>
