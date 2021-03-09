@@ -14,7 +14,7 @@ Create recurring rules within a single ACF field and retrieve all the dates.
 
 This plugin allows you to create recurring rules within a single ACF field.
 
-Just add a RRule field in an ACF field group and use the interface to create a period like you would do in any agenda. The field will automatically generate the corresponding RRule string and save every single date in database. You can then query all the dates with a single call to the `get_field()` function.
+Just add a RRule field in an ACF field group and use the interface to create a period like you would do in any agenda. The field will automatically generate the corresponding RRule string and save it in database. You can then retrieve all the dates for the period with a single call to the `get_field()` function.
 
 == Installation ==
 
