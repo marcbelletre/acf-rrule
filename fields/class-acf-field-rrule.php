@@ -63,7 +63,7 @@ if (! class_exists('acf_field_rrule')) :
 			 */
 
 			// $this->l10n = array(
-			// 	'error'	=> __('Error! Please enter a higher value', 'acf-rrule'),
+			// 	'date_error' => __('The end date should be after the start date.', 'acf-rrule'),
 			// );
 
 			/*
@@ -180,351 +180,354 @@ if (! class_exists('acf_field_rrule')) :
 			$timepicker_options = array(
 				'class' => 'acf-time-picker acf-input-wrap',
 			);
-
-			// HTML
 			?>
 
-	        <?php if ($field['value'] && $field['value']['text']) : ?>
-	            <p class="acf-field-rrule-current">
-	                <?=__('Current value:', 'acf-rrule')?> <?=$field['value']['text']?>
-	            </p>
-	        <?php endif; ?>
+			<div class="acf-input-wrap">
+				<input type="hidden" name="<?=$field['name']?>">
 
-			<div class="acf-field-rrule-sub-fields">
-				<div class="acf-field">
-					<div class="acf-columns">
-						<div class="acf-column">
-							<div class="acf-field acf-field-date-picker is-required" data-type="date_picker">
-								<div <?php acf_esc_attr_e( $datepicker_options ); ?>>
-									<?php
-									$start_date_hidden = '';
-									$start_date_display = '';
+		        <?php if ($field['value'] && $field['value']['text']) : ?>
+		            <p class="acf-field-rrule-current">
+		                <?=__('Current value:', 'acf-rrule')?> <?=$field['value']['text']?>
+		            </p>
+		        <?php endif; ?>
 
-									// Format values
-									if ($field['value']) {
-										$start_date_hidden = acf_format_date( $field['value']['start_date'], 'Ymd' );
-										$start_date_display = acf_format_date( $field['value']['start_date'], $field['date_display_format'] );
-									}
-									?>
-
-									<div class="acf-label">
-										<label for="<?=$unique_id?>-start-date">
-											<?=__('Start date', 'acf-rrule')?> <span class="acf-required">*</span>
-										</label>
-									</div>
-
-									<?php acf_hidden_input( array (
-										'name' => $field['name'] . '[start_date]',
-										'value'	=> $start_date_hidden,
-									) ); ?>
-									<?php acf_text_input( array(
-										'id' => $unique_id . '-start-date',
-										'class' => 'input',
-										'value'	=> $start_date_display,
-									) ); ?>
-								</div>
-							</div>
-						</div>
-
-						<?php if ($field['allow_time']) : ?>
+				<div class="acf-field-rrule-sub-fields">
+					<div class="acf-field">
+						<div class="acf-columns">
 							<div class="acf-column">
-								<div class="acf-field acf-field-time-picker is-required" data-type="time_picker">
-									<div <?php acf_esc_attr_e( $timepicker_options ); ?>>
+								<div class="acf-field acf-field-date-picker is-required" data-type="date_picker">
+									<div <?php acf_esc_attr_e( $datepicker_options ); ?>>
 										<?php
-										$start_time = '';
+										$start_date_hidden = '';
+										$start_date_display = '';
 
 										// Format values
 										if ($field['value']) {
-											$start_time = acf_format_date( $field['value']['start_time'], $field['time_display_format'] );
+											$start_date_hidden = acf_format_date( $field['value']['start_date'], 'Ymd' );
+											$start_date_display = acf_format_date( $field['value']['start_date'], $field['date_display_format'] );
 										}
 										?>
 
 										<div class="acf-label">
-											<label for="<?=$unique_id?>-start-time">
-												<?=__('Start time', 'acf-rrule')?> <span class="acf-required">*</span>
+											<label for="<?=$unique_id?>-start-date">
+												<?=__('Start date', 'acf-rrule')?> <span class="acf-required">*</span>
 											</label>
 										</div>
 
 										<?php acf_hidden_input( array (
-											'name' => $field['name'] . '[start_time]',
-											'value'	=> $start_time,
+											'name' => $field['name'] . '[start_date]',
+											'value'	=> $start_date_hidden,
 										) ); ?>
 										<?php acf_text_input( array(
-											'id' => $unique_id . '-start-time',
+											'id' => $unique_id . '-start-date',
 											'class' => 'input',
-											'value'	=> $start_time,
+											'value'	=> $start_date_display,
+											'required' => true,
 										) ); ?>
 									</div>
 								</div>
 							</div>
-						<?php endif; ?>
-					</div>
-				</div>
 
-				<div class="acf-field">
-					<?php
-					$frequency = array(
-						'id' => $field['id'] . '-frequency',
-						'name' => $field['name'] . '[frequency]',
-						'value' => is_array($field['value']) ? $field['value']['frequency'] : null,
-	                    'class' => 'frequency-select',
-						'choices' => array(
-							'DAILY' => __('Daily', 'acf-rrule'),
-							'WEEKLY' => __('Weekly', 'acf-rrule'),
-							'MONTHLY' => __('Monthly', 'acf-rrule'),
-							'YEARLY' => __('Yearly', 'acf-rrule'),
-						),
-					);
-					?>
+							<?php if ($field['allow_time']) : ?>
+								<div class="acf-column">
+									<div class="acf-field acf-field-time-picker is-required" data-type="time_picker">
+										<div <?php acf_esc_attr_e( $timepicker_options ); ?>>
+											<?php
+											$start_time = '';
 
-					<div class="acf-label">
-						<label for="<?=$frequency['id']?>">
-							<?=__('Frequency', 'acf-rrule')?>
-						</label>
-					</div>
+											// Format values
+											if ($field['value']) {
+												$start_time = acf_format_date( $field['value']['start_time'], $field['time_display_format'] );
+											}
+											?>
 
-					<div class="acf-input">
-						<?php acf_select_input( $frequency ); ?>
-					</div>
-				</div>
+											<div class="acf-label">
+												<label for="<?=$unique_id?>-start-time">
+													<?=__('Start time', 'acf-rrule')?> <span class="acf-required">*</span>
+												</label>
+											</div>
 
-				<div class="acf-field">
-					<?php
-					$interval = array(
-						'id' => $field['id'] . '-interval',
-						'name' => $field['name'] . '[interval]',
-						'type' => 'number',
-						'class' => 'acf-is-prepended acf-is-appended',
-						'value'	=> is_array($field['value']) && $field['value']['interval'] ? $field['value']['interval'] : 1,
-						'min' => 1,
-						'step' => 1,
-					);
-					?>
-
-					<div class="acf-input">
-						<div class="acf-input-prepend"><?=_x('Every', 'RRule Interval', 'acf-rrule')?></div>
-						<div class="acf-input-append">
-							<span class="freq-suffix" data-frequency="DAILY"><?=_x('day', 'RRule Interval', 'acf-rrule')?></span>
-							<span class="freq-suffix" data-frequency="WEEKLY"><?=_x('week', 'RRule Interval', 'acf-rrule')?></span>
-							<span class="freq-suffix" data-frequency="MONTHLY"><?=_x('month', 'RRule Interval', 'acf-rrule')?></span>
-							<span class="freq-suffix" data-frequency="YEARLY"><?=_x('year', 'RRule Interval', 'acf-rrule')?></span>
-						</div>
-						<div class="acf-input-wrap">
-							<?php acf_text_input( $interval ); ?>
-						</div>
-					</div>
-				</div>
-
-				<div class="acf-field acf-field-button-group" data-type="button_group_multiple" data-frequency="WEEKLY">
-					<?php
-					$weekdays = array(
-						'MO' => __('Monday', 'acf-rrule'),
-						'TU' => __('Tuesday', 'acf-rrule'),
-						'WE' => __('Wednesday', 'acf-rrule'),
-						'TH' => __('Thursday', 'acf-rrule'),
-						'FR' => __('Friday', 'acf-rrule'),
-						'SA' => __('Saturday', 'acf-rrule'),
-						'SU' => __('Sunday', 'acf-rrule'),
-					);
-					?>
-
-					<div class="acf-label">
-						<label>
-							<?=__('Week days', 'acf-rrule')?>
-						</label>
-					</div>
-
-					<div class="acf-input">
-						<div class="acf-button-group">
-							<?php foreach ($weekdays as $key => $value) : ?>
-	                            <?php $selected = is_array($field['value']) && in_array($key, $field['value']['weekdays']); ?>
-
-								<label<?=($selected ? ' class="selected"' : '')?>>
-									<input type="checkbox" name="<?=$field['name']?>[weekdays][]" value="<?=$key?>"<?=($selected ? ' checked' : '')?>> <?=$value?>
-								</label>
-							<?php endforeach; ?>
-						</div>
-					</div>
-				</div>
-
-				<div id="<?=$field['id']?>-monthly-by" class="acf-field monthly-by-options" data-frequency="MONTHLY">
-					<div class="acf-columns">
-						<div class="acf-column">
-							<div class="acf-label is-inline">
-								<input id="acf-<?=$field['name']?>-bymonthdays" type="radio" name="<?=$field['name']?>[monthly_by]" value="monthdays"<?=(is_array($field['value']) && $field['value']['monthly_by'] == 'monthdays' ? ' checked' : '')?>>
-								<label for="acf-<?=$field['name']?>-bymonthdays">
-									<?=__('Month days', 'acf-rrule')?>
-								</label>
-							</div>
-
-							<?php $days = range(1, 31); ?>
-
-							<div class="acf-input<?=$field['value']['monthly_by'] != 'monthdays' ? ' is-disabled' : ''?>" data-monthly-by="monthdays">
-								<table class="acf-rrule-monthdays">
-									<?php foreach (array_chunk($days, 7) as $week) : ?>
-										<tr>
-											<?php foreach ($week as $day) : ?>
-	                                            <?php $selected = is_array($field['value']) && in_array($day, $field['value']['monthdays']); ?>
-
-												<td>
-													<input id="acf-<?=$field['name']?>-monthdays-<?=$day?>" type="checkbox" name="<?=$field['name']?>[monthdays][]" value="<?=$day?>"<?=($selected ? ' checked' : '')?>>
-													<label for="acf-<?=$field['name']?>-monthdays-<?=$day?>"><?=$day?></label>
-												</td>
-											<?php endforeach; ?>
-										</tr>
-									<?php endforeach; ?>
-								</table>
-							</div>
-						</div>
-
-						<div class="acf-column">
-							<div class="acf-label is-inline">
-								<input id="acf-<?=$field['name']?>-bysetpos" type="radio" name="<?=$field['name']?>[monthly_by]" value="setpos"<?=(is_array($field['value']) && $field['value']['monthly_by'] == 'setpos' ? ' checked' : '')?>>
-								<label for="acf-<?=$field['name']?>-bysetpos">
-									<?=__('Day of the week', 'acf-rrule')?>
-								</label>
-							</div>
-
-							<?php
-							$setpos = array(
-								'id' => $field['id'] . '-setpos',
-								'name' => $field['name'] . '[setpos]',
-								'value' => is_array($field['value']) ? $field['value']['setpos'] : null,
-								'choices' => array(
-									'1' => __('First', 'acf-rrule'),
-									'2' => __('Second', 'acf-rrule'),
-									'3' => __('Third', 'acf-rrule'),
-									'4' => __('Fourth', 'acf-rrule'),
-									'-1' => __('Last', 'acf-rrule'),
-								),
-							);
-							$setpos_options = array(
-								'id' => $field['id'] . '-setpos-option',
-								'name' => $field['name'] . '[setpos_option]',
-								'value' => is_array($field['value']) ? $field['value']['setpos_option'] : null,
-								'choices' => $weekdays,
-							);
-							?>
-
-							<div class="acf-input<?=(is_array($field['value']) && $field['value']['monthly_by'] != 'setpos' ? ' is-disabled' : '')?>" data-monthly-by="setpos">
-								<div class="acf-columns">
-									<div class="acf-column">
-										<?php acf_select_input( $setpos ); ?>
-									</div>
-									<div class="acf-column">
-										<?php acf_select_input( $setpos_options ); ?>
+											<?php acf_hidden_input( array (
+												'name' => $field['name'] . '[start_time]',
+												'value'	=> $start_time,
+											) ); ?>
+											<?php acf_text_input( array(
+												'id' => $unique_id . '-start-time',
+												'class' => 'input',
+												'value'	=> $start_time,
+											) ); ?>
+										</div>
 									</div>
 								</div>
-							</div>
+							<?php endif; ?>
 						</div>
 					</div>
-				</div>
 
-				<div class="acf-field acf-field-checkbox" data-type="checkbox" data-key="<?=$field['key']?>" data-frequency="YEARLY">
-					<div class="acf-label">
-						<label><?=__('Month', 'acf-rrule')?></label>
-					</div>
-					<div class="acf-input">
-						<?php $months = array(
-							'1' => __('January', 'acf-rrule'),
-							'2' => __('February', 'acf-rrule'),
-							'3' => __('March', 'acf-rrule'),
-							'4' => __('April', 'acf-rrule'),
-							'5' => __('May', 'acf-rrule'),
-							'6' => __('June', 'acf-rrule'),
-							'7' => __('July', 'acf-rrule'),
-							'8' => __('August', 'acf-rrule'),
-							'9' => __('September', 'acf-rrule'),
-							'10' => __('October', 'acf-rrule'),
-							'11' => __('November', 'acf-rrule'),
-							'12' => __('December', 'acf-rrule'),
-						); ?>
-
-						<input type="hidden" name="<?=$field['name']?>[months]">
-
-						<ul class="acf-checkbox-list acf-hl">
-							<?php foreach ($months as $key => $month) : ?>
-	                            <?php $selected = is_array($field['value']) && in_array($key, $field['value']['months']); ?>
-
-								<li>
-									<label<?=($selected ? ' class="selected"' : '')?>>
-										<input type="checkbox" id="acf-<?=$field['name']?>-months-<?=$key?>" name="<?=$field['name']?>[months][]" value="<?=$key?>"<?=($selected ? ' checked' : '')?>>
-										<?=$month?>
-									</label>
-								</li>
-							<?php endforeach; ?>
-						</ul>
-					</div>
-				</div>
-
-				<div class="acf-field">
-					<div class="acf-label">
-						<label for="<?=$field['id']?>-end-type">
-							<?=__('End date', 'acf-rrule')?>
-						</label>
-					</div>
-					<div class="acf-input">
-						<?php acf_select_input( array(
-							'id' => $field['id'] . '-end-type',
-							'name' => $field['name'] . '[end_type]',
-							'value' => $field['value'] ? $field['value']['end_type'] : null,
-	                        'class' => 'end-type-select',
-							'choices' => array(
-								'date' => __('At a specific date', 'acf-rrule'),
-								'count' =>  __('After a number of occurences', 'acf-rrule'),
-								'none'	=> __('Never', 'acf-rrule'),
-							),
-						) ); ?>
-					</div>
-				</div>
-
-				<div class="acf-field" data-end-type="count">
-					<?php
-					$occurence_count = array(
-						'id' => $field['id'] . '-occurence-count',
-						'name' => $field['name'] . '[occurence_count]',
-						'type' => 'number',
-						'class' => 'acf-is-prepended acf-is-appended',
-						'value'	=> is_array($field['value']) ? $field['value']['occurence_count'] : null,
-						'min' => 1,
-						'step' => 1,
-					);
-					?>
-
-					<div class="acf-input">
-						<div class="acf-input-prepend"><?=__('After', 'acf-rrule')?></div>
-						<div class="acf-input-append"><?=__('occurence(s)', 'acf-rrule')?></div>
-						<div class="acf-input-wrap">
-							<?php acf_text_input( $occurence_count ); ?>
-						</div>
-					</div>
-				</div>
-
-				<div class="acf-field acf-field-date-picker" data-type="date_picker" data-end-type="date">
-					<div <?php acf_esc_attr_e( $datepicker_options ); ?>>
+					<div class="acf-field">
 						<?php
-						$end_date_hidden = '';
-						$end_date_display = '';
+						$frequency = array(
+							'id' => $field['id'] . '-frequency',
+							'name' => $field['name'] . '[frequency]',
+							'value' => is_array($field['value']) ? $field['value']['frequency'] : null,
+		                    'class' => 'frequency-select',
+							'choices' => array(
+								'DAILY' => __('Daily', 'acf-rrule'),
+								'WEEKLY' => __('Weekly', 'acf-rrule'),
+								'MONTHLY' => __('Monthly', 'acf-rrule'),
+								'YEARLY' => __('Yearly', 'acf-rrule'),
+							),
+						);
+						?>
 
-						// Format values
-						if ($field['value']) {
-							$end_date_hidden = acf_format_date( $field['value']['end_date'], 'Ymd' );
-							$end_date_display = acf_format_date( $field['value']['end_date'], $field['date_display_format'] );
-						}
+						<div class="acf-label">
+							<label for="<?=$frequency['id']?>">
+								<?=__('Frequency', 'acf-rrule')?>
+							</label>
+						</div>
+
+						<div class="acf-input">
+							<?php acf_select_input( $frequency ); ?>
+						</div>
+					</div>
+
+					<div class="acf-field">
+						<?php
+						$interval = array(
+							'id' => $field['id'] . '-interval',
+							'name' => $field['name'] . '[interval]',
+							'type' => 'number',
+							'class' => 'acf-is-prepended acf-is-appended',
+							'value'	=> is_array($field['value']) && $field['value']['interval'] ? $field['value']['interval'] : 1,
+							'min' => 1,
+							'step' => 1,
+						);
 						?>
 
 						<div class="acf-input">
-							<div class="acf-input-prepend"><?=__('Until', 'acf-rrule')?></div>
+							<div class="acf-input-prepend"><?=_x('Every', 'RRule Interval', 'acf-rrule')?></div>
+							<div class="acf-input-append">
+								<span class="freq-suffix" data-frequency="DAILY"><?=_x('day', 'RRule Interval', 'acf-rrule')?></span>
+								<span class="freq-suffix" data-frequency="WEEKLY"><?=_x('week', 'RRule Interval', 'acf-rrule')?></span>
+								<span class="freq-suffix" data-frequency="MONTHLY"><?=_x('month', 'RRule Interval', 'acf-rrule')?></span>
+								<span class="freq-suffix" data-frequency="YEARLY"><?=_x('year', 'RRule Interval', 'acf-rrule')?></span>
+							</div>
 							<div class="acf-input-wrap">
-								<?php acf_hidden_input( array (
-									'name' => $field['name'] . '[end_date]',
-									'value'	=> $end_date_hidden,
-								) ); ?>
-								<?php acf_text_input( array(
-									'id' => $unique_id . '-end-date',
-									'class' => 'acf-is-prepended',
-									'value'	=> $end_date_display,
-								) ); ?>
+								<?php acf_text_input( $interval ); ?>
+							</div>
+						</div>
+					</div>
+
+					<div class="acf-field acf-field-button-group" data-type="button_group_multiple" data-frequency="WEEKLY">
+						<?php
+						$weekdays = array(
+							'MO' => __('Monday', 'acf-rrule'),
+							'TU' => __('Tuesday', 'acf-rrule'),
+							'WE' => __('Wednesday', 'acf-rrule'),
+							'TH' => __('Thursday', 'acf-rrule'),
+							'FR' => __('Friday', 'acf-rrule'),
+							'SA' => __('Saturday', 'acf-rrule'),
+							'SU' => __('Sunday', 'acf-rrule'),
+						);
+						?>
+
+						<div class="acf-label">
+							<label>
+								<?=__('Week days', 'acf-rrule')?>
+							</label>
+						</div>
+
+						<div class="acf-input">
+							<div class="acf-button-group">
+								<?php foreach ($weekdays as $key => $value) : ?>
+		                            <?php $selected = is_array($field['value']) && in_array($key, $field['value']['weekdays']); ?>
+
+									<label<?=($selected ? ' class="selected"' : '')?>>
+										<input type="checkbox" name="<?=$field['name']?>[weekdays][]" value="<?=$key?>"<?=($selected ? ' checked' : '')?>> <?=$value?>
+									</label>
+								<?php endforeach; ?>
+							</div>
+						</div>
+					</div>
+
+					<div id="<?=$field['id']?>-monthly-by" class="acf-field monthly-by-options" data-frequency="MONTHLY">
+						<div class="acf-columns">
+							<div class="acf-column">
+								<div class="acf-label is-inline">
+									<input id="acf-<?=$field['name']?>-bymonthdays" type="radio" name="<?=$field['name']?>[monthly_by]" value="monthdays"<?=(is_array($field['value']) && $field['value']['monthly_by'] == 'monthdays' ? ' checked' : '')?>>
+									<label for="acf-<?=$field['name']?>-bymonthdays">
+										<?=__('Month days', 'acf-rrule')?>
+									</label>
+								</div>
+
+								<?php $days = range(1, 31); ?>
+
+								<div class="acf-input<?=$field['value']['monthly_by'] != 'monthdays' ? ' is-disabled' : ''?>" data-monthly-by="monthdays">
+									<table class="acf-rrule-monthdays">
+										<?php foreach (array_chunk($days, 7) as $week) : ?>
+											<tr>
+												<?php foreach ($week as $day) : ?>
+		                                            <?php $selected = is_array($field['value']) && in_array($day, $field['value']['monthdays']); ?>
+
+													<td>
+														<input id="acf-<?=$field['name']?>-monthdays-<?=$day?>" type="checkbox" name="<?=$field['name']?>[monthdays][]" value="<?=$day?>"<?=($selected ? ' checked' : '')?>>
+														<label for="acf-<?=$field['name']?>-monthdays-<?=$day?>"><?=$day?></label>
+													</td>
+												<?php endforeach; ?>
+											</tr>
+										<?php endforeach; ?>
+									</table>
+								</div>
+							</div>
+
+							<div class="acf-column">
+								<div class="acf-label is-inline">
+									<input id="acf-<?=$field['name']?>-bysetpos" type="radio" name="<?=$field['name']?>[monthly_by]" value="setpos"<?=(is_array($field['value']) && $field['value']['monthly_by'] == 'setpos' ? ' checked' : '')?>>
+									<label for="acf-<?=$field['name']?>-bysetpos">
+										<?=__('Day of the week', 'acf-rrule')?>
+									</label>
+								</div>
+
+								<?php
+								$setpos = array(
+									'id' => $field['id'] . '-setpos',
+									'name' => $field['name'] . '[setpos]',
+									'value' => is_array($field['value']) ? $field['value']['setpos'] : null,
+									'choices' => array(
+										'1' => __('First', 'acf-rrule'),
+										'2' => __('Second', 'acf-rrule'),
+										'3' => __('Third', 'acf-rrule'),
+										'4' => __('Fourth', 'acf-rrule'),
+										'-1' => __('Last', 'acf-rrule'),
+									),
+								);
+								$setpos_options = array(
+									'id' => $field['id'] . '-setpos-option',
+									'name' => $field['name'] . '[setpos_option]',
+									'value' => is_array($field['value']) ? $field['value']['setpos_option'] : null,
+									'choices' => $weekdays,
+								);
+								?>
+
+								<div class="acf-input<?=(is_array($field['value']) && $field['value']['monthly_by'] != 'setpos' ? ' is-disabled' : '')?>" data-monthly-by="setpos">
+									<div class="acf-columns">
+										<div class="acf-column">
+											<?php acf_select_input( $setpos ); ?>
+										</div>
+										<div class="acf-column">
+											<?php acf_select_input( $setpos_options ); ?>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="acf-field acf-field-checkbox" data-type="checkbox" data-key="<?=$field['key']?>" data-frequency="YEARLY">
+						<div class="acf-label">
+							<label><?=__('Month', 'acf-rrule')?></label>
+						</div>
+						<div class="acf-input">
+							<?php $months = array(
+								'1' => __('January', 'acf-rrule'),
+								'2' => __('February', 'acf-rrule'),
+								'3' => __('March', 'acf-rrule'),
+								'4' => __('April', 'acf-rrule'),
+								'5' => __('May', 'acf-rrule'),
+								'6' => __('June', 'acf-rrule'),
+								'7' => __('July', 'acf-rrule'),
+								'8' => __('August', 'acf-rrule'),
+								'9' => __('September', 'acf-rrule'),
+								'10' => __('October', 'acf-rrule'),
+								'11' => __('November', 'acf-rrule'),
+								'12' => __('December', 'acf-rrule'),
+							); ?>
+
+							<input type="hidden" name="<?=$field['name']?>[months]">
+
+							<ul class="acf-checkbox-list acf-hl">
+								<?php foreach ($months as $key => $month) : ?>
+		                            <?php $selected = is_array($field['value']) && in_array($key, $field['value']['months']); ?>
+
+									<li>
+										<label<?=($selected ? ' class="selected"' : '')?>>
+											<input type="checkbox" id="acf-<?=$field['name']?>-months-<?=$key?>" name="<?=$field['name']?>[months][]" value="<?=$key?>"<?=($selected ? ' checked' : '')?>>
+											<?=$month?>
+										</label>
+									</li>
+								<?php endforeach; ?>
+							</ul>
+						</div>
+					</div>
+
+					<div class="acf-field">
+						<div class="acf-label">
+							<label for="<?=$field['id']?>-end-type">
+								<?=__('End date', 'acf-rrule')?>
+							</label>
+						</div>
+						<div class="acf-input">
+							<?php acf_select_input( array(
+								'id' => $field['id'] . '-end-type',
+								'name' => $field['name'] . '[end_type]',
+								'value' => $field['value'] ? $field['value']['end_type'] : null,
+		                        'class' => 'end-type-select',
+								'choices' => array(
+									'date' => __('At a specific date', 'acf-rrule'),
+									'count' =>  __('After a number of occurences', 'acf-rrule'),
+									'none'	=> __('Never', 'acf-rrule'),
+								),
+							) ); ?>
+						</div>
+					</div>
+
+					<div class="acf-field" data-end-type="count">
+						<?php
+						$occurence_count = array(
+							'id' => $field['id'] . '-occurence-count',
+							'name' => $field['name'] . '[occurence_count]',
+							'type' => 'number',
+							'class' => 'acf-is-prepended acf-is-appended',
+							'value'	=> is_array($field['value']) ? $field['value']['occurence_count'] : null,
+							'min' => 1,
+							'step' => 1,
+						);
+						?>
+
+						<div class="acf-input">
+							<div class="acf-input-prepend"><?=__('After', 'acf-rrule')?></div>
+							<div class="acf-input-append"><?=__('occurence(s)', 'acf-rrule')?></div>
+							<div class="acf-input-wrap">
+								<?php acf_text_input( $occurence_count ); ?>
+							</div>
+						</div>
+					</div>
+
+					<div class="acf-field acf-field-date-picker" data-type="date_picker" data-end-type="date">
+						<div <?php acf_esc_attr_e( $datepicker_options ); ?>>
+							<?php
+							$end_date_hidden = '';
+							$end_date_display = '';
+
+							// Format values
+							if ($field['value']) {
+								$end_date_hidden = acf_format_date( $field['value']['end_date'], 'Ymd' );
+								$end_date_display = acf_format_date( $field['value']['end_date'], $field['date_display_format'] );
+							}
+							?>
+
+							<div class="acf-input">
+								<div class="acf-input-prepend"><?=__('Until', 'acf-rrule')?></div>
+								<div class="acf-input-wrap">
+									<?php acf_hidden_input( array (
+										'name' => $field['name'] . '[end_date]',
+										'value'	=> $end_date_hidden,
+									) ); ?>
+									<?php acf_text_input( array(
+										'id' => $unique_id . '-end-date',
+										'class' => 'acf-is-prepended',
+										'value'	=> $end_date_display,
+									) ); ?>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -784,6 +787,38 @@ if (! class_exists('acf_field_rrule')) :
 			}
 
 	        return $value;
+		}
+
+		/**
+		 * Validate the email value. If this method returns TRUE, the input value is valid. If
+		 * FALSE or a string is returned, the input value is invalid and the user is shown a
+		 * notice. If a string is returned, the string is show as the message text.
+		 *
+		 * @param bool   $valid Whether the value is valid.
+		 * @param mixed  $value The field value.
+		 * @param array  $field The field array.
+		 * @param string $input The request variable name for the inbound field.
+		 *
+		 * @return bool|string
+		 */
+		public function validate_value( $valid, $value, $field, $input ) {
+			if (! $value['start_date']) {
+				return __('The start date is required.', 'acf-rrule');
+			}
+
+			if ($value['end_type'] === 'date') {
+				if (! $value['end_date']) {
+					$valid = __('The end date is required.', 'acf-rrule');
+				} elseif ($value['end_date'] < $value['start_date']) {
+					$valid = __('The start date must be before the end date.', 'acf-rrule');
+				}
+			}
+
+			if ($value['interval'] < 1) {
+				$valid = __('The frequency must be greater than 1.', 'acf-rrule');
+			}
+
+			return $valid;
 		}
 
 	}

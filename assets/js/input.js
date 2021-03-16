@@ -71,7 +71,7 @@
 		/*
 		*  acf/setup_fields (ACF4)
 		*
-		*  These single event is called when a field element is ready for initizliation.
+		*  This single event is called when a field element is ready for initialization.
 		*
 		*  @param	event		an event object. This can be ignored
 		*  @param	element		An element which contains the new HTML
