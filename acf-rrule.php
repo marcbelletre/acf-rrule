@@ -8,6 +8,8 @@ Version: 1.1
 Author: Marc Bellêtre
 Author URI: https://pixelparfait.fr
 License: MIT
+Text Domain: acf-rrule-field
+Domain Path: /lang
 */
 
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -67,8 +69,8 @@ if (! class_exists('acf_plugin_rrule')) :
 		function include_field( $version = false ) {
 
 			// Load ACF RRule
-			load_plugin_textdomain( 'acf-rrule', false, basename( dirname(__FILE__) ) . '/lang' );
-	        load_muplugin_textdomain( 'acf-rrule', basename( dirname(__FILE__) ) . '/lang' );
+			load_plugin_textdomain( 'acf-rrule-field', false, basename( dirname(__FILE__) ) . '/lang' );
+	        load_muplugin_textdomain( 'acf-rrule-field', basename( dirname(__FILE__) ) . '/lang' );
 
 			// Include
 			include_once('fields/class-acf-field-rrule.php');
