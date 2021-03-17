@@ -120,7 +120,7 @@ if (! class_exists('acf_field_rrule')) :
 					'd/m/Y'			=> '<span>' . $d_m_Y . '</span><code>d/m/Y</code>',
 					'm/d/Y'			=> '<span>' . $m_d_Y . '</span><code>m/d/Y</code>',
 					'F j, Y'		=> '<span>' . $F_j_Y . '</span><code>F j, Y</code>',
-					'other'			=> '<span>' . __('Custom:', 'acf') . '</span>'
+					'other'			=> '<span>' . __('Custom:', 'acf-rrule-field') . '</span>'
 				)
 			));
 
@@ -136,7 +136,7 @@ if (! class_exists('acf_field_rrule')) :
 					'm/d/Y'			=> '<span>' . $m_d_Y . '</span><code>m/d/Y</code>',
 					'F j, Y'		=> '<span>' . $F_j_Y . '</span><code>F j, Y</code>',
 					'Ymd'			=> '<span>' . $Ymd . '</span><code>Ymd</code>',
-					'other'			=> '<span>' . __('Custom:', 'acf') . '</span>'
+					'other'			=> '<span>' . __('Custom:', 'acf-rrule-field') . '</span>'
 				)
 			));
 
@@ -563,11 +563,11 @@ if (! class_exists('acf_field_rrule')) :
 
 		   	acf_localize_data(array(
 			   	'datePickerL10n'	=> array(
-					'closeText'			=> _x('Done',	'Date Picker JS closeText',		'acf'),
-					'currentText'		=> _x('Today',	'Date Picker JS currentText',	'acf'),
-					'nextText'			=> _x('Next',	'Date Picker JS nextText',		'acf'),
-					'prevText'			=> _x('Prev',	'Date Picker JS prevText',		'acf'),
-					'weekHeader'		=> _x('Wk',		'Date Picker JS weekHeader',	'acf'),
+					'closeText'			=> _x('Done',	'Date Picker JS closeText',		'acf-rrule-field'),
+					'currentText'		=> _x('Today',	'Date Picker JS currentText',	'acf-rrule-field'),
+					'nextText'			=> _x('Next',	'Date Picker JS nextText',		'acf-rrule-field'),
+					'prevText'			=> _x('Prev',	'Date Picker JS prevText',		'acf-rrule-field'),
+					'weekHeader'		=> _x('Wk',		'Date Picker JS weekHeader',	'acf-rrule-field'),
 					'monthNames'        => array_values( $wp_locale->month ),
 					'monthNamesShort'   => array_values( $wp_locale->month_abbrev ),
 					'dayNames'          => array_values( $wp_locale->weekday ),
