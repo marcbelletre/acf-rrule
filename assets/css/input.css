@@ -59,6 +59,10 @@ table.acf-rrule-monthdays input[type=checkbox]:checked + label {
     margin-right: -5px;
 }
 
+.acf-columns:not(:last-child) {
+    margin-bottom: 10px;
+}
+
 .acf-columns .acf-column {
     flex: 1;
     margin: 0 5px;
@@ -67,6 +71,31 @@ table.acf-rrule-monthdays input[type=checkbox]:checked + label {
 .acf-column .acf-field {
     margin-top: 0;
     margin-bottom: 0;
+}
+
+.acf-field-rrule .setpos-row {
+    position: relative;
+}
+
+.acf-field-rrule .setpos-row .acf-icon {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translate(-50%, -50%);
+}
+
+.acf-field-rrule .setpos-row:first-child .acf-icon {
+    display: none !important;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.acf-field-rrule .setpos-row:not(:hover) .acf-icon {
+    display: none;
+}
+
+.acf-field-rrule select {
+    height: 32px;
 }
 
 
