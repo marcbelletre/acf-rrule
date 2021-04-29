@@ -381,47 +381,60 @@ if (! class_exists('acf_field_rrule')) :
 
 							<div class="acf-column">
 								<div class="acf-label is-inline">
-									<input id="acf-<?=$field['name']?>-bysetpos" type="radio" name="<?=$field['name']?>[monthly_by]" value="setpos"<?=(is_array($field['value']) && $field['value']['monthly_by'] == 'setpos' ? ' checked' : '')?>>
-									<label for="acf-<?=$field['name']?>-bysetpos">
-										<?php _e('Day of the week', 'acf-rrule-field'); ?>
+									<input id="acf-<?=$field['name']?>-setpos" type="radio" name="<?=$field['name']?>[monthly_by]" value="setpos"<?=(is_array($field['value']) && $field['value']['monthly_by'] == 'setpos' ? ' checked' : '')?>>
+									<label for="acf-<?=$field['name']?>-setpos">
+										<?php _e('Weekdays', 'acf-rrule-field'); ?>
 									</label>
 								</div>
 
-								<?php
-								$setpos = array(
-                                    'type' => 'select',
-									'id' => $field['id'] . '-setpos',
-									'name' => $field['name'] . '[setpos]',
-                                    'multiple' => true,
-                                    'ui' => true,
-									'value' => is_array($field['value']) ? $field['value']['setpos'] : null,
-									'choices' => array(
-										'1' => __('First', 'acf-rrule-field'),
-										'2' => __('Second', 'acf-rrule-field'),
-										'3' => __('Third', 'acf-rrule-field'),
-										'4' => __('Fourth', 'acf-rrule-field'),
-										'-1' => __('Last', 'acf-rrule-field'),
-									),
-								);
-								$setpos_options = array(
-									'id' => $field['id'] . '-setpos-option',
-									'name' => $field['name'] . '[setpos_option]',
-									'value' => is_array($field['value']) ? $field['value']['setpos_option'] : null,
-									'choices' => $weekdays,
-								);
-								?>
-
 								<div class="acf-input<?=(is_array($field['value']) && $field['value']['monthly_by'] != 'setpos' ? ' is-disabled' : '')?>" data-monthly-by="setpos">
-									<div class="acf-columns">
-										<div class="acf-column">
-                                            <div class="acf-field acf-field-select" data-name="<?=$setpos['name']?>" data-type="select" data-key="<?=$field['id']?>">
-                                                <?php acf_render_field( $setpos ); ?>
-                                            </div>
-										</div>
-										<div class="acf-column">
-											<?php acf_select_input( $setpos_options ); ?>
-										</div>
-									</div>
+                                    <div class="acf-columns">
+                                        <div class="acf-column">
+                                            <ul class="acf-checkbox-list">
+                                                <?php
+                                                $bysetpos = [
+                                                    '1' => 'First',
+                                                    '2' => 'Second',
+                                                    '3' => 'Third',
+                                                    '4' => 'Fourth',
+                                                    '-1' => 'Last',
+                                                ];
+                                                ?>
+
+                                                <?php foreach ($bysetpos as $key => $value) : ?>
+                                                    <?php
+                                                    $selected = false;
+
+                                                    if (is_array($field['value']) && is_array($field['value']['bysetpos'])) {
+                                                        $selected = in_array($key, $field['value']['bysetpos']);
+                                                    }
+                                                    ?>
+
+                                                    <li>
+                                                        <label<?=($selected ? ' class="selected"' : '')?>>
+                                                            <input type="checkbox" id="<?=$field['id']?>-bysetpos-<?=$key?>" name="<?=$field['name']?>[bysetpos][]" value="<?=$key?>"<?=($selected ? ' checked' : '')?>>
+                                                            <?php _e($value, 'acf-rrule-field'); ?>
+                                                        </label>
+                                                    </li>
+                                                <?php endforeach; ?>
+                                            </ul>
+                                        </div>
+
+                                        <div class="acf-column">
+                                            <ul class="acf-checkbox-list">
+                                                <?php foreach ($weekdays as $key => $value) : ?>
+                                                    <?php $selected = is_array($field['value']) && in_array($key, $field['value']['weekdays']); ?>
+
+                                                    <li>
+                                                        <label<?=($selected ? ' class="selected"' : '')?>>
+                                                            <input type="checkbox" id="<?=$field['id']?>-byweekday-<?=$key?>" name="<?=$field['name']?>[byweekday][]" value="<?=$key?>"<?=($selected ? ' checked' : '')?>>
+                                                            <?=$value?>
+                                                        </label>
+                                                    </li>
+                                                <?php endforeach; ?>
+                                            </ul>
+                                        </div>
+                                    </div>
 								</div>
 							</div>
 						</div>
@@ -626,8 +639,8 @@ if (! class_exists('acf_field_rrule')) :
 				'monthdays' => array(),
 				'months' => array(),
 				'monthly_by' => 'monthdays',
-				'setpos' => 1,
-				'setpos_option' => 'MO',
+				'bysetpos' => [],
+				'byweekday' => [],
 				'end_type' => null,
 				'end_date' => null,
 				'occurence_count' => null,
@@ -654,8 +667,8 @@ if (! class_exists('acf_field_rrule')) :
 						if (sizeof($new_value['weekdays']) > 0) {
 							$new_value['monthly_by'] = 'setpos';
 							$set_position = $rule->getBySetPosition();
-							$new_value['setpos'] = $set_position[0];
-							$new_value['setpos_option'] = $new_value['weekdays'][0];
+							$new_value['bysetpos'] = $set_position;
+							$new_value['byweekday'] = $new_value['weekdays'];
 						} else {
 							$new_value['monthly_by'] = 'monthdays';
 						}
@@ -754,8 +767,8 @@ if (! class_exists('acf_field_rrule')) :
 						if ($value['monthly_by'] == 'monthdays') {
 							$rule->setByMonthDay($value['monthdays']);
 						} else {
-							$rule->setBySetPosition(array(intval($value['setpos'])));
-							$rule->setByDay(array($value['setpos_option']));
+							$rule->setBySetPosition($value['bysetpos']);
+							$rule->setByDay($value['byweekday']);
 						}
 
 						break;

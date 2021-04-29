@@ -68,9 +68,8 @@ table.acf-rrule-monthdays input[type=checkbox]:checked + label {
     margin: 0 5px;
 }
 
-.acf-column .acf-field {
+.acf-field-rrule .acf-field:first-child {
     margin-top: 0;
-    margin-bottom: 0;
 }
 
 .acf-field-rrule .setpos-row {
