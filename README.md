@@ -39,11 +39,11 @@ An array of months for the yearly frequency
 **monthly_by** *(string)*  
 The selected option between "monthdays" and "setpos" for the monthly frequency  
 
-**setpos** *(string)*  
-The starting number for the monthly "setpos" option
+**bysetpos** *(array)*  
+The starting numbers for the monthly "setpos" option  
 
-**setpos_option** *(string)*  
-The selected day for the monthly "setpos" option  
+**byweekday** *(array)*  
+The selected days for the monthly "setpos" option  
 
 **end_type** *(string)*  
 The end of the recurrence between "date" and "count"  
