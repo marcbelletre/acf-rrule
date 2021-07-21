@@ -54,7 +54,7 @@ if (! class_exists('acf_field_rrule')) :
 				'date_return_format' => 'Y-m-d',
 				'allow_time' => false,
 				'time_display_format' => 'H:i',
-				'timezone' => get_option('timezone_string'),
+				'timezone' => get_option('timezone_string') ?: 'UTC',
 			);
 
 			/*
@@ -744,15 +744,9 @@ if (! class_exists('acf_field_rrule')) :
 				$rule = new Rule;
 
 				// Ensure timezone arg is never blank
-				$timezone = $field['timezone'];
-				if( empty( $timezone ) ) {
-					$timezone = get_option( 'timezone_string' );
-				}
-				if( empty( $timezone ) ) {
-					$timezone = get_option( 'gmt_offset' );
-				}
+				$timezone = $field['timezone'] ?: $this->defaults['timezone'];
 
-				$rule->setTimezone( $timezone )
+				$rule->setTimezone($timezone)
 					 ->setStartDate($start_date, true)
 					 ->setFreq($value['frequency'])
 					 ->setInterval($value['interval']);
