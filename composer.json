@@ -14,8 +14,13 @@
     "support": {
         "issues": "https://github.com/marcbelletre/acf-rrule/issues"
     },
+    "autoload": {
+        "psr-4": {
+            "AcfRRule\\": "src/"
+        }
+    },
     "require": {
-        "simshaun/recurr": "^4.0",
+        "rlanvin/php-rrule": "^v1.6.3",
         "composer/installers": "~1.0"
     }
 }

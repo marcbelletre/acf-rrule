@@ -1,6 +1,6 @@
 <?php
 
-use \Recurr\Rule;
+use AcfRRule\RRule;
 
 // Exit if accessed directly
 if (! defined('ABSPATH')) {
@@ -100,8 +100,6 @@ if (! class_exists('acf_field_rrule')) :
 			 *  More than one setting can be added by copy/paste the above code.
 			 *  Please note that you must also have a matching $defaults value for the field name (font_size)
 			 */
-
-			global $wp_locale;
 
 			// Init vars
 			$d_m_Y = date_i18n('d/m/Y');
@@ -650,7 +648,7 @@ if (! class_exists('acf_field_rrule')) :
 
 			if ($value) {
 				try {
-					$rule = new Rule($value);
+					$rule = new RRule($value);
 
 					$start_date = $rule->getStartDate();
 
@@ -659,7 +657,7 @@ if (! class_exists('acf_field_rrule')) :
 					$new_value['start_time'] = $start_date->format('H:i:s');
 					$new_value['frequency'] = $rule->getFreqAsText();
 					$new_value['interval'] = $rule->getInterval();
-					$new_value['weekdays'] = $rule->getByDay() ?: array();
+					$new_value['weekdays'] = $rule->getByDayAsText() ?: array();
 					$new_value['monthdays'] = $rule->getByMonthDay() ?: array();
 					$new_value['months'] = $rule->getByMonth() ?: array();
 
@@ -684,20 +682,8 @@ if (! class_exists('acf_field_rrule')) :
 						$new_value['end_type'] = 'none';
 					}
 
-	                $locale = explode('_', get_locale());
-
-	                $transformer = new \Recurr\Transformer\ArrayTransformer();
-	                $textTransformer = new \Recurr\Transformer\TextTransformer(
-	                    new \Recurr\Transformer\Translator($locale[0])
-	                );
-
-	                $new_value['dates_collection'] = array();
-
-	                foreach ($transformer->transform($rule) as $recurrence) {
-	                    $new_value['dates_collection'][] = $recurrence->getStart();
-	                }
-
-	                $new_value['text'] = $textTransformer->transform($rule);
+	                $new_value['dates_collection'] = $rule->getOccurrences(732);
+	                $new_value['text'] = $rule->humanReadable(['locale'=> get_locale()]);
 				} catch (\Exception $e) {
 					//
 				}
@@ -741,33 +727,30 @@ if (! class_exists('acf_field_rrule')) :
 					$start_date->setTime(0,0,0);
 				}
 
-				$rule = new Rule;
-
 				// Ensure timezone arg is never blank
 				$timezone = $field['timezone'] ?: $this->defaults['timezone'];
 
-				$rule->setTimezone($timezone)
-					 ->setStartDate($start_date, true)
-					 ->setFreq($value['frequency'])
-					 ->setInterval($value['interval']);
+				$start_date->setTimezone(new \DateTimeZone($timezone));
 
-				switch ($value['frequency']) {
-					case 'WEEKLY':
+				$rule = new RRule(sprintf('FREQ=%s;INTERVAL=%d',$value['frequency'], $value['interval']), $start_date);
+
+				switch ($rule->getFreq()) {
+					case RRule::WEEKLY:
 						$rule->setByDay($value['weekdays']);
 
 						break;
 
-					case 'MONTHLY':
-						if ($value['monthly_by'] == 'monthdays') {
+					case RRule::MONTHLY:
+						if ($value['monthly_by'] === 'monthdays') {
 							$rule->setByMonthDay($value['monthdays']);
 						} else {
-							$rule->setBySetPosition($value['bysetpos']);
+							$rule->setBySetPos($value['bysetpos']);
 							$rule->setByDay($value['byweekday']);
 						}
 
 						break;
 
-					case 'YEARLY':
+					case RRule::YEARLY:
 						$rule->setByMonth($value['months']);
 
 						break;
@@ -791,7 +774,7 @@ if (! class_exists('acf_field_rrule')) :
 					default: break;
 				}
 
-				$new_value = $rule->getString();
+				$new_value = $rule->__toString();
 
 				acf_update_value( $new_value, $post_id, $field );
 
