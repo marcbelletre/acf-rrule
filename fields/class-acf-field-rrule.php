@@ -196,7 +196,7 @@ if (! class_exists('acf_field_rrule')) :
 						<div class="acf-columns">
 							<div class="acf-column">
 								<div class="acf-field acf-field-date-picker is-required" data-type="date_picker">
-									<div <?php acf_esc_attr_e( $datepicker_options ); ?>>
+									<div <?php echo acf_esc_attrs( $datepicker_options ); ?>>
 										<?php
 										$start_date_hidden = '';
 										$start_date_display = '';
@@ -231,7 +231,7 @@ if (! class_exists('acf_field_rrule')) :
 							<?php if ($field['allow_time']) : ?>
 								<div class="acf-column">
 									<div class="acf-field acf-field-time-picker is-required" data-type="time_picker">
-										<div <?php acf_esc_attr_e( $timepicker_options ); ?>>
+										<div <?php echo acf_esc_attrs( $timepicker_options ); ?>>
 											<?php
 											$start_time = '';
 
@@ -515,13 +515,13 @@ if (! class_exists('acf_field_rrule')) :
 							<div class="acf-input-prepend"><?php _e('After', 'acf-rrule-field'); ?></div>
 							<div class="acf-input-append"><?php _e('occurence(s)', 'acf-rrule-field'); ?></div>
 							<div class="acf-input-wrap">
-								<?php acf_text_input( $occurence_count ); ?>
+								<?php acf_text_input( $occurrence_count ); ?>
 							</div>
 						</div>
 					</div>
 
 					<div class="acf-field acf-field-date-picker" data-type="date_picker" data-end-type="date">
-						<div <?php acf_esc_attr_e( $datepicker_options ); ?>>
+						<div <?php echo acf_esc_attrs( $datepicker_options ); ?>>
 							<?php
 							$end_date_hidden = '';
 							$end_date_display = '';
