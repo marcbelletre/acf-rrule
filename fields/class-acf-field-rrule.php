@@ -195,7 +195,7 @@ if (! class_exists('acf_field_rrule')) :
 					<div class="acf-field">
 						<div class="acf-columns">
 							<div class="acf-column">
-								<div class="acf-field acf-field-date-picker is-required" data-type="date_picker">
+								<div class="acf-field acf-field-date-picker" data-type="date_picker">
 									<div <?php echo acf_esc_attrs( $datepicker_options ); ?>>
 										<?php
 										$start_date_hidden = '';
@@ -210,7 +210,7 @@ if (! class_exists('acf_field_rrule')) :
 
 										<div class="acf-label">
 											<label for="<?=$unique_id?>-start-date">
-												<?php _e('Start date', 'acf-rrule-field'); ?> <span class="acf-required">*</span>
+												<?php _e('Start date', 'acf-rrule-field'); ?>
 											</label>
 										</div>
 
@@ -222,7 +222,6 @@ if (! class_exists('acf_field_rrule')) :
 											'id' => $unique_id . '-start-date',
 											'class' => 'input',
 											'value'	=> $start_date_display,
-											'required' => true,
 										) ); ?>
 									</div>
 								</div>
@@ -230,7 +229,7 @@ if (! class_exists('acf_field_rrule')) :
 
 							<?php if ($field['allow_time']) : ?>
 								<div class="acf-column">
-									<div class="acf-field acf-field-time-picker is-required" data-type="time_picker">
+									<div class="acf-field acf-field-time-picker" data-type="time_picker">
 										<div <?php echo acf_esc_attrs( $timepicker_options ); ?>>
 											<?php
 											$start_time = '';
@@ -243,7 +242,7 @@ if (! class_exists('acf_field_rrule')) :
 
 											<div class="acf-label">
 												<label for="<?=$unique_id?>-start-time">
-													<?php _e('Start time', 'acf-rrule-field'); ?> <span class="acf-required">*</span>
+													<?php _e('Start time', 'acf-rrule-field'); ?>
 												</label>
 											</div>
 
@@ -803,7 +802,7 @@ if (! class_exists('acf_field_rrule')) :
 		}
 
 		/**
-		 * Validate the email value. If this method returns TRUE, the input value is valid. If
+		 * Validate the value. If this method returns TRUE, the input value is valid. If
 		 * FALSE or a string is returned, the input value is invalid and the user is shown a
 		 * notice. If a string is returned, the string is show as the message text.
 		 *
@@ -815,20 +814,35 @@ if (! class_exists('acf_field_rrule')) :
 		 * @return bool|string
 		 */
 		public function validate_value( $valid, $value, $field, $input ) {
-			if (! $value['start_date']) {
+			if ($field['required'] && ! $value['start_date']) {
 				return __('The start date is required.', 'acf-rrule-field');
 			}
 
-			if ($value['end_type'] === 'date') {
-				if (! $value['end_date']) {
-					$valid = __('The end date is required.', 'acf-rrule-field');
-				} elseif ($value['end_date'] < $value['start_date']) {
-					$valid = __('The start date must be before the end date.', 'acf-rrule-field');
+			// Validate only if the start date has been set
+			if ($value['start_date']) {
+				if ($value['end_type'] === 'date') {
+					if (! $value['end_date']) {
+						$valid = __('The end date is required.', 'acf-rrule-field');
+					} elseif ($value['end_date'] < $value['start_date']) {
+						$valid = __('The start date must be before the end date.', 'acf-rrule-field');
+					}
 				}
-			}
 
-			if ($value['interval'] < 1) {
-				$valid = __('The frequency must be greater than 1.', 'acf-rrule-field');
+				if ($value['frequency'] === 'WEEKLY' && ! $value['weekdays']) {
+					$valid = __('Please select at least one weekday.', 'acf-rrule-field');
+				} elseif ($value['frequency'] === 'MONTHLY') {
+					if ($value['monthly_by'] === 'monthdays' && ! $value['monthdays']) {
+						$valid = __('Please select at least one monthday.', 'acf-rrule-field');
+					} elseif ($value['monthly_by'] === 'setpos' && ! ($value['bysetpos'] && $value['byweekday'])) {
+						$valid = __('Please select at least one weekday.', 'acf-rrule-field');
+					}
+				} elseif ($value['frequency'] === 'YEARLY' && ! $value['months']) {
+					$valid = __('Please select at least one month.', 'acf-rrule-field');
+				}
+
+				if ($value['interval'] < 1) {
+					$valid = __('The frequency must be greater than 1.', 'acf-rrule-field');
+				}
 			}
 
 			return $valid;
