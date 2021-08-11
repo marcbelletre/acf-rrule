@@ -491,7 +491,7 @@ if (! class_exists('acf_field_rrule')) :
 		                        'class' => 'end-type-select',
 								'choices' => array(
 									'date' => __('At a specific date', 'acf-rrule-field'),
-									'count' =>  __('After a number of occurences', 'acf-rrule-field'),
+									'count' =>  __('After a number of occurrences', 'acf-rrule-field'),
 									'none'	=> __('Never', 'acf-rrule-field'),
 								),
 							) ); ?>
@@ -500,12 +500,12 @@ if (! class_exists('acf_field_rrule')) :
 
 					<div class="acf-field" data-end-type="count">
 						<?php
-						$occurence_count = array(
-							'id' => $field['id'] . '-occurence-count',
-							'name' => $field['name'] . '[occurence_count]',
+						$occurrence_count = array(
+							'id' => $field['id'] . '-occurrence-count',
+							'name' => $field['name'] . '[occurrence_count]',
 							'type' => 'number',
 							'class' => 'acf-is-prepended acf-is-appended',
-							'value'	=> is_array($field['value']) ? $field['value']['occurence_count'] : null,
+							'value'	=> is_array($field['value']) ? $field['value']['occurrence_count'] : null,
 							'min' => 1,
 							'step' => 1,
 						);
@@ -513,7 +513,7 @@ if (! class_exists('acf_field_rrule')) :
 
 						<div class="acf-input">
 							<div class="acf-input-prepend"><?php _e('After', 'acf-rrule-field'); ?></div>
-							<div class="acf-input-append"><?php _e('occurence(s)', 'acf-rrule-field'); ?></div>
+							<div class="acf-input-append"><?php _e('occurrence(s)', 'acf-rrule-field'); ?></div>
 							<div class="acf-input-wrap">
 								<?php acf_text_input( $occurence_count ); ?>
 							</div>
@@ -643,7 +643,7 @@ if (! class_exists('acf_field_rrule')) :
 				'byweekday' => [],
 				'end_type' => null,
 				'end_date' => null,
-				'occurence_count' => null,
+				'occurrence_count' => null,
 	            'dates_collection' => null,
 	            'text' => null,
 			);
@@ -679,7 +679,7 @@ if (! class_exists('acf_field_rrule')) :
 						$new_value['end_date'] =  $rule->getUntil()->format('Ymd');
 					} else if ($rule->getCount()) {
 						$new_value['end_type'] = 'count';
-						$new_value['occurence_count'] =  $rule->getCount();
+						$new_value['occurrence_count'] =  $rule->getCount();
 					} else {
 						$new_value['end_type'] = 'none';
 					}
@@ -786,7 +786,7 @@ if (! class_exists('acf_field_rrule')) :
 
 						break;
 					case 'count':
-						$rule->setCount($value['occurence_count']);
+						$rule->setCount($value['occurrence_count']);
 						break;
 					default: break;
 				}
