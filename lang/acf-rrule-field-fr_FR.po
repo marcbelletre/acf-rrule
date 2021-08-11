@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ACF RRule Field\n"
-"POT-Creation-Date: 2021-04-30 00:14+0200\n"
-"PO-Revision-Date: 2021-04-30 00:14+0200\n"
+"POT-Creation-Date: 2021-08-11 18:11+0200\n"
+"PO-Revision-Date: 2021-08-11 18:12+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr_FR\n"
@@ -155,120 +155,120 @@ msgstr "Jours de la semaine"
 msgid "Month"
 msgstr "Mois"
 
-#: fields/class-acf-field-rrule.php:449
+#: fields/class-acf-field-rrule.php:450
 msgid "January"
 msgstr "Janvier"
 
-#: fields/class-acf-field-rrule.php:450
+#: fields/class-acf-field-rrule.php:451
 msgid "February"
 msgstr "Février"
 
-#: fields/class-acf-field-rrule.php:451
+#: fields/class-acf-field-rrule.php:452
 msgid "March"
 msgstr "Mars"
 
-#: fields/class-acf-field-rrule.php:452
+#: fields/class-acf-field-rrule.php:453
 msgid "April"
 msgstr "Avril"
 
-#: fields/class-acf-field-rrule.php:453
+#: fields/class-acf-field-rrule.php:454
 msgid "May"
 msgstr "Mai"
 
-#: fields/class-acf-field-rrule.php:454
+#: fields/class-acf-field-rrule.php:455
 msgid "June"
 msgstr "Juin"
 
-#: fields/class-acf-field-rrule.php:455
+#: fields/class-acf-field-rrule.php:456
 msgid "July"
 msgstr "Juillet"
 
-#: fields/class-acf-field-rrule.php:456
+#: fields/class-acf-field-rrule.php:457
 msgid "August"
 msgstr "Août"
 
-#: fields/class-acf-field-rrule.php:457
+#: fields/class-acf-field-rrule.php:458
 msgid "September"
 msgstr "Septembre"
 
-#: fields/class-acf-field-rrule.php:458
+#: fields/class-acf-field-rrule.php:459
 msgid "October"
 msgstr "Octobre"
 
-#: fields/class-acf-field-rrule.php:459
+#: fields/class-acf-field-rrule.php:460
 msgid "November"
 msgstr "Novembre"
 
-#: fields/class-acf-field-rrule.php:460
+#: fields/class-acf-field-rrule.php:461
 msgid "December"
 msgstr "Décembre"
 
-#: fields/class-acf-field-rrule.php:483
+#: fields/class-acf-field-rrule.php:484
 msgid "End date"
 msgstr "Date de fin"
 
-#: fields/class-acf-field-rrule.php:493
+#: fields/class-acf-field-rrule.php:494
 msgid "At a specific date"
 msgstr "À une date précise"
 
-#: fields/class-acf-field-rrule.php:494
-msgid "After a number of occurences"
+#: fields/class-acf-field-rrule.php:495
+msgid "After a number of occurrences"
 msgstr "Après un certain nombre d’occurrences"
 
-#: fields/class-acf-field-rrule.php:495
+#: fields/class-acf-field-rrule.php:496
 msgid "Never"
 msgstr "Jamais"
 
-#: fields/class-acf-field-rrule.php:515
+#: fields/class-acf-field-rrule.php:516
 msgid "After"
 msgstr "Après"
 
-#: fields/class-acf-field-rrule.php:516
-msgid "occurence(s)"
+#: fields/class-acf-field-rrule.php:517
+msgid "occurrence(s)"
 msgstr "occurrence(s)"
 
-#: fields/class-acf-field-rrule.php:537
+#: fields/class-acf-field-rrule.php:538
 msgid "Until"
 msgstr "Jusqu'à"
 
-#: fields/class-acf-field-rrule.php:584
+#: fields/class-acf-field-rrule.php:585
 msgctxt "Date Picker JS closeText"
 msgid "Done"
 msgstr "Terminé"
 
-#: fields/class-acf-field-rrule.php:585
+#: fields/class-acf-field-rrule.php:586
 msgctxt "Date Picker JS currentText"
 msgid "Today"
 msgstr "Aujourd’hui"
 
-#: fields/class-acf-field-rrule.php:586
+#: fields/class-acf-field-rrule.php:587
 msgctxt "Date Picker JS nextText"
 msgid "Next"
 msgstr "Suiv"
 
-#: fields/class-acf-field-rrule.php:587
+#: fields/class-acf-field-rrule.php:588
 msgctxt "Date Picker JS prevText"
 msgid "Prev"
 msgstr "Préc"
 
-#: fields/class-acf-field-rrule.php:588
+#: fields/class-acf-field-rrule.php:589
 msgctxt "Date Picker JS weekHeader"
 msgid "Wk"
 msgstr "Sem"
 
-#: fields/class-acf-field-rrule.php:824
+#: fields/class-acf-field-rrule.php:819
 msgid "The start date is required."
 msgstr "La date de début est obligatoire."
 
-#: fields/class-acf-field-rrule.php:829
+#: fields/class-acf-field-rrule.php:824
 msgid "The end date is required."
 msgstr "La date de fin est obligatoire."
 
-#: fields/class-acf-field-rrule.php:831
+#: fields/class-acf-field-rrule.php:826
 msgid "The start date must be before the end date."
 msgstr "La date de fin doit être après la date de début."
 
-#: fields/class-acf-field-rrule.php:836
+#: fields/class-acf-field-rrule.php:831
 msgid "The frequency must be greater than 1."
 msgstr "La fréquence doit être supérieure à 1."
 

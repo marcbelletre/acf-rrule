@@ -185,11 +185,11 @@ if (! class_exists('acf_field_rrule')) :
 			<div class="acf-input-wrap">
 				<input type="hidden" name="<?=$field['name']?>">
 
-		        <?php if ($field['value'] && $field['value']['text']) : ?>
-		            <p class="acf-field-rrule-current">
-		                <?php _e('Current value:', 'acf-rrule-field'); ?> <?=$field['value']['text']?>
-		            </p>
-		        <?php endif; ?>
+				<?php if ($field['value'] && $field['value']['text']) : ?>
+					<p class="acf-field-rrule-current">
+						<?php _e('Current value:', 'acf-rrule-field'); ?> <?=$field['value']['text']?>
+					</p>
+				<?php endif; ?>
 
 				<div class="acf-field-rrule-sub-fields">
 					<div class="acf-field">
@@ -269,7 +269,7 @@ if (! class_exists('acf_field_rrule')) :
 							'id' => $field['id'] . '-frequency',
 							'name' => $field['name'] . '[frequency]',
 							'value' => is_array($field['value']) ? $field['value']['frequency'] : null,
-		                    'class' => 'frequency-select',
+							'class' => 'frequency-select',
 							'choices' => array(
 								'DAILY' => __('Daily', 'acf-rrule-field'),
 								'WEEKLY' => __('Weekly', 'acf-rrule-field'),
@@ -339,7 +339,7 @@ if (! class_exists('acf_field_rrule')) :
 						<div class="acf-input">
 							<div class="acf-button-group">
 								<?php foreach ($weekdays as $key => $value) : ?>
-		                            <?php $selected = is_array($field['value']) && in_array($key, $field['value']['weekdays'], true); ?>
+									<?php $selected = is_array($field['value']) && in_array($key, $field['value']['weekdays'], true); ?>
 
 									<label<?=($selected ? ' class="selected"' : '')?>>
 										<input type="checkbox" name="<?=$field['name']?>[weekdays][]" value="<?=$key?>"<?=($selected ? ' checked' : '')?>> <?=$value?>
@@ -366,7 +366,7 @@ if (! class_exists('acf_field_rrule')) :
 										<?php foreach (array_chunk($days, 7) as $week) : ?>
 											<tr>
 												<?php foreach ($week as $day) : ?>
-		                                            <?php $selected = is_array($field['value']) && in_array($day, $field['value']['monthdays'], true); ?>
+													<?php $selected = is_array($field['value']) && in_array($day, $field['value']['monthdays'], true); ?>
 
 													<td>
 														<input id="acf-<?=$field['name']?>-monthdays-<?=$day?>" type="checkbox" name="<?=$field['name']?>[monthdays][]" value="<?=$day?>"<?=($selected ? ' checked' : '')?>>
@@ -388,53 +388,53 @@ if (! class_exists('acf_field_rrule')) :
 								</div>
 
 								<div class="acf-input<?=(is_array($field['value']) && $field['value']['monthly_by'] !== 'setpos' ? ' is-disabled' : '')?>" data-monthly-by="setpos">
-                                    <div class="acf-columns">
-                                        <div class="acf-column">
-                                            <ul class="acf-checkbox-list">
-                                                <?php
-                                                $bysetpos = [
-                                                    '1' => 'First',
-                                                    '2' => 'Second',
-                                                    '3' => 'Third',
-                                                    '4' => 'Fourth',
-                                                    '-1' => 'Last',
-                                                ];
-                                                ?>
+									<div class="acf-columns">
+										<div class="acf-column">
+											<ul class="acf-checkbox-list">
+												<?php
+												$bysetpos = [
+													'1' => 'First',
+													'2' => 'Second',
+													'3' => 'Third',
+													'4' => 'Fourth',
+													'-1' => 'Last',
+												];
+												?>
 
-                                                <?php foreach ($bysetpos as $key => $value) : ?>
-                                                    <?php
-                                                    $selected = false;
+												<?php foreach ($bysetpos as $key => $value) : ?>
+													<?php
+													$selected = false;
 
-                                                    if (is_array($field['value']) && is_array($field['value']['bysetpos'])) {
-                                                        $selected = in_array($key, $field['value']['bysetpos'], true);
-                                                    }
-                                                    ?>
+													if (is_array($field['value']) && is_array($field['value']['bysetpos'])) {
+														$selected = in_array($key, $field['value']['bysetpos'], true);
+													}
+													?>
 
-                                                    <li>
-                                                        <label<?=($selected ? ' class="selected"' : '')?>>
-                                                            <input type="checkbox" id="<?=$field['id']?>-bysetpos-<?=$key?>" name="<?=$field['name']?>[bysetpos][]" value="<?=$key?>"<?=($selected ? ' checked' : '')?>>
-                                                            <?php _e($value, 'acf-rrule-field'); ?>
-                                                        </label>
-                                                    </li>
-                                                <?php endforeach; ?>
-                                            </ul>
-                                        </div>
+													<li>
+														<label<?=($selected ? ' class="selected"' : '')?>>
+															<input type="checkbox" id="<?=$field['id']?>-bysetpos-<?=$key?>" name="<?=$field['name']?>[bysetpos][]" value="<?=$key?>"<?=($selected ? ' checked' : '')?>>
+															<?php _e($value, 'acf-rrule-field'); ?>
+														</label>
+													</li>
+												<?php endforeach; ?>
+											</ul>
+										</div>
 
-                                        <div class="acf-column">
-                                            <ul class="acf-checkbox-list">
-                                                <?php foreach ($weekdays as $key => $value) : ?>
-                                                    <?php $selected = is_array($field['value']) && in_array($key, $field['value']['weekdays'], true); ?>
+										<div class="acf-column">
+											<ul class="acf-checkbox-list">
+												<?php foreach ($weekdays as $key => $value) : ?>
+													<?php $selected = is_array($field['value']) && in_array($key, $field['value']['weekdays'], true); ?>
 
-                                                    <li>
-                                                        <label<?=($selected ? ' class="selected"' : '')?>>
-                                                            <input type="checkbox" id="<?=$field['id']?>-byweekday-<?=$key?>" name="<?=$field['name']?>[byweekday][]" value="<?=$key?>"<?=($selected ? ' checked' : '')?>>
-                                                            <?=$value?>
-                                                        </label>
-                                                    </li>
-                                                <?php endforeach; ?>
-                                            </ul>
-                                        </div>
-                                    </div>
+													<li>
+														<label<?=($selected ? ' class="selected"' : '')?>>
+															<input type="checkbox" id="<?=$field['id']?>-byweekday-<?=$key?>" name="<?=$field['name']?>[byweekday][]" value="<?=$key?>"<?=($selected ? ' checked' : '')?>>
+															<?=$value?>
+														</label>
+													</li>
+												<?php endforeach; ?>
+											</ul>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -444,6 +444,7 @@ if (! class_exists('acf_field_rrule')) :
 						<div class="acf-label">
 							<label><?php _e('Month', 'acf-rrule-field'); ?></label>
 						</div>
+
 						<div class="acf-input">
 							<?php $months = array(
 								'1' => __('January', 'acf-rrule-field'),
@@ -464,7 +465,7 @@ if (! class_exists('acf_field_rrule')) :
 
 							<ul class="acf-checkbox-list acf-hl">
 								<?php foreach ($months as $key => $month) : ?>
-		                            <?php $selected = is_array($field['value']) && in_array($key, $field['value']['months'], true); ?>
+									<?php $selected = is_array($field['value']) && in_array($key, $field['value']['months'], true); ?>
 
 									<li>
 										<label<?=($selected ? ' class="selected"' : '')?>>
@@ -488,7 +489,7 @@ if (! class_exists('acf_field_rrule')) :
 								'id' => $field['id'] . '-end-type',
 								'name' => $field['name'] . '[end_type]',
 								'value' => $field['value'] ? $field['value']['end_type'] : null,
-		                        'class' => 'end-type-select',
+								'class' => 'end-type-select',
 								'choices' => array(
 									'date' => __('At a specific date', 'acf-rrule-field'),
 									'count' =>  __('After a number of occurrences', 'acf-rrule-field'),
@@ -644,8 +645,8 @@ if (! class_exists('acf_field_rrule')) :
 				'end_type' => null,
 				'end_date' => null,
 				'occurrence_count' => null,
-	            'dates_collection' => null,
-	            'text' => null,
+				'dates_collection' => null,
+				'text' => null,
 			);
 
 			if ($value) {
@@ -684,26 +685,26 @@ if (! class_exists('acf_field_rrule')) :
 						$new_value['end_type'] = 'none';
 					}
 
-	                $locale = explode('_', get_locale());
+					$locale = explode('_', get_locale());
 
-	                $transformer = new \Recurr\Transformer\ArrayTransformer();
-	                $textTransformer = new \Recurr\Transformer\TextTransformer(
-	                    new \Recurr\Transformer\Translator($locale[0])
-	                );
+					$transformer = new \Recurr\Transformer\ArrayTransformer();
+					$textTransformer = new \Recurr\Transformer\TextTransformer(
+						new \Recurr\Transformer\Translator($locale[0])
+					);
 
-	                $new_value['dates_collection'] = array();
+					$new_value['dates_collection'] = array();
 
-	                foreach ($transformer->transform($rule) as $recurrence) {
-	                    $new_value['dates_collection'][] = $recurrence->getStart();
-	                }
+					foreach ($transformer->transform($rule) as $recurrence) {
+						$new_value['dates_collection'][] = $recurrence->getStart();
+					}
 
-	                $new_value['text'] = $textTransformer->transform($rule);
+					$new_value['text'] = $textTransformer->transform($rule);
 				} catch (\Exception $e) {
 					//
 				}
 			} else {
-	            $new_value = false;
-	        }
+				$new_value = false;
+			}
 
 			return $new_value;
 
@@ -798,7 +799,7 @@ if (! class_exists('acf_field_rrule')) :
 				return $new_value;
 			}
 
-	        return $value;
+			return $value;
 		}
 
 		/**
