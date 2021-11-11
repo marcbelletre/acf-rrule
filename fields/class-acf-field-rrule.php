@@ -405,7 +405,7 @@ if (! class_exists('acf_field_rrule')) :
 													$selected = false;
 
 													if (is_array($field['value']) && is_array($field['value']['bysetpos'])) {
-														$selected = in_array($key, $field['value']['bysetpos'], true);
+														$selected = in_array((string) $key, $field['value']['bysetpos'], true);
 													}
 													?>
 
@@ -674,16 +674,6 @@ if (! class_exists('acf_field_rrule')) :
 						}
 					}
 
-					if ($rule->getUntil()) {
-						$new_value['end_type'] = 'date';
-						$new_value['end_date'] =  $rule->getUntil()->format('Ymd');
-					} else if ($rule->getCount()) {
-						$new_value['end_type'] = 'count';
-						$new_value['occurrence_count'] =  $rule->getCount();
-					} else {
-						$new_value['end_type'] = 'none';
-					}
-
 					$locale = explode('_', get_locale());
 
 					$transformer = new \Recurr\Transformer\ArrayTransformer();
@@ -696,6 +686,21 @@ if (! class_exists('acf_field_rrule')) :
 					foreach ($transformer->transform($rule) as $recurrence) {
 						$new_value['dates_collection'][] = $recurrence->getStart();
 					}
+
+					if ($rule->getUntil()) {
+						$end_date = $rule->getUntil();
+
+						$new_value['end_type'] = 'date';
+					} elseif ($rule->getCount()) {
+						$end_date = end($new_value['dates_collection']);
+
+						$new_value['end_type'] = 'count';
+						$new_value['occurrence_count'] = $rule->getCount();
+					} else {
+						$new_value['end_type'] = 'none';
+					}
+
+					$new_value['end_date'] = $end_date ? $end_date->format('Ymd') : null;
 
 					$new_value['text'] = $textTransformer->transform($rule);
 				} catch (\Exception $e) {
