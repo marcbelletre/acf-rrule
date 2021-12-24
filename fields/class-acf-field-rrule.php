@@ -700,7 +700,7 @@ if (! class_exists('acf_field_rrule')) :
 						$new_value['end_type'] = 'none';
 					}
 
-					$new_value['end_date'] = $end_date ? $end_date->format('Ymd') : null;
+					$new_value['end_date'] = isset($end_date) ? $end_date->format('Ymd') : null;
 
 					$new_value['text'] = $textTransformer->transform($rule);
 				} catch (\Exception $e) {
