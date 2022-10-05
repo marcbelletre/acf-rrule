@@ -352,7 +352,7 @@ if (!class_exists('acf_field_rrule')) :
 
                                 <?php $days = range(1, 31); ?>
 
-                                <div class="acf-input<?= $field['value']['monthly_by'] !== 'monthdays' ? ' is-disabled' : '' ?>" data-monthly-by="monthdays">
+                                <div class="acf-input<?= is_array($field['value']) && $field['value']['monthly_by'] !== 'monthdays' ? ' is-disabled' : '' ?>" data-monthly-by="monthdays">
                                     <table class="acf-rrule-monthdays">
                                         <?php foreach (array_chunk($days, 7) as $week) : ?>
                                             <tr>
