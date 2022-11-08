@@ -4,7 +4,7 @@
 Plugin Name: ACF RRule Field
 Plugin URI: https://github.com/marcbelletre/acf-rrule
 Description: Create recurring rules with a single ACF field
-Version: 1.2.4
+Version: 1.2.5
 Author: Marc Bellêtre
 Author URI: https://pixelparfait.fr
 License: MIT
@@ -12,7 +12,7 @@ Text Domain: acf-rrule-field
 Domain Path: /lang
 */
 
-require_once(__DIR__ . '/vendor/autoload.php');
+require_once __DIR__.'/vendor/autoload.php';
 
 // Exit if accessed directly
 if (! defined('ABSPATH')) {
@@ -43,14 +43,14 @@ if (! class_exists('acf_plugin_rrule')) :
         {
             // Settings
             // - these will be passed into the field class.
-            $this->settings = array(
-                'version'	=> '1.2.4',
+            $this->settings = [
+                'version'	=> '1.2.5',
                 'url'		=> plugin_dir_url(__FILE__),
-                'path'		=> plugin_dir_path(__FILE__)
-            );
+                'path'		=> plugin_dir_path(__FILE__),
+            ];
 
             // Include field
-            add_action('acf/include_field_types', array($this, 'include_field'));
+            add_action('acf/include_field_types', [$this, 'include_field']);
         }
 
         /*
@@ -69,16 +69,16 @@ if (! class_exists('acf_plugin_rrule')) :
         public function include_field($version = false)
         {
             // Load ACF RRule
-            load_plugin_textdomain('acf-rrule-field', false, basename(dirname(__FILE__)) . '/lang');
-            load_muplugin_textdomain('acf-rrule-field', basename(dirname(__FILE__)) . '/lang');
+            load_plugin_textdomain('acf-rrule-field', false, basename(dirname(__FILE__)).'/lang');
+            load_muplugin_textdomain('acf-rrule-field', basename(dirname(__FILE__)).'/lang');
 
             // Include
-            include_once('fields/class-acf-field-rrule.php');
+            include_once 'fields/class-acf-field-rrule.php';
         }
     }
 
     // Initialize
     new acf_plugin_rrule();
 
-// class_exists check
+    // class_exists check
 endif;
