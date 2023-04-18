@@ -1,6 +1,6 @@
 <?php
 
-use \Recurr\Rule;
+use Recurr\Rule;
 
 // Exit if accessed directly
 if (!defined('ABSPATH')) {
@@ -49,13 +49,13 @@ if (!class_exists('acf_field_rrule')) :
              *  defaults (array) Array of default settings which are merged into the field object. These are used later in settings
              */
 
-            $this->defaults = array(
+            $this->defaults = [
                 'date_display_format' => 'j F Y',
                 'date_return_format' => 'Y-m-d',
                 'allow_time' => false,
                 'time_display_format' => 'H:i',
                 'timezone' => get_option('timezone_string') ?: 'UTC',
-            );
+            ];
 
             /*
              *  l10n (array) Array of strings that are used in JavaScript. This allows JS strings to be translated in PHP and loaded via:
@@ -109,46 +109,45 @@ if (!class_exists('acf_field_rrule')) :
             $Ymd = date_i18n('Ymd');
 
             // Display format
-            acf_render_field_setting($field, array(
-                'label'            => __('Date Display Format', 'acf-rrule-field'),
-                'instructions'    => __('The date format displayed when editing a post', 'acf-rrule-field'),
-                'type'            => 'radio',
-                'name'            => 'date_display_format',
-                'other_choice'    => 1,
-                'choices'        => array(
-                    'd/m/Y'            => '<span>' . $d_m_Y . '</span><code>d/m/Y</code>',
-                    'm/d/Y'            => '<span>' . $m_d_Y . '</span><code>m/d/Y</code>',
-                    'F j, Y'        => '<span>' . $F_j_Y . '</span><code>F j, Y</code>',
-                    'other'            => '<span>' . __('Custom:', 'acf-rrule-field') . '</span>'
-                )
-            ));
+            acf_render_field_setting($field, [
+                'label' => __('Date Display Format', 'acf-rrule-field'),
+                'instructions' => __('The date format displayed when editing a post', 'acf-rrule-field'),
+                'type' => 'radio',
+                'name' => 'date_display_format',
+                'other_choice' => 1,
+                'choices' => [
+                    'd/m/Y' => '<span>' . $d_m_Y . '</span><code>d/m/Y</code>',
+                    'm/d/Y' => '<span>' . $m_d_Y . '</span><code>m/d/Y</code>',
+                    'F j, Y' => '<span>' . $F_j_Y . '</span><code>F j, Y</code>',
+                    'other' => '<span>' . __('Custom:', 'acf-rrule-field') . '</span>',
+                ],
+            ]);
 
             // Return format
-            acf_render_field_setting($field, array(
-                'label'            => __('Date Return Format', 'acf-rrule-field'),
-                'instructions'    => __('The date format returned via template functions', 'acf-rrule-field'),
-                'type'            => 'radio',
-                'name'            => 'return_format',
-                'other_choice'    => 1,
-                'choices'        => array(
-                    'd/m/Y'            => '<span>' . $d_m_Y . '</span><code>d/m/Y</code>',
-                    'm/d/Y'            => '<span>' . $m_d_Y . '</span><code>m/d/Y</code>',
-                    'F j, Y'        => '<span>' . $F_j_Y . '</span><code>F j, Y</code>',
-                    'Ymd'            => '<span>' . $Ymd . '</span><code>Ymd</code>',
-                    'other'            => '<span>' . __('Custom:', 'acf-rrule-field') . '</span>'
-                )
-            ));
+            acf_render_field_setting($field, [
+                'label' => __('Date Return Format', 'acf-rrule-field'),
+                'instructions' => __('The date format returned via template functions', 'acf-rrule-field'),
+                'type' => 'radio',
+                'name' => 'return_format',
+                'other_choice' => 1,
+                'choices' => [
+                    'd/m/Y' => '<span>' . $d_m_Y . '</span><code>d/m/Y</code>',
+                    'm/d/Y' => '<span>' . $m_d_Y . '</span><code>m/d/Y</code>',
+                    'F j, Y' => '<span>' . $F_j_Y . '</span><code>F j, Y</code>',
+                    'Ymd' => '<span>' . $Ymd . '</span><code>Ymd</code>',
+                    'other' => '<span>' . __('Custom:', 'acf-rrule-field') . '</span>',
+                ],
+            ]);
 
             // Allow time selector
-            acf_render_field_setting($field, array(
-                'label'            => __('Time Selector', 'acf-rrule-field'),
-                'instructions'    => __('Allow time selection when creating the recurring rule', 'acf-rrule-field'),
-                'name'            => 'allow_time',
-                'type'            => 'true_false',
-                'ui'            => 1,
-            ));
+            acf_render_field_setting($field, [
+                'label' => __('Time Selector', 'acf-rrule-field'),
+                'instructions' => __('Allow time selection when creating the recurring rule', 'acf-rrule-field'),
+                'name' => 'allow_time',
+                'type' => 'true_false',
+                'ui' => 1,
+            ]);
         }
-
 
         /*
          *  render_field()
@@ -171,20 +170,21 @@ if (!class_exists('acf_field_rrule')) :
             $unique_id = $field['id'] . '-' . time();
 
             // Datepicker options
-            $datepicker_options = array(
+            $datepicker_options = [
                 'class' => 'acf-date-picker acf-input-wrap',
                 'data-date_format' => acf_convert_date_to_js($field['date_display_format']),
-            );
-            $timepicker_options = array(
+            ];
+            $timepicker_options = [
                 'class' => 'acf-time-picker acf-input-wrap',
-            ); ?>
+            ]; ?>
 
             <div class="acf-input-wrap">
                 <input type="hidden" name="<?= $field['name'] ?>">
 
                 <?php if ($field['value'] && $field['value']['text']) : ?>
                     <p class="acf-field-rrule-current">
-                        <?php _e('Current value:', 'acf-rrule-field'); ?> <?= $field['value']['text'] ?>
+                        <?php _e('Current value:', 'acf-rrule-field'); ?>
+                        <?= $field['value']['text'] ?>
                     </p>
                 <?php endif; ?>
 
@@ -210,15 +210,15 @@ if (!class_exists('acf_field_rrule')) :
                                             </label>
                                         </div>
 
-                                        <?php acf_hidden_input(array(
+                                        <?php acf_hidden_input([
                                             'name' => $field['name'] . '[start_date]',
                                             'value'    => $start_date_hidden,
-                                        )); ?>
-                                        <?php acf_text_input(array(
+                                        ]); ?>
+                                        <?php acf_text_input([
                                             'id' => $unique_id . '-start-date',
                                             'class' => 'input',
                                             'value'    => $start_date_display,
-                                        )); ?>
+                                        ]); ?>
                                     </div>
                                 </div>
                             </div>
@@ -241,15 +241,15 @@ if (!class_exists('acf_field_rrule')) :
                                                 </label>
                                             </div>
 
-                                            <?php acf_hidden_input(array(
+                                            <?php acf_hidden_input([
                                                 'name' => $field['name'] . '[start_time]',
                                                 'value'    => $start_time,
-                                            )); ?>
-                                            <?php acf_text_input(array(
+                                            ]); ?>
+                                            <?php acf_text_input([
                                                 'id' => $unique_id . '-start-time',
                                                 'class' => 'input',
                                                 'value'    => $start_time,
-                                            )); ?>
+                                            ]); ?>
                                         </div>
                                     </div>
                                 </div>
@@ -259,18 +259,18 @@ if (!class_exists('acf_field_rrule')) :
 
                     <div class="acf-field">
                         <?php
-                        $frequency = array(
+                        $frequency = [
                             'id' => $field['id'] . '-frequency',
                             'name' => $field['name'] . '[frequency]',
                             'value' => is_array($field['value']) ? $field['value']['frequency'] : null,
                             'class' => 'frequency-select',
-                            'choices' => array(
+                            'choices' => [
                                 'DAILY' => __('Daily', 'acf-rrule-field'),
                                 'WEEKLY' => __('Weekly', 'acf-rrule-field'),
                                 'MONTHLY' => __('Monthly', 'acf-rrule-field'),
                                 'YEARLY' => __('Yearly', 'acf-rrule-field'),
-                            ),
-                        ); ?>
+                            ],
+                        ]; ?>
 
                         <div class="acf-label">
                             <label for="<?= $frequency['id'] ?>">
@@ -285,7 +285,7 @@ if (!class_exists('acf_field_rrule')) :
 
                     <div class="acf-field">
                         <?php
-                        $interval = array(
+                        $interval = [
                             'id' => $field['id'] . '-interval',
                             'name' => $field['name'] . '[interval]',
                             'type' => 'number',
@@ -293,10 +293,12 @@ if (!class_exists('acf_field_rrule')) :
                             'value'    => is_array($field['value']) && $field['value']['interval'] ? $field['value']['interval'] : 1,
                             'min' => 1,
                             'step' => 1,
-                        ); ?>
+                        ]; ?>
 
                         <div class="acf-input">
-                            <div class="acf-input-prepend"><?= _x('Every', 'RRule Interval', 'acf-rrule-field') ?></div>
+                            <div class="acf-input-prepend">
+                                <?= _x('Every', 'RRule Interval', 'acf-rrule-field') ?>
+                            </div>
                             <div class="acf-input-append">
                                 <span class="freq-suffix" data-frequency="DAILY"><?= _x('day', 'RRule Interval', 'acf-rrule-field') ?></span>
                                 <span class="freq-suffix" data-frequency="WEEKLY"><?= _x('week', 'RRule Interval', 'acf-rrule-field') ?></span>
@@ -311,7 +313,7 @@ if (!class_exists('acf_field_rrule')) :
 
                     <div class="acf-field acf-field-button-group" data-type="button_group_multiple" data-frequency="WEEKLY">
                         <?php
-                        $weekdays = array(
+                        $weekdays = [
                             'MO' => __('Monday', 'acf-rrule-field'),
                             'TU' => __('Tuesday', 'acf-rrule-field'),
                             'WE' => __('Wednesday', 'acf-rrule-field'),
@@ -319,7 +321,7 @@ if (!class_exists('acf_field_rrule')) :
                             'FR' => __('Friday', 'acf-rrule-field'),
                             'SA' => __('Saturday', 'acf-rrule-field'),
                             'SU' => __('Sunday', 'acf-rrule-field'),
-                        ); ?>
+                        ]; ?>
 
                         <div class="acf-label">
                             <label>
@@ -333,7 +335,8 @@ if (!class_exists('acf_field_rrule')) :
                                     <?php $selected = is_array($field['value']) && in_array($key, $field['value']['weekdays'], true); ?>
 
                                     <label<?= ($selected ? ' class="selected"' : '') ?>>
-                                        <input type="checkbox" name="<?= $field['name'] ?>[weekdays][]" value="<?= $key ?>" <?= ($selected ? ' checked' : '') ?>> <?= $value ?>
+                                        <input type="checkbox" name="<?= $field['name'] ?>[weekdays][]" value="<?= $key ?>" <?= ($selected ? ' checked' : '') ?>>
+                                        <?= $value ?>
                                         </label>
                                     <?php endforeach; ?>
                             </div>
@@ -435,7 +438,7 @@ if (!class_exists('acf_field_rrule')) :
                         </div>
 
                         <div class="acf-input">
-                            <?php $months = array(
+                            <?php $months = [
                                 '1' => __('January', 'acf-rrule-field'),
                                 '2' => __('February', 'acf-rrule-field'),
                                 '3' => __('March', 'acf-rrule-field'),
@@ -448,7 +451,7 @@ if (!class_exists('acf_field_rrule')) :
                                 '10' => __('October', 'acf-rrule-field'),
                                 '11' => __('November', 'acf-rrule-field'),
                                 '12' => __('December', 'acf-rrule-field'),
-                            ); ?>
+                            ]; ?>
 
                             <input type="hidden" name="<?= $field['name'] ?>[months]">
 
@@ -474,35 +477,39 @@ if (!class_exists('acf_field_rrule')) :
                             </label>
                         </div>
                         <div class="acf-input">
-                            <?php acf_select_input(array(
+                            <?php acf_select_input([
                                 'id' => $field['id'] . '-end-type',
                                 'name' => $field['name'] . '[end_type]',
                                 'value' => $field['value'] ? $field['value']['end_type'] : null,
                                 'class' => 'end-type-select',
-                                'choices' => array(
+                                'choices' => [
                                     'date' => __('At a specific date', 'acf-rrule-field'),
                                     'count' =>  __('After a number of occurrences', 'acf-rrule-field'),
-                                    'none'    => __('Never', 'acf-rrule-field'),
-                                ),
-                            )); ?>
+                                    'none' => __('Never', 'acf-rrule-field'),
+                                ],
+                            ]); ?>
                         </div>
                     </div>
 
                     <div class="acf-field" data-end-type="count">
                         <?php
-                        $occurrence_count = array(
+                        $occurrence_count = [
                             'id' => $field['id'] . '-occurrence-count',
                             'name' => $field['name'] . '[occurrence_count]',
                             'type' => 'number',
                             'class' => 'acf-is-prepended acf-is-appended',
-                            'value'    => is_array($field['value']) ? $field['value']['occurrence_count'] : null,
+                            'value' => is_array($field['value']) ? $field['value']['occurrence_count'] : null,
                             'min' => 1,
                             'step' => 1,
-                        ); ?>
+                        ]; ?>
 
                         <div class="acf-input">
-                            <div class="acf-input-prepend"><?php _e('After', 'acf-rrule-field'); ?></div>
-                            <div class="acf-input-append"><?php _e('occurrence(s)', 'acf-rrule-field'); ?></div>
+                            <div class="acf-input-prepend">
+                                <?php _e('After', 'acf-rrule-field'); ?>
+                            </div>
+                            <div class="acf-input-append">
+                                <?php _e('occurrence(s)', 'acf-rrule-field'); ?>
+                            </div>
                             <div class="acf-input-wrap">
                                 <?php acf_text_input($occurrence_count); ?>
                             </div>
@@ -522,17 +529,19 @@ if (!class_exists('acf_field_rrule')) :
                             } ?>
 
                             <div class="acf-input">
-                                <div class="acf-input-prepend"><?php _e('Until', 'acf-rrule-field'); ?></div>
+                                <div class="acf-input-prepend">
+                                    <?php _e('Until', 'acf-rrule-field'); ?>
+                                </div>
                                 <div class="acf-input-wrap">
-                                    <?php acf_hidden_input(array(
+                                    <?php acf_hidden_input([
                                         'name' => $field['name'] . '[end_date]',
                                         'value'    => $end_date_hidden,
-                                    )); ?>
-                                    <?php acf_text_input(array(
+                                    ]); ?>
+                                    <?php acf_text_input([
                                         'id' => $unique_id . '-end-date',
                                         'class' => 'acf-is-prepended',
                                         'value'    => $end_date_display,
-                                    )); ?>
+                                    ]); ?>
                                 </div>
                             </div>
                         </div>
@@ -559,7 +568,6 @@ if (!class_exists('acf_field_rrule')) :
 
         public function input_admin_enqueue_scripts()
         {
-
             // Bail early if no enqueue
             if (!acf_get_setting('enqueue_datepicker')) {
                 return;
@@ -568,36 +576,36 @@ if (!class_exists('acf_field_rrule')) :
             // Localize data
             global $wp_locale;
 
-            acf_localize_data(array(
-                'datePickerL10n'    => array(
-                    'closeText'            => _x('Done', 'Date Picker JS closeText', 'acf-rrule-field'),
-                    'currentText'        => _x('Today', 'Date Picker JS currentText', 'acf-rrule-field'),
-                    'nextText'            => _x('Next', 'Date Picker JS nextText', 'acf-rrule-field'),
-                    'prevText'            => _x('Prev', 'Date Picker JS prevText', 'acf-rrule-field'),
-                    'weekHeader'        => _x('Wk', 'Date Picker JS weekHeader', 'acf-rrule-field'),
-                    'monthNames'        => array_values($wp_locale->month),
-                    'monthNamesShort'   => array_values($wp_locale->month_abbrev),
-                    'dayNames'          => array_values($wp_locale->weekday),
-                    'dayNamesMin'       => array_values($wp_locale->weekday_initial),
-                    'dayNamesShort'     => array_values($wp_locale->weekday_abbrev)
-                )
-            ));
+            acf_localize_data([
+                'datePickerL10n' => [
+                    'closeText' => _x('Done', 'Date Picker JS closeText', 'acf-rrule-field'),
+                    'currentText' => _x('Today', 'Date Picker JS currentText', 'acf-rrule-field'),
+                    'nextText' => _x('Next', 'Date Picker JS nextText', 'acf-rrule-field'),
+                    'prevText' => _x('Prev', 'Date Picker JS prevText', 'acf-rrule-field'),
+                    'weekHeader' => _x('Wk', 'Date Picker JS weekHeader', 'acf-rrule-field'),
+                    'monthNames' => array_values($wp_locale->month),
+                    'monthNamesShort' => array_values($wp_locale->month_abbrev),
+                    'dayNames' => array_values($wp_locale->weekday),
+                    'dayNamesMin' => array_values($wp_locale->weekday_initial),
+                    'dayNamesShort' => array_values($wp_locale->weekday_abbrev),
+                ],
+            ]);
 
             // Enqueue scripts
             wp_enqueue_script('jquery-ui-datepicker');
 
             // Enqueue style
-            wp_enqueue_style('acf-datepicker', acf_get_url('assets/inc/datepicker/jquery-ui.min.css'), array(), '1.11.4');
+            wp_enqueue_style('acf-datepicker', acf_get_url('assets/inc/datepicker/jquery-ui.min.css'), [], '1.11.4');
 
             // Init vars
             $url = $this->settings['url'];
             $version = $this->settings['version'];
 
             // Register & include JS
-            wp_enqueue_script('acf-rrule-field', "{$url}assets/js/input.js", array('acf-input'), $version);
+            wp_enqueue_script('acf-rrule-field', "{$url}assets/js/input.js", ['acf-input'], $version);
 
             // Register & include CSS
-            wp_enqueue_style('acf-rrule-field', "{$url}assets/css/input.css", array('acf-input'), $version);
+            wp_enqueue_style('acf-rrule-field', "{$url}assets/css/input.css", ['acf-input'], $version);
         }
 
         /*
@@ -617,15 +625,15 @@ if (!class_exists('acf_field_rrule')) :
 
         public function load_value($value, $post_id, $field)
         {
-            $new_value = array(
+            $new_value = [
                 'rrule' => null,
                 'start_date' => null,
                 'start_time' => null,
                 'frequency' => 'WEEKLY',
                 'interval' => 1,
-                'weekdays' => array(),
-                'monthdays' => array(),
-                'months' => array(),
+                'weekdays' => [],
+                'monthdays' => [],
+                'months' => [],
                 'monthly_by' => 'monthdays',
                 'bysetpos' => [],
                 'byweekday' => [],
@@ -634,11 +642,13 @@ if (!class_exists('acf_field_rrule')) :
                 'occurrence_count' => null,
                 'dates_collection' => null,
                 'text' => null,
-            );
+            ];
 
             if ($value) {
                 try {
                     $rule = new Rule($value);
+
+                    $rule->setTimezone($field['timezone'] ?: $this->defaults['timezone']);
 
                     $start_date = $rule->getStartDate();
 
@@ -647,12 +657,12 @@ if (!class_exists('acf_field_rrule')) :
                     $new_value['start_time'] = $start_date->format('H:i:s');
                     $new_value['frequency'] = $rule->getFreqAsText();
                     $new_value['interval'] = $rule->getInterval();
-                    $new_value['weekdays'] = $rule->getByDay() ?: array();
-                    $new_value['monthdays'] = $rule->getByMonthDay() ?: array();
-                    $new_value['months'] = $rule->getByMonth() ?: array();
+                    $new_value['weekdays'] = $rule->getByDay() ?: [];
+                    $new_value['monthdays'] = $rule->getByMonthDay() ?: [];
+                    $new_value['months'] = $rule->getByMonth() ?: [];
 
                     if ($new_value['frequency'] === 'MONTHLY') {
-                        if (sizeof($new_value['weekdays']) > 0) {
+                        if (count($new_value['weekdays']) > 0) {
                             $new_value['monthly_by'] = 'setpos';
                             $set_position = $rule->getBySetPosition();
                             $new_value['bysetpos'] = $set_position;
@@ -669,7 +679,7 @@ if (!class_exists('acf_field_rrule')) :
                         new \Recurr\Transformer\Translator($locale[0])
                     );
 
-                    $new_value['dates_collection'] = array();
+                    $new_value['dates_collection'] = [];
 
                     foreach ($transformer->transform($rule) as $recurrence) {
                         $new_value['dates_collection'][] = $recurrence->getStart();
