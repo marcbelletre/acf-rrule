@@ -54,7 +54,6 @@ if (!class_exists('acf_field_rrule')) :
                 'date_return_format' => 'Y-m-d',
                 'allow_time' => false,
                 'time_display_format' => 'H:i',
-                'timezone' => get_option('timezone_string') ?: 'UTC',
             ];
 
             /*
@@ -645,10 +644,12 @@ if (!class_exists('acf_field_rrule')) :
             ];
 
             if ($value) {
+                $timezoneString = get_option('timezone_string') ?: 'UTC';
+
                 try {
                     $rule = new Rule($value);
 
-                    $rule->setTimezone($field['timezone'] ?: $this->defaults['timezone']);
+                    $rule->setTimezone($timezoneString);
 
                     $start_date = $rule->getStartDate();
 
@@ -686,7 +687,7 @@ if (!class_exists('acf_field_rrule')) :
                     }
 
                     if ($rule->getUntil()) {
-                        $end_date = $rule->getUntil();
+                        $end_date = $rule->getEndDate() ?: $rule->getUntil();
 
                         $new_value['end_type'] = 'date';
                     } elseif ($rule->getCount()) {
@@ -729,7 +730,10 @@ if (!class_exists('acf_field_rrule')) :
         public function update_value($value, $post_id, $field)
         {
             if (is_array($value)) {
-                $start_date = \DateTime::createFromFormat('Ymd', $value['start_date']);
+                $timezoneString = get_option('timezone_string') ?: 'UTC';
+                $timezone = new \DateTimeZone($timezoneString);
+
+                $start_date = \DateTime::createFromFormat('Ymd', $value['start_date'], $timezone);
 
                 // Bail early if the DateTime object is null
                 if (!$start_date) {
@@ -745,10 +749,7 @@ if (!class_exists('acf_field_rrule')) :
 
                 $rule = new Rule;
 
-                // Ensure timezone arg is never blank
-                $timezone = $field['timezone'] ?: $this->defaults['timezone'];
-
-                $rule->setTimezone($timezone)
+                $rule->setTimezone($timezoneString)
                     ->setStartDate($start_date, true)
                     ->setFreq($value['frequency'])
                     ->setInterval($value['interval']);
@@ -781,10 +782,11 @@ if (!class_exists('acf_field_rrule')) :
                 switch ($value['end_type']) {
                     case 'date':
                         if ($value['end_date']) {
-                            $end_date = \DateTime::createFromFormat('Ymd', $value['end_date']);
+                            $end_date = \DateTime::createFromFormat('Ymd', $value['end_date'], $timezone);
                             $end_date->setTime(0, 0, 0);
 
                             $rule->setUntil($end_date);
+                            $rule->setEndDate($end_date);
                         }
 
                         break;
