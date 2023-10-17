@@ -2,9 +2,9 @@
 Contributors: marcbelletre, pedromendonca
 Tags: acf, rrule, recurrence, date, calendar
 Requires at least: 4.7
-Tested up to: 6.1
+Tested up to: 6.3
 Requires PHP: 5.6
-Stable tag: 1.2.5
+Stable tag: 1.3.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -30,6 +30,11 @@ This plugin requires ACF or ACF Pro to work.
 1. RRule field example
 
 == Changelog ==
+
+= 1.3.0 =
+* Add time picker options
+* Fix compatibility with ACF Extended plugin
+* Fix selection not being reflected in the calendar
 
 = 1.2.5 =
 * Bug fix
