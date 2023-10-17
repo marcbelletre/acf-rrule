@@ -331,7 +331,7 @@ if (!class_exists('acf_field_rrule')) :
                         <div class="acf-input">
                             <div class="acf-button-group">
                                 <?php foreach ($weekdays as $key => $value) : ?>
-                                    <?php $selected = is_array($field['value']) && in_array($key, $field['value']['weekdays'], true); ?>
+                                    <?php $selected = is_array($field['value']) && in_array($key, $field['value']['weekdays']); ?>
 
                                     <label<?= ($selected ? ' class="selected"' : '') ?>>
                                         <input type="checkbox" name="<?= $field['name'] ?>[weekdays][]" value="<?= $key ?>" <?= ($selected ? ' checked' : '') ?>>
@@ -359,7 +359,7 @@ if (!class_exists('acf_field_rrule')) :
                                         <?php foreach (array_chunk($days, 7) as $week) : ?>
                                             <tr>
                                                 <?php foreach ($week as $day) : ?>
-                                                    <?php $selected = is_array($field['value']) && in_array($day, $field['value']['monthdays'], true); ?>
+                                                    <?php $selected = is_array($field['value']) && in_array($day, $field['value']['monthdays']); ?>
 
                                                     <td>
                                                         <input id="acf-<?= $field['name'] ?>-monthdays-<?= $day ?>" type="checkbox" name="<?= $field['name'] ?>[monthdays][]" value="<?= $day ?>" <?= ($selected ? ' checked' : '') ?>>
@@ -398,7 +398,7 @@ if (!class_exists('acf_field_rrule')) :
                                                     $selected = false;
 
                                                     if (is_array($field['value']) && is_array($field['value']['bysetpos'])) {
-                                                        $selected = in_array((string) $key, $field['value']['bysetpos'], true);
+                                                        $selected = in_array((string) $key, $field['value']['bysetpos']);
                                                     } ?>
 
                                                     <li>
@@ -414,7 +414,7 @@ if (!class_exists('acf_field_rrule')) :
                                         <div class="acf-column">
                                             <ul class="acf-checkbox-list">
                                                 <?php foreach ($weekdays as $key => $value) : ?>
-                                                    <?php $selected = is_array($field['value']) && in_array($key, $field['value']['weekdays'], true); ?>
+                                                    <?php $selected = is_array($field['value']) && in_array($key, $field['value']['weekdays']); ?>
 
                                                     <li>
                                                         <label<?= ($selected ? ' class="selected"' : '') ?>>
@@ -456,7 +456,7 @@ if (!class_exists('acf_field_rrule')) :
 
                             <ul class="acf-checkbox-list acf-hl">
                                 <?php foreach ($months as $key => $month) : ?>
-                                    <?php $selected = is_array($field['value']) && in_array($key, $field['value']['months'], true); ?>
+                                    <?php $selected = is_array($field['value']) && in_array($key, $field['value']['months']); ?>
 
                                     <li>
                                         <label<?= ($selected ? ' class="selected"' : '') ?>>
