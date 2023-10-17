@@ -54,6 +54,7 @@ if (!class_exists('acf_field_rrule')) :
                 'date_return_format' => 'Y-m-d',
                 'allow_time' => false,
                 'time_display_format' => 'H:i',
+                'time_return_format' => 'H:i',
             ];
 
             /*
@@ -105,9 +106,13 @@ if (!class_exists('acf_field_rrule')) :
             $d_m_Y = date_i18n('d/m/Y');
             $m_d_Y = date_i18n('m/d/Y');
             $F_j_Y = date_i18n('F j, Y');
+            $g_i_a = date_i18n('g:i a');
+            $H_i = date_i18n('H:i');
             $Ymd = date_i18n('Ymd');
 
-            // Display format
+            echo '<div class="acf-field-settings-split">';
+
+            // Date display format
             acf_render_field_setting($field, [
                 'label' => __('Date Display Format', 'acf-rrule-field'),
                 'instructions' => __('The date format displayed when editing a post', 'acf-rrule-field'),
@@ -122,12 +127,12 @@ if (!class_exists('acf_field_rrule')) :
                 ],
             ]);
 
-            // Return format
+            // Date return format
             acf_render_field_setting($field, [
                 'label' => __('Date Return Format', 'acf-rrule-field'),
                 'instructions' => __('The date format returned via template functions', 'acf-rrule-field'),
                 'type' => 'radio',
-                'name' => 'return_format',
+                'name' => 'date_return_format',
                 'other_choice' => 1,
                 'choices' => [
                     'd/m/Y' => '<span>' . $d_m_Y . '</span><code>d/m/Y</code>',
@@ -138,6 +143,10 @@ if (!class_exists('acf_field_rrule')) :
                 ],
             ]);
 
+            echo '</div>';
+
+            echo '<div class="acf-field-settings-split">';
+
             // Allow time selector
             acf_render_field_setting($field, [
                 'label' => __('Time Selector', 'acf-rrule-field'),
@@ -146,6 +155,50 @@ if (!class_exists('acf_field_rrule')) :
                 'type' => 'true_false',
                 'ui' => 1,
             ]);
+
+            echo '</div>';
+
+            echo '<div class="acf-field-settings-split">';
+
+            // Time display format
+            acf_render_field_setting($field, [
+                'label' => __('Time Display Format', 'acf-rrule-field'),
+                'instructions' => __('The time format displayed when editing a post', 'acf-rrule-field'),
+                'type' => 'radio',
+                'name' => 'time_display_format',
+                'other_choice' => 1,
+                'choices' => [
+                    'H:i' => '<span>' . $H_i . '</span><code>H:i</code>',
+                    'g:i a' => '<span>' . $g_i_a . '</span><code>g:i a</code>',
+                    'other' => '<span>' . __('Custom:', 'acf-rrule-field') . '</span>',
+                ],
+                'conditions' => [
+                    'field' => 'allow_time',
+                    'operator' => '==',
+                    'value' => 1
+                ],
+            ]);
+
+            // Time return format
+            acf_render_field_setting($field, [
+                'label' => __('Time Return Format', 'acf-rrule-field'),
+                'instructions' => __('The time format returned via template functions', 'acf-rrule-field'),
+                'type' => 'radio',
+                'name' => 'time_return_format',
+                'other_choice' => 1,
+                'choices' => [
+                    'H:i' => '<span>' . $H_i . '</span><code>H:i</code>',
+                    'g:i a' => '<span>' . $g_i_a . '</span><code>g:i a</code>',
+                    'other' => '<span>' . __('Custom:', 'acf-rrule-field') . '</span>',
+                ],
+                'conditions' => [
+                    'field' => 'allow_time',
+                    'operator' => '==',
+                    'value' => 1
+                ],
+            ]);
+
+            echo '</div>';
         }
 
         /*
@@ -175,6 +228,7 @@ if (!class_exists('acf_field_rrule')) :
             ];
             $timepicker_options = [
                 'class' => 'acf-time-picker acf-input-wrap',
+                'data-time_format' => acf_convert_time_to_js($field['time_display_format']),
             ]; ?>
 
             <div class="acf-input-wrap">
@@ -242,12 +296,12 @@ if (!class_exists('acf_field_rrule')) :
 
                                             <?php acf_hidden_input([
                                                 'name' => $field['name'] . '[start_time]',
-                                                'value'    => $start_time,
+                                                'value' => $start_time,
                                             ]); ?>
                                             <?php acf_text_input([
                                                 'id' => $unique_id . '-start-time',
                                                 'class' => 'input',
-                                                'value'    => $start_time,
+                                                'value' => $start_time,
                                             ]); ?>
                                         </div>
                                     </div>
@@ -534,12 +588,12 @@ if (!class_exists('acf_field_rrule')) :
                                 <div class="acf-input-wrap">
                                     <?php acf_hidden_input([
                                         'name' => $field['name'] . '[end_date]',
-                                        'value'    => $end_date_hidden,
+                                        'value' => $end_date_hidden,
                                     ]); ?>
                                     <?php acf_text_input([
                                         'id' => $unique_id . '-end-date',
                                         'class' => 'acf-is-prepended',
-                                        'value'    => $end_date_display,
+                                        'value' => $end_date_display,
                                     ]); ?>
                                 </div>
                             </div>
