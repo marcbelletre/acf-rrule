@@ -21,9 +21,12 @@
   },
   "require": {
     "simshaun/recurr": "^5.0",
-    "composer/installers": "~1.0"
+    "composer/installers": "^2.0"
   },
   "config": {
+    "platform": {
+      "php": "7.2"
+    },
     "allow-plugins": {
       "composer/installers": true
     }
