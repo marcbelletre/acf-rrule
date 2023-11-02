@@ -810,14 +810,34 @@ if (!class_exists('acf_field_rrule')) :
 
                 switch ($value['frequency']) {
                     case 'WEEKLY':
+                        // Bail early if weekdays are not set
+                        if (!isset($value['weekdays'])) {
+                            return $value;
+                        }
+
                         $rule->setByDay($value['weekdays']);
 
                         break;
 
                     case 'MONTHLY':
+                        // Bail early if monthly_by is not set
+                        if (!isset($value['monthly_by'])) {
+                            return $value;
+                        }
+
                         if ($value['monthly_by'] == 'monthdays') {
+                            // Bail early if monthdays are not set
+                            if (!isset($value['monthdays'])) {
+                                return $value;
+                            }
+
                             $rule->setByMonthDay($value['monthdays']);
                         } else {
+                            // Bail early if bysetpost & byweekday are not set
+                            if (!(isset($value['bysetpos']) && isset($value['byweekday']))) {
+                                return $value;
+                            }
+
                             $rule->setBySetPosition($value['bysetpos']);
                             $rule->setByDay($value['byweekday']);
                         }
@@ -825,6 +845,11 @@ if (!class_exists('acf_field_rrule')) :
                         break;
 
                     case 'YEARLY':
+                        // Bail early if months are not set
+                        if (!isset($value['months'])) {
+                            return $value;
+                        }
+
                         $rule->setByMonth($value['months']);
 
                         break;
