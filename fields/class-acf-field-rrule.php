@@ -708,8 +708,8 @@ if (!class_exists('acf_field_rrule')) :
                     $start_date = $rule->getStartDate();
 
                     $new_value['rrule'] = $value;
-                    $new_value['start_date'] = $start_date?->format('Ymd');
-                    $new_value['start_time'] = $start_date?->format('H:i:s');
+                    $new_value['start_date'] = $start_date ? $start_date->format('Ymd') : null;
+                    $new_value['start_time'] = $start_date ? $start_date->format('H:i:s') : null;
                     $new_value['frequency'] = $rule->getFreqAsText();
                     $new_value['interval'] = $rule->getInterval();
                     $new_value['weekdays'] = $rule->getByDay() ?: [];

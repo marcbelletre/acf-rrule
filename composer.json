@@ -20,15 +20,23 @@
     "issues": "https://github.com/marcbelletre/acf-rrule/issues"
   },
   "require": {
+    "php": "^7.2|^8.0",
     "simshaun/recurr": "^5.0",
     "composer/installers": "^1.0|^2.0"
   },
+  "require-dev": {
+    "phpcompatibility/php-compatibility": "*",
+    "phpcompatibility/phpcompatibility-wp": "*",
+    "dealerdirect/phpcodesniffer-composer-installer": "^0.7"
+  },
+  "prefer-stable": true,
   "config": {
     "platform": {
       "php": "7.2"
     },
     "allow-plugins": {
-      "composer/installers": true
+      "composer/installers": true,
+      "dealerdirect/phpcodesniffer-composer-installer": true
     }
   }
 }
