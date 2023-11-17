@@ -4,7 +4,7 @@ Tags: acf, rrule, recurrence, date, calendar
 Requires at least: 4.7
 Tested up to: 6.3
 Requires PHP: 7.2
-Stable tag: 1.3.3
+Stable tag: 1.3.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -30,6 +30,9 @@ This plugin requires ACF or ACF Pro to work.
 1. RRule field example
 
 == Changelog ==
+
+= 1.3.4 =
+* Remove DTEND attribute from RRULE string. This fixes a compatibility issue with rrule.js package.
 
 = 1.3.3 =
 * Fix compatibility with PHP >= 7.2
