@@ -705,9 +705,18 @@ if (!class_exists('acf_field_rrule')) :
 
                     $rule->setTimezone($timezoneString);
 
+                    /**
+                     * Ensure DTEND is reset if UNTIL exists.
+                     *
+                     * @see https://github.com/marcbelletre/acf-rrule/issues/23
+                     */
+                    if ($rule->getEndDate() == $rule->getUntil()) {
+                        $rule->setEndDate(null);
+                    }
+
                     $start_date = $rule->getStartDate();
 
-                    $new_value['rrule'] = $value;
+                    $new_value['rrule'] = $rule->getString();
                     $new_value['start_date'] = $start_date ? $start_date->format('Ymd') : null;
                     $new_value['start_time'] = $start_date ? $start_date->format('H:i:s') : null;
                     $new_value['frequency'] = $rule->getFreqAsText();
@@ -740,8 +749,8 @@ if (!class_exists('acf_field_rrule')) :
                         $new_value['dates_collection'][] = $recurrence->getStart();
                     }
 
-                    if ($rule->getUntil()) {
-                        $end_date = $rule->getEndDate() ?: $rule->getUntil();
+                    if ($rule->getUntil() || $rule->getEndDate()) {
+                        $end_date = $rule->getUntil() ?: $rule->getEndDate();
 
                         $new_value['end_type'] = 'date';
                     } elseif ($rule->getCount()) {
@@ -865,7 +874,6 @@ if (!class_exists('acf_field_rrule')) :
                             $end_date->setTime(0, 0, 0);
 
                             $rule->setUntil($end_date);
-                            $rule->setEndDate($end_date);
                         }
 
                         break;
