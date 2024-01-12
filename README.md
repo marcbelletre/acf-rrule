@@ -33,6 +33,35 @@ The RRule field returns an array with the following attributes:
 | **first_date**        | *DateTime*          | The first occurrence of the recurrence (since v1.4.0)                               |
 | **last_date**         | *DateTime*          | The last occurrence of the recurrence (since v1.4.0)                                |
 
+### Advanced usage
+
+A common use case for this plugin is creating an agenda-style display for your events. Here is how I usually do it.
+
+In the following example we will assume you have an `event` custom post type with an ACF RRule field named `rrule`.
+
+The first step is to use the `acf/save_post` hook to save the first and last dates in database. This is necessary for querying our events later.
+
+```php
+/**
+ * Save first & last occurrences of an event in database.
+ *
+ * @param  int|string  $post_id
+ * @return void
+ */
+add_action('acf/save_post', function (int|string $post_id) {
+    if (! $post_id || get_post_type($post_id) !== 'event') {
+        return;
+    }
+
+    $rrule = get_field('rrule');
+
+    update_post_meta($post_id, 'start_date', $rrule['first_date']);
+    update_post_meta($post_id, 'end_date', $rrule['last_date']);
+});
+```
+
+You will then be able to use the `start_date` and `end_date` meta values in a custom `WP_Query` to retrieve events having occurrences between specified dates.
+
 ## Testing
 
 ```
