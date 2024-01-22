@@ -55,12 +55,80 @@ add_action('acf/save_post', function (int|string $post_id) {
 
     $rrule = get_field('rrule');
 
-    update_post_meta($post_id, 'start_date', $rrule['first_date']);
-    update_post_meta($post_id, 'end_date', $rrule['last_date']);
+    update_post_meta($post_id, 'start_date', $rrule['first_date']->format('Y-m-d'));
+    update_post_meta($post_id, 'end_date', $rrule['last_date']->format('Y-m-d'));
 });
 ```
 
-You will then be able to use the `start_date` and `end_date` meta values in a custom `WP_Query` to retrieve events having occurrences between specified dates.
+You will then be able to use the `start_date` and `end_date` meta values in a custom `WP_Query` to filter events that may have occurrences between the specified dates.
+
+```php
+$startDate = date('Y-m-d'); // Today
+$endDate = date('Y-m-d', strtotime('+1 month', strtotime($startDate))); // Today + 1 month
+
+// Retrieve events starting before the end date
+// and ending after the start date
+$eventsQuery = new WP_Query([
+    'post_type' => 'event',
+    'posts_per_page' => -1,
+    'post_status' => 'publish',
+    'meta_query' => [
+        'relation' => 'AND',
+        [
+            'key' => 'start_date',
+            'compare' => '<=',
+            'value' => $endDate,
+            'type' => 'DATE',
+        ],
+        [
+            'key' => 'end_date',
+            'compare' => '>=',
+            'value' => $startDate,
+            'type' => 'DATE',
+        ],
+    ],
+]);
+```
+
+The next and last step is to create an associative array of dates. Each date will be an array of events that occurs at the given date.
+
+```php
+// Instanciate an array for our list of dates
+$dates = [];
+
+while ($eventsQuery->have_posts()) {
+    $eventsQuery->the_post();
+
+    $recurrence = get_field('rrule');
+
+    // Loop through the individual dates for the recurrence
+    foreach ($recurrence['dates_collection'] as $datetime) {
+        $date = $datetime->format('Y-m-d');
+
+        if ($date < $startDate) {
+            // If the date is before the start date, jump directly to the next one
+            continue;
+        } elseif ($date > $endDate) {
+            // If the date is after the end date, break the loop
+            break;
+        }
+
+        // Create the date if it doesn't exist yet
+        if (! isset($dates[$date])) {
+            // Each date will contain an array of events
+            $dates[$date] = [];
+        }
+
+        // Use the event ID as key to avoid duplicates
+        $dates[$date][$post->ID] = $post;
+    }
+
+    // Sort array by key
+    ksort($dates);
+}
+```
+
+Of course this is a very basic example that you will have to adapt to your use case.
 
 ## Testing
 
