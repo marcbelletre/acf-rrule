@@ -1,135 +1,89 @@
-(function($){
+(function ($) {
 
+    /**
+     * Initialize the field
+     */
+    function initializeField(field) {
+        const selectFrequency = function ($input) {
+            var freq = $input.val();
 
-	/**
-	*  initialize_field
-	*
-	*  This function will initialize the $field.
-	*
-	*  @date	30/11/17
-	*  @since	5.6.5
-	*
-	*  @param	n/a
-	*  @return	n/a
-	*/
+            field.$el.find('.acf-field[data-frequency], .freq-suffix[data-frequency]').each(function () {
+                if ($(this).data('frequency') != freq) {
+                    $(this).hide();
+                } else {
+                    $(this).show();
+                }
+            });
+        }
 
-	function initialize_field( $field ) {
+        const selectEndType = function ($input) {
+            var type = $input.val();
 
-		$field.find('.frequency-select').on('change', function () {
-			var freq = $(this).val();
+            field.$el.find('.acf-field[data-end-type]').each(function () {
+                if ($(this).data('end-type') != type) {
+                    $(this).hide();
+                } else {
+                    $(this).show();
+                }
+            });
+        }
 
-			$field.find('.acf-field[data-frequency], .freq-suffix[data-frequency]').each(function () {
-				if ($(this).data('frequency') != freq) {
-					$(this).hide();
-				} else {
-					$(this).show();
-				}
-			});
-		}).trigger('change');
+        const selectMonthlyBy = function ($input) {
+            var parent = $input.closest('.acf-field');
+            var value = $input.val() ? $input.val() : "''";
 
-		$field.find('.end-type-select').on('change', function () {
-			var type = $(this).val();
+            parent.find('.acf-input').addClass('is-disabled');
+            parent.find('.acf-input[data-monthly-by=' + value + ']').removeClass('is-disabled');
+        }
 
-			$field.find('.acf-field[data-end-type]').each(function () {
-				if ($(this).data('end-type') != type) {
-					$(this).hide();
-				} else {
-					$(this).show();
-				}
-			});
-		}).trigger('change');
+        field.$el.find('.frequency-select').on('change', function () {
+            selectFrequency($(this));
+        });
 
-		$field.find('.monthly-by-options').on('change', 'input[type=radio]', function () {
-			var parent = $(this).closest('.acf-field');
+        field.$el.find('.end-type-select').on('change', function () {
+            selectEndType($(this));
+        });
 
-			parent.find('.acf-input').addClass('is-disabled');
-			parent.find('.acf-input[data-monthly-by=' + $(this).val() + ']').removeClass('is-disabled');
-		});
+        field.$el.find('.monthly-by-options').on('change', 'input[type=radio]', function () {
+            selectMonthlyBy(($(this)));
+        });
 
-	}
+        selectFrequency(field.$el.find('.frequency-select'));
+        selectEndType(field.$el.find('.end-type-select'));
+        selectMonthlyBy(field.$el.find('.monthly-by-options'));
+    }
 
+    if (typeof acf.addAction !== 'undefined') {
+        acf.addAction('ready_field/type=rrule', initializeField);
+        acf.addAction('append_field/type=rrule', initializeField);
+    }
 
-	if( typeof acf.add_action !== 'undefined' ) {
+    var Field = acf.Field.extend({
+        type: 'button_group_multiple',
+        events: {
+            'click input[type="checkbox"]': 'onClick'
+        },
+        $control: function () {
+            return this.$('.acf-button-group');
+        },
+        $input: function () {
+            return this.$('input:checked');
+        },
+        setValue: function (val) {
+            this.$('input[value="' + val + '"]').prop('checked', true).trigger('change');
+        },
+        onClick: function (e, $el) {
+            var $label = $el.parent('label');
 
-		/*
-		*  ready & append (ACF5)
-		*
-		*  These two events are called when a field element is ready for initizliation.
-		*  - ready: on page load similar to $(document).ready()
-		*  - append: on new DOM elements appended via repeater field or other AJAX calls
-		*
-		*  @param	n/a
-		*  @return	n/a
-		*/
+            // Toggle active class
+            if ($el.prop('checked')) {
+                $label.addClass('selected');
+            } else {
+                $label.removeClass('selected');
+            }
+        }
+    });
 
-		acf.add_action('ready_field/type=rrule', initialize_field);
-		acf.add_action('append_field/type=rrule', initialize_field);
-
-
-	} else {
-
-		/*
-		*  acf/setup_fields (ACF4)
-		*
-		*  This single event is called when a field element is ready for initialization.
-		*
-		*  @param	event		an event object. This can be ignored
-		*  @param	element		An element which contains the new HTML
-		*  @return	n/a
-		*/
-
-		$(document).on('acf/setup_fields', function(e, postbox){
-
-			// find all relevant fields
-			$(postbox).find('.field[data-field_type="rrule"]').each(function(){
-
-				// initialize
-				initialize_field( $(this) );
-
-			});
-
-		});
-
-	}
-
-})(jQuery);
-
-(function($, undefined){
-
-	var Field = acf.Field.extend({
-
-		type: 'button_group_multiple',
-
-		events: {
-			'click input[type="checkbox"]': 'onClick'
-		},
-
-		$control: function(){
-			return this.$('.acf-button-group');
-		},
-
-		$input: function(){
-			return this.$('input:checked');
-		},
-
-		setValue: function( val ){
-			this.$('input[value="' + val + '"]').prop('checked', true).trigger('change');
-		},
-
-		onClick: function( e, $el ){
-
-			// vars
-			var $label = $el.parent('label');
-
-			// toggle active class
-			if ($el.prop('checked')) {
-				$label.addClass('selected');
-			} else {
-				$label.removeClass('selected');
-			}
-		}
-	});
-
-	acf.registerFieldType( Field );
+    acf.registerFieldType(Field);
 
 })(jQuery);
