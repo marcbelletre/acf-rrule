@@ -204,11 +204,12 @@
                                 <ul class="acf-checkbox-list">
                                     <?php
                                     $bysetpos = [
-                                        '1' => 'First',
-                                        '2' => 'Second',
-                                        '3' => 'Third',
-                                        '4' => 'Fourth',
-                                        '-1' => 'Last',
+                                        '1' => __('First', 'acf-rrule-field'),
+                                        '2' => __('Second', 'acf-rrule-field'),
+                                        '3' => __('Third', 'acf-rrule-field'),
+                                        '4' => __('Fourth', 'acf-rrule-field'),
+                                        '5' => __('Fifth', 'acf-rrule-field'),
+                                        '-1' => __('Last', 'acf-rrule-field'),
                                     ];
                                     ?>
 

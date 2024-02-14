@@ -45,12 +45,12 @@
         });
 
         field.$el.find('.monthly-by-options').on('change', 'input[type=radio]', function () {
-            selectMonthlyBy(($(this)));
+            selectMonthlyBy($(this));
         });
 
         selectFrequency(field.$el.find('.frequency-select'));
         selectEndType(field.$el.find('.end-type-select'));
-        selectMonthlyBy(field.$el.find('.monthly-by-options'));
+        selectMonthlyBy(field.$el.find('.monthly-by-options input[type=radio]:checked'));
     }
 
     if (typeof acf.addAction !== 'undefined') {

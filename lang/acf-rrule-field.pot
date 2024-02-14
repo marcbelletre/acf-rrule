@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Advanced Custom Fields: RRule\n"
-"POT-Creation-Date: 2024-01-18 12:01+0100\n"
+"POT-Creation-Date: 2024-02-14 11:28+0100\n"
 "PO-Revision-Date: 2020-06-15 10:20+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -221,83 +221,107 @@ msgstr ""
 msgid "Weekdays"
 msgstr ""
 
-#: include/render.php:256
+#: include/render.php:207
+msgid "First"
+msgstr ""
+
+#: include/render.php:208
+msgid "Second"
+msgstr ""
+
+#: include/render.php:209
+msgid "Third"
+msgstr ""
+
+#: include/render.php:210
+msgid "Fourth"
+msgstr ""
+
+#: include/render.php:211
+msgid "Fifth"
+msgstr ""
+
+#: include/render.php:212
+msgid "Last"
+msgstr ""
+
+#: include/render.php:257
 msgid "Month"
 msgstr ""
 
-#: include/render.php:262
+#: include/render.php:263
 msgid "January"
 msgstr ""
 
-#: include/render.php:263
+#: include/render.php:264
 msgid "February"
 msgstr ""
 
-#: include/render.php:264
+#: include/render.php:265
 msgid "March"
 msgstr ""
 
-#: include/render.php:265
+#: include/render.php:266
 msgid "April"
 msgstr ""
 
-#: include/render.php:266
+#: include/render.php:267
 msgid "May"
 msgstr ""
 
-#: include/render.php:267
+#: include/render.php:268
 msgid "June"
 msgstr ""
 
-#: include/render.php:268
+#: include/render.php:269
 msgid "July"
 msgstr ""
 
-#: include/render.php:269
+#: include/render.php:270
 msgid "August"
 msgstr ""
 
-#: include/render.php:270
+#: include/render.php:271
 msgid "September"
 msgstr ""
 
-#: include/render.php:271
+#: include/render.php:272
 msgid "October"
 msgstr ""
 
-#: include/render.php:272
+#: include/render.php:273
 msgid "November"
 msgstr ""
 
-#: include/render.php:273
+#: include/render.php:274
 msgid "December"
 msgstr ""
 
-#: include/render.php:297
+#: include/render.php:298
 msgid "End date"
 msgstr ""
 
-#: include/render.php:307
+#: include/render.php:308
 msgid "At a specific date"
 msgstr ""
 
-#: include/render.php:308
+#: include/render.php:309
 msgid "After a number of occurrences"
 msgstr ""
 
-#: include/render.php:309
+#: include/render.php:310
 msgid "Never"
 msgstr ""
 
-#: include/render.php:330
+#: include/render.php:331
 msgid "After"
 msgstr ""
 
-#: include/render.php:333
+#: include/render.php:334
 msgid "occurrence(s)"
 msgstr ""
 
-#: include/render.php:356
+#: include/render.php:357
 msgid "Until"
 msgstr ""
 
