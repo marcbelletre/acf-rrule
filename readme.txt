@@ -4,7 +4,7 @@ Tags: acf, rrule, recurrence, date, calendar
 Requires at least: 4.7
 Tested up to: 6.4
 Requires PHP: 7.2
-Stable tag: 1.5.0
+Stable tag: 1.5.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -31,10 +31,12 @@ This plugin requires ACF or ACF Pro to work.
 
 == Changelog ==
 
+= 1.5.1 =
+* Fix montlhy frequency preselection
+
 = 1.5.0 =
 * Add "Fifth" option to weekdays
 * Add missing translations
-* Fix montlhy frequency preselection
 
 = 1.4.2 =
 * Fix Javascript error
