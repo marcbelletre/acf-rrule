@@ -1,16 +1,17 @@
 <?php
 
-/*
-Plugin Name: ACF RRule Field
-Plugin URI: https://github.com/marcbelletre/acf-rrule
-Description: Create recurring rules with a single ACF field
-Version: 1.5.1
-Author: Marc Bellêtre
-Author URI: https://pixelparfait.fr
-License: MIT
-Text Domain: acf-rrule-field
-Domain Path: /lang
-*/
+/**
+ * Plugin Name: ACF RRule Field
+ * Plugin URI: https://github.com/marcbelletre/acf-rrule
+ * Description: Create recurring rules with a single ACF field
+ * Requires Plugins: advanced-custom-fields
+ * Version: 1.5.2
+ * Author: Marc Bellêtre
+ * Author URI: https://pixelparfait.fr
+ * License: MIT
+ * Text Domain: acf-rrule-field
+ * Domain Path: /lang
+ */
 
 require_once __DIR__ . '/vendor/autoload.php';
 
