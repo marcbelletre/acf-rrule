@@ -372,9 +372,10 @@ if (! class_exists('acf_field_rrule')) :
                         new Recurr\Transformer\Translator($locale[0])
                     );
 
-                    apply_filters('ACF/RRule/ArrayTransformer', $transformer);
-                    apply_filters('ACF/RRule/TextTransformer',  $textTransformer);
-                    $constraint = apply_filters('ACF/RRule/Constraint', null);
+                    apply_filters('acf_rrule/array_transformer', $transformer);
+                    apply_filters('acf_rrule/text_transformer', $textTransformer);
+
+                    $constraint = apply_filters('acf_rrule/constraint', null);
 
                     $new_value['dates_collection'] = [];
 
@@ -395,7 +396,7 @@ if (! class_exists('acf_field_rrule')) :
                         $new_value['end_type'] = 'none';
                     }
 
-                    $new_value['end_date'] = (isset($end_date) && ($end_date instanceof \DateTime)) ? $end_date->format('Ymd') : null; // Because we are using `Recurr\Transformer\Constraint\BeforeConstraint`, it's that ['dates_collection'] is empty, in which case setting '$end_date = end($new_value['dates_collection'])' will provide a falsy value for $end_date, yet it will still return true for isset($end_date). Hence the need for instanceof.
+                    $new_value['end_date'] = (isset($end_date) && ($end_date instanceof \DateTime)) ? $end_date->format('Ymd') : null;
 
                     $new_value['first_date'] = ! empty($new_value['dates_collection']) ? $new_value['dates_collection'][0] : null;
                     $new_value['last_date'] = ! $rule->repeatsIndefinitely() ? end($new_value['dates_collection']) : null;
