@@ -2,7 +2,7 @@
 Contributors: marcbelletre
 Tags: acf, rrule, recurrence, date, calendar
 Requires at least: 4.7
-Tested up to: 6.4
+Tested up to: 6.7
 Requires PHP: 7.2
 Stable tag: 1.5.2
 License: GPLv2 or later
