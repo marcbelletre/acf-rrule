@@ -372,9 +372,9 @@ if (!class_exists('acf_field_rrule')) :
                         new Recurr\Transformer\Translator($locale[0])
                     );
 
-                    apply_filters('ACF/RRule/ArrayTransformer', $transformer);
-                    apply_filters('ACF/RRule/TextTransformer',  $textTransformer);
-                    $constraint = apply_filters('ACF/RRule/Constraint', null);
+                    apply_filters('acf_rrule/recurr/array_transformer', $transformer);
+                    apply_filters('acf_rrule/recurr/text_transformer',  $textTransformer);
+                    $constraint = apply_filters('acf_rrule/recurr/constraint', null);
 
                     $new_value['dates_collection'] = [];
 
