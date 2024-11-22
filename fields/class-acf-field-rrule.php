@@ -3,12 +3,12 @@
 use Recurr\Rule;
 
 // Exit if accessed directly
-if (!defined('ABSPATH')) {
+if (! defined('ABSPATH')) {
     exit;
 }
 
 // Check if class already exists
-if (!class_exists('acf_field_rrule')) :
+if (! class_exists('acf_field_rrule')) :
 
     class acf_field_rrule extends acf_field
     {
@@ -120,10 +120,10 @@ if (!class_exists('acf_field_rrule')) :
                 'name' => 'date_display_format',
                 'other_choice' => 1,
                 'choices' => [
-                    'd/m/Y' => '<span>' . $d_m_Y . '</span><code>d/m/Y</code>',
-                    'm/d/Y' => '<span>' . $m_d_Y . '</span><code>m/d/Y</code>',
-                    'F j, Y' => '<span>' . $F_j_Y . '</span><code>F j, Y</code>',
-                    'other' => '<span>' . __('Custom:', 'acf-rrule-field') . '</span>',
+                    'd/m/Y' => '<span>'.$d_m_Y.'</span><code>d/m/Y</code>',
+                    'm/d/Y' => '<span>'.$m_d_Y.'</span><code>m/d/Y</code>',
+                    'F j, Y' => '<span>'.$F_j_Y.'</span><code>F j, Y</code>',
+                    'other' => '<span>'.__('Custom:', 'acf-rrule-field').'</span>',
                 ],
             ]);
 
@@ -135,11 +135,11 @@ if (!class_exists('acf_field_rrule')) :
                 'name' => 'date_return_format',
                 'other_choice' => 1,
                 'choices' => [
-                    'd/m/Y' => '<span>' . $d_m_Y . '</span><code>d/m/Y</code>',
-                    'm/d/Y' => '<span>' . $m_d_Y . '</span><code>m/d/Y</code>',
-                    'F j, Y' => '<span>' . $F_j_Y . '</span><code>F j, Y</code>',
-                    'Ymd' => '<span>' . $Ymd . '</span><code>Ymd</code>',
-                    'other' => '<span>' . __('Custom:', 'acf-rrule-field') . '</span>',
+                    'd/m/Y' => '<span>'.$d_m_Y.'</span><code>d/m/Y</code>',
+                    'm/d/Y' => '<span>'.$m_d_Y.'</span><code>m/d/Y</code>',
+                    'F j, Y' => '<span>'.$F_j_Y.'</span><code>F j, Y</code>',
+                    'Ymd' => '<span>'.$Ymd.'</span><code>Ymd</code>',
+                    'other' => '<span>'.__('Custom:', 'acf-rrule-field').'</span>',
                 ],
             ]);
 
@@ -168,9 +168,9 @@ if (!class_exists('acf_field_rrule')) :
                 'name' => 'time_display_format',
                 'other_choice' => 1,
                 'choices' => [
-                    'H:i' => '<span>' . $H_i . '</span><code>H:i</code>',
-                    'g:i a' => '<span>' . $g_i_a . '</span><code>g:i a</code>',
-                    'other' => '<span>' . __('Custom:', 'acf-rrule-field') . '</span>',
+                    'H:i' => '<span>'.$H_i.'</span><code>H:i</code>',
+                    'g:i a' => '<span>'.$g_i_a.'</span><code>g:i a</code>',
+                    'other' => '<span>'.__('Custom:', 'acf-rrule-field').'</span>',
                 ],
                 'conditions' => [
                     'field' => 'allow_time',
@@ -187,9 +187,9 @@ if (!class_exists('acf_field_rrule')) :
                 'name' => 'time_return_format',
                 'other_choice' => 1,
                 'choices' => [
-                    'H:i' => '<span>' . $H_i . '</span><code>H:i</code>',
-                    'g:i a' => '<span>' . $g_i_a . '</span><code>g:i a</code>',
-                    'other' => '<span>' . __('Custom:', 'acf-rrule-field') . '</span>',
+                    'H:i' => '<span>'.$H_i.'</span><code>H:i</code>',
+                    'g:i a' => '<span>'.$g_i_a.'</span><code>g:i a</code>',
+                    'other' => '<span>'.__('Custom:', 'acf-rrule-field').'</span>',
                 ],
                 'conditions' => [
                     'field' => 'allow_time',
@@ -219,7 +219,7 @@ if (!class_exists('acf_field_rrule')) :
         public function render_field($field)
         {
             // Generate a unique ID for fields we don't want to be autocompleted
-            $unique_id = $field['id'] . '-' . time();
+            $unique_id = $field['id'].'-'.time();
 
             // Datepicker options
             $datepicker_options = [
@@ -231,7 +231,7 @@ if (!class_exists('acf_field_rrule')) :
                 'data-time_format' => acf_convert_time_to_js($field['time_display_format']),
             ];
 
-            include __DIR__ . '/../include/render.php';
+            include __DIR__.'/../include/render.php';
         }
 
         /*
@@ -251,7 +251,7 @@ if (!class_exists('acf_field_rrule')) :
         public function input_admin_enqueue_scripts()
         {
             // Bail early if no enqueue
-            if (!acf_get_setting('enqueue_datepicker')) {
+            if (! acf_get_setting('enqueue_datepicker')) {
                 return;
             }
 
@@ -393,8 +393,8 @@ if (!class_exists('acf_field_rrule')) :
 
                     $new_value['end_date'] = isset($end_date) ? $end_date->format('Ymd') : null;
 
-                    $new_value['first_date'] = !empty($new_value['dates_collection']) ? $new_value['dates_collection'][0] : null;
-                    $new_value['last_date'] = !$rule->repeatsIndefinitely() ? end($new_value['dates_collection']) : null;
+                    $new_value['first_date'] = ! empty($new_value['dates_collection']) ? $new_value['dates_collection'][0] : null;
+                    $new_value['last_date'] = ! $rule->repeatsIndefinitely() ? end($new_value['dates_collection']) : null;
 
                     $new_value['text'] = $textTransformer->transform($rule);
                 } catch (Exception $e) {
@@ -431,7 +431,7 @@ if (!class_exists('acf_field_rrule')) :
                 $start_date = DateTime::createFromFormat('Ymd', $value['start_date'], $timezone);
 
                 // Bail early if the DateTime object is null
-                if (!$start_date) {
+                if (! $start_date) {
                     return $value;
                 }
 
@@ -452,7 +452,7 @@ if (!class_exists('acf_field_rrule')) :
                 switch ($value['frequency']) {
                     case 'WEEKLY':
                         // Bail early if weekdays are not set
-                        if (!isset($value['weekdays'])) {
+                        if (! isset($value['weekdays'])) {
                             return $value;
                         }
 
@@ -462,20 +462,20 @@ if (!class_exists('acf_field_rrule')) :
 
                     case 'MONTHLY':
                         // Bail early if monthly_by is not set
-                        if (!isset($value['monthly_by'])) {
+                        if (! isset($value['monthly_by'])) {
                             return $value;
                         }
 
                         if ($value['monthly_by'] == 'monthdays') {
                             // Bail early if monthdays are not set
-                            if (!isset($value['monthdays'])) {
+                            if (! isset($value['monthdays'])) {
                                 return $value;
                             }
 
                             $rule->setByMonthDay($value['monthdays']);
                         } else {
                             // Bail early if bysetpost & byweekday are not set
-                            if (!(isset($value['bysetpos']) && isset($value['byweekday']))) {
+                            if (! (isset($value['bysetpos']) && isset($value['byweekday']))) {
                                 return $value;
                             }
 
@@ -487,7 +487,7 @@ if (!class_exists('acf_field_rrule')) :
 
                     case 'YEARLY':
                         // Bail early if months are not set
-                        if (!isset($value['months'])) {
+                        if (! isset($value['months'])) {
                             return $value;
                         }
 
@@ -505,7 +505,7 @@ if (!class_exists('acf_field_rrule')) :
                             $end_date = DateTime::createFromFormat('Ymd', $value['end_date'], $timezone);
                             $end_date->setTime(0, 0, 0);
 
-                            $rule->setUntil($end_date);
+                            $rule->setEndDate($end_date);
                         }
 
                         break;
@@ -540,29 +540,29 @@ if (!class_exists('acf_field_rrule')) :
          */
         public function validate_value($valid, $value, $field, $input)
         {
-            if ($field['required'] && !$value['start_date']) {
+            if ($field['required'] && ! $value['start_date']) {
                 return __('The start date is required.', 'acf-rrule-field');
             }
 
             // Validate only if the start date has been set
             if ($value['start_date']) {
                 if ($value['end_type'] === 'date') {
-                    if (!$value['end_date']) {
+                    if (! $value['end_date']) {
                         $valid = __('The end date is required.', 'acf-rrule-field');
                     } elseif ($value['end_date'] < $value['start_date']) {
                         $valid = __('The start date must be before the end date.', 'acf-rrule-field');
                     }
                 }
 
-                if ($value['frequency'] === 'WEEKLY' && !$value['weekdays']) {
+                if ($value['frequency'] === 'WEEKLY' && ! $value['weekdays']) {
                     $valid = __('Please select at least one weekday.', 'acf-rrule-field');
                 } elseif ($value['frequency'] === 'MONTHLY') {
-                    if ($value['monthly_by'] === 'monthdays' && !$value['monthdays']) {
+                    if ($value['monthly_by'] === 'monthdays' && ! $value['monthdays']) {
                         $valid = __('Please select at least one monthday.', 'acf-rrule-field');
-                    } elseif ($value['monthly_by'] === 'setpos' && !($value['bysetpos'] && $value['byweekday'])) {
+                    } elseif ($value['monthly_by'] === 'setpos' && ! ($value['bysetpos'] && $value['byweekday'])) {
                         $valid = __('Please select at least one weekday.', 'acf-rrule-field');
                     }
-                } elseif ($value['frequency'] === 'YEARLY' && !$value['months']) {
+                } elseif ($value['frequency'] === 'YEARLY' && ! $value['months']) {
                     $valid = __('Please select at least one month.', 'acf-rrule-field');
                 }
 
