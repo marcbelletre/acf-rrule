@@ -4,7 +4,7 @@
 Plugin Name: ACF RRule Field
 Plugin URI: https://github.com/marcbelletre/acf-rrule
 Description: Create recurring rules with a single ACF field
-Version: 1.5.2
+Version: 1.5.3
 Author: Marc Bellêtre
 Author URI: https://pixelparfait.fr
 License: MIT
@@ -44,7 +44,7 @@ if (! class_exists('acf_plugin_rrule')) :
             // Settings
             // - these will be passed into the field class.
             $this->settings = [
-                'version' => '1.5.2',
+                'version' => '1.5.3',
                 'url' => plugin_dir_url(__FILE__),
                 'path' => plugin_dir_path(__FILE__),
             ];

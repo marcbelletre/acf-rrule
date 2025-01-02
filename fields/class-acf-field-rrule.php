@@ -505,6 +505,7 @@ if (! class_exists('acf_field_rrule')) :
                             $end_date = DateTime::createFromFormat('Ymd', $value['end_date'], $timezone);
                             $end_date->setTime(0, 0, 0);
 
+                            $rule->setUntil($end_date);
                             $rule->setEndDate($end_date);
                         }
 
