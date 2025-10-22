@@ -13,6 +13,11 @@ if (! class_exists('acf_field_rrule')) :
     class acf_field_rrule extends acf_field
     {
         /*
+         * settings (array) Store plugin settings (url, path, version) as a reference for later use with assets
+         */
+        public $settings = [];
+
+        /*
          *  __construct
          *
          *  This function will setup the field type data
@@ -65,11 +70,7 @@ if (! class_exists('acf_field_rrule')) :
             // $this->l10n = array(
             // 	'date_error' => __('The end date should be after the start date.', 'acf-rrule-field'),
             // );
-
-            /*
-             *  settings (array) Store plugin settings (url, path, version) as a reference for later use with assets
-             */
-
+            
             $this->settings = $settings;
 
             parent::__construct();
