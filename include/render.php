@@ -47,7 +47,15 @@
                     <div class="acf-column">
                         <div class="acf-field acf-field-time-picker" data-type="time_picker">
                             <div <?php echo acf_esc_attrs($timepicker_options); ?>>
-                                <?php $start_time = $field['value'] ? acf_format_date($field['value']['start_time'], $field['time_display_format']) : ''; ?>
+                                <?php
+                                // Keep the saved value in 24-hour format; format only the visible input.
+                                $start_time_raw = is_array($field['value']) && !empty($field['value']['start_time'])
+                                    ? $field['value']['start_time']
+                                    : '';
+                                $start_time_display = $start_time_raw
+                                    ? acf_format_date($start_time_raw, $field['time_display_format'])
+                                    : '';
+                                ?>
 
                                 <div class="acf-label">
                                     <label for="<?= $unique_id ?>-start-time">
@@ -57,12 +65,12 @@
 
                                 <?php acf_hidden_input([
                                     'name' => $field['name'] . '[start_time]',
-                                    'value' => $start_time,
+                                    'value' => $start_time_raw,
                                 ]); ?>
                                 <?php acf_text_input([
                                     'id' => $unique_id . '-start-time',
                                     'class' => 'input',
-                                    'value' => $start_time,
+                                    'value' => $start_time_display,
                                 ]); ?>
                             </div>
                         </div>
