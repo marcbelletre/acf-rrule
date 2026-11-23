@@ -393,6 +393,18 @@ if (! class_exists('acf_field_rrule')) :
 
                     $new_value['end_date'] = isset($end_date) ? $end_date->format('Ymd') : null;
 
+                    // For legacy RRULEs, UNTIL without "Z" stores the selected
+                    // calendar date. Avoid deriving that date from a timezone-
+                    // converted DateTime, which can shift it one day backward.
+                    // Do not change DTSTART or the RRULE's stored representation.
+                    if (
+                        isset($end_date)
+                        && is_string($value)
+                        && preg_match('/(?:^|;)UNTIL=([0-9]{8})T[0-9]{6}(?=;|$)/', $value, $until_match)
+                    ) {
+                        $new_value['end_date'] = $until_match[1];
+                    }
+
                     $new_value['first_date'] = ! empty($new_value['dates_collection']) ? $new_value['dates_collection'][0] : null;
                     $new_value['last_date'] = ! $rule->repeatsIndefinitely() ? end($new_value['dates_collection']) : null;
 
