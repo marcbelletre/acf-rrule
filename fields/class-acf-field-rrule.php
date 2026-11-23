@@ -374,7 +374,28 @@ if (! class_exists('acf_field_rrule')) :
 
                     $new_value['dates_collection'] = [];
 
-                    foreach ($transformer->transform($rule) as $recurrence) {
+                    // Legacy rules store UNTIL as a calendar date at midnight,
+                    // without a timezone marker. For occurrence generation only,
+                    // treat that date as inclusive through the end of the local day.
+                    // Do not alter DTSTART, the stored rule, or its displayed values.
+                    $expansion_rule = clone $rule;
+                    if (
+                        is_string($value)
+                        && preg_match('/(?:^|;)UNTIL=([0-9]{8})T000000(?=;|$)/', $value, $legacy_until)
+                    ) {
+                        $local_until = DateTime::createFromFormat(
+                            '!Ymd',
+                            $legacy_until[1],
+                            new DateTimeZone($timezoneString)
+                        );
+
+                        if ($local_until) {
+                            $local_until->setTime(23, 59, 59);
+                            $expansion_rule->setUntil($local_until);
+                        }
+                    }
+
+                    foreach ($transformer->transform($expansion_rule) as $recurrence) {
                         $new_value['dates_collection'][] = $recurrence->getStart();
                     }
 
@@ -392,6 +413,18 @@ if (! class_exists('acf_field_rrule')) :
                     }
 
                     $new_value['end_date'] = isset($end_date) ? $end_date->format('Ymd') : null;
+
+                    // For legacy RRULEs, UNTIL without "Z" stores the selected
+                    // calendar date. Avoid deriving that date from a timezone-
+                    // converted DateTime, which can shift it one day backward.
+                    // Do not change DTSTART or the RRULE's stored representation.
+                    if (
+                        isset($end_date)
+                        && is_string($value)
+                        && preg_match('/(?:^|;)UNTIL=([0-9]{8})T[0-9]{6}(?=;|$)/', $value, $until_match)
+                    ) {
+                        $new_value['end_date'] = $until_match[1];
+                    }
 
                     $new_value['first_date'] = ! empty($new_value['dates_collection']) ? $new_value['dates_collection'][0] : null;
                     $new_value['last_date'] = ! $rule->repeatsIndefinitely() ? end($new_value['dates_collection']) : null;
@@ -503,7 +536,8 @@ if (! class_exists('acf_field_rrule')) :
                     case 'date':
                         if ($value['end_date']) {
                             $end_date = DateTime::createFromFormat('Ymd', $value['end_date'], $timezone);
-                            $end_date->setTime(0, 0, 0);
+                            // Include occurrences on the selected end date.
+                            $end_date->setTime(23, 59, 59);
 
                             $rule->setUntil($end_date);
                             $rule->setEndDate($end_date);
@@ -518,6 +552,20 @@ if (! class_exists('acf_field_rrule')) :
                 }
 
                 $new_value = $rule->getString();
+
+                // Store the inclusive end-of-day cutoff in explicit UTC.
+                // Leave DTSTART unchanged: Senior Planet's MU-plugin handles it.
+                if (isset($end_date) && $value['end_type'] === 'date') {
+                    $until_utc = (clone $end_date)
+                        ->setTimezone(new DateTimeZone('UTC'))
+                        ->format('Ymd\THis\Z');
+
+                    $new_value = preg_replace(
+                        '/(^|;)(UNTIL|DTEND)=[0-9]{8}T[0-9]{6}(?=;|$)/',
+                        '${1}${2}=' . $until_utc,
+                        $new_value
+                    );
+                }
 
                 acf_update_value($new_value, $post_id, $field);
 
