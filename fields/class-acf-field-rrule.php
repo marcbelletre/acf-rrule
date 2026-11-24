@@ -378,7 +378,8 @@ if (! class_exists('acf_field_rrule')) :
 
                     $new_value['dates_collection'] = [];
 
-                    foreach ($transformer->transform($rule, $constraint) as $recurrence) {
+                    // A COUNT rule must count dates outside the window; anything else would lose old dates to the cap.
+                    foreach ($transformer->transform($rule, $constraint, (bool) $rule->getCount()) as $recurrence) {
                         $new_value['dates_collection'][] = $recurrence->getStart();
                     }
 
